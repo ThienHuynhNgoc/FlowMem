@@ -1,17 +1,35 @@
-%%{init: {'theme': 'default'}}%%
-%% FlowMem | type=C4Context | layer=structure | method=ai | refresh=none | last-updated=2026-05-03 %%
-C4Context
-    title System Context — FlowMem
+%%{init: {'theme': 'default', 'themeVariables': {'primaryColor': '#2563eb', 'primaryTextColor': '#ffffff', 'primaryBorderColor': '#1d4ed8', 'lineColor': '#64748b', 'secondaryColor': '#eff6ff', 'tertiaryColor': '#f0fdf4'}}}%%
+%% FlowMem | type=flowchart | layer=structure | method=ai | refresh=none | last-updated=2026-05-03 %%
+flowchart TD
+    dev(["👤 Developer / AI Engineer"])
 
-    Person(dev, "Developer / AI Engineer", "Uses Claude Code to work on any codebase")
-    System(flowmem, "FlowMem Skill", "Indexes codebase into Mermaid .mmd charts, organized by layer")
-    System_Ext(vscode, "VS Code", "Renders .mmd files with Mermaid Preview extension")
-    System_Ext(flowskill, "FlowSkill", "Browser-based Mermaid editor and workflow runner")
-    System_Ext(mermaid_live, "mermaid.live", "Online Mermaid renderer")
-    System_Ext(claude, "Claude Code", "AI assistant that traverses FlowMem memory")
+    subgraph skill["⚡ FlowMem Skill  —  Claude Code"]
+        direction TB
+        scan["📊 Phase 1 · Scan\nRun scripts + AI reasoning"]
+        chart["🗺️ Phase 2 · Chart\nGenerate .mmd files by layer"]
+        view["🌐 Phase 3 · View\nOpen index.html in browser"]
+        scan --> chart --> view
+    end
 
-    Rel(dev, flowmem, "Triggers with phrase", "Claude Code")
-    Rel(flowmem, vscode, "Writes .mmd files to .flowmem/")
-    Rel(dev, flowskill, "Pastes charts for visual editing")
-    Rel(dev, mermaid_live, "Pastes charts for quick preview")
-    Rel(claude, flowmem, "Reads INDEX.md, loads charts by layer")
+    subgraph mem[".flowmem/  output directory"]
+        direction LR
+        s["structure/\nmodules · classes"]
+        b["behavior/\nsequences · states"]
+        d["data/\nschema · ER"]
+        p["project/\nroadmap · gantt"]
+        q["quality/\ndebt · coverage"]
+    end
+
+    claude(["🤖 Any AI Assistant\nClaude · Cursor · Copilot · Windsurf"])
+
+    dev -->|"say: generate flowmem"| skill
+    chart -->|"writes .mmd files"| mem
+    mem -->|"reads INDEX.md + charts"| claude
+    dev <-->|"ask questions"| claude
+
+    classDef primary fill:#2563eb,stroke:#1d4ed8,color:#fff,rx:8
+    classDef memory fill:#eff6ff,stroke:#93c5fd,color:#1e40af
+    classDef ai fill:#f0fdf4,stroke:#86efac,color:#166534
+    class skill primary
+    class s,b,d,p,q memory
+    class claude ai

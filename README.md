@@ -151,8 +151,8 @@ FlowMem generates up to **16 chart types** automatically, covering all major kno
 ### File Distribution (pie)
 ![pie](docs/screenshots/bugs_pie.svg)
 
-### System Architecture (C4Context)
-![c4](docs/screenshots/architecture_c4.svg)
+### System Architecture (flowchart)
+![architecture](docs/screenshots/architecture_c4.svg)
 
 ### AI Traversal Sequence (sequenceDiagram)
 ![traverse](docs/screenshots/traverse_sequence.svg)

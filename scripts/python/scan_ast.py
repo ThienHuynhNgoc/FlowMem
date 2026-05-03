@@ -58,11 +58,16 @@ def extract_file(filepath, root):
                 "methods": methods,
             })
 
-        elif isinstance(node, ast.FunctionDef) and not any(
-            isinstance(parent, ast.ClassDef)
-            for parent in ast.walk(tree)
-            if hasattr(parent, "body") and node in getattr(parent, "body", [])
-        ):
+        elif isinstance(node, ast.FunctionDef):
+            class_method_linenos = {
+                item.lineno
+                for n in ast.walk(tree)
+                if isinstance(n, ast.ClassDef)
+                for item in n.body
+                if isinstance(item, ast.FunctionDef)
+            }
+            if node.lineno in class_method_linenos:
+                continue
             args = [a.arg for a in node.args.args]
             functions.append({
                 "name": node.name,

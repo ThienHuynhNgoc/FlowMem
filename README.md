@@ -351,6 +351,54 @@ Open `.flowmem/index.html` in your browser to browse all 10 charts interactively
 
 ---
 
+## Our Significant Ideas & Contributions
+
+FlowMem introduces several original ideas to the AI memory and codebase-indexing space:
+
+### 1. Metadata-in-Comments Portability
+Every `.mmd` file carries its own provenance inside Mermaid comments — not in a sidecar file, not in a database. The format is:
+```
+%% FlowMem | type=classDiagram | layer=structure | method=script | refresh=scan_ast.py | last-updated=2026-05-03 %%
+```
+This means any file is self-describing. Move it, share it, open it in VS Code — the metadata travels with it. No registry, no lock-in.
+
+### 2. Hybrid Script + AI Dual Execution Model
+FlowMem introduces two execution modes for memory nodes:
+- **Script-backed** — deterministic bash/python/node scripts run on demand, always producing fresh data (classes, imports, git history, file sizes)
+- **AI-backed** — semantic charts generated once by reasoning (architecture diagrams, sequence flows, state machines)
+
+This mirrors how production systems combine rule-based and ML pipelines: use deterministic extraction where possible, AI reasoning where structure can't be inferred mechanically.
+
+### 3. Five-Layer Semantic Memory Architecture
+Memory is organized into five semantic layers, not one flat list:
+| Layer | Contents | When to load |
+|-------|----------|--------------|
+| `structure` | modules, classes | code navigation questions |
+| `behavior` | sequences, state | "how does X work?" questions |
+| `data` | schema, ER diagrams | data model questions |
+| `project` | roadmap, timeline | planning questions |
+| `quality` | debt, coverage, complexity | health/review questions |
+
+AI assistants load only the relevant layer per query — keeping context tight and responses fast.
+
+### 4. Generate-Once, Traverse-Anywhere Multi-Assistant Design
+`.flowmem/` output is plain Mermaid + Markdown. Any AI assistant reads it natively:
+- **Claude Code** — native skill with full Generate + Traverse + Refresh modes
+- **Cursor, Windsurf** — add one line to `.cursorrules` / `.windsurfrules`
+- **GitHub Copilot** — add to `.github/copilot-instructions.md`
+- **Kiro, Gemini, Continue** — paste `INDEX.md` at session start
+
+One generation run, permanently usable across every tool.
+
+### 5. Zero-Install HTML Memory Viewer
+FlowMem generates `.flowmem/index.html` — a self-contained single-file HTML app using the mermaid.js CDN. No npm install, no build step. Open in any browser. Features:
+- Sticky sidebar TOC organized by layer
+- Live Mermaid rendering (not screenshots — the actual diagram engine)
+- Search across all chart names and types
+- Per-card metadata: layer, method, type, last-updated
+
+---
+
 ## Contributing
 
 1. **Add a new chart type** — add a template in `templates/charts/`, update `chart-selector.md`, reference it in `SKILL.md`

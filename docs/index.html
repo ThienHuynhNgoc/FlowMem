@@ -61,6 +61,7 @@
       border-radius: 10px;
       padding: 16px;
       overflow: hidden;
+      white-space: pre-wrap;
     }
     .kw  { color: #7dd3fc; }
     .str { color: #86efac; }
@@ -355,12 +356,13 @@
             </div>
           </div>
           <p class="text-gray-600 text-sm leading-relaxed mb-5">Scripts extract classes, imports, TODOs, git history. AI reasons about architecture and behavior.</p>
-          <div class="chart-preview text-xs rounded-lg" style="font-size: 10px; padding: 12px;">
-<span class="cmt"># scan_ast.py</span>
-<span class="kw">python3</span> scan_ast.py
-→ ast.json
-<span class="kw">bash</span> scan_git.sh
-→ git.txt
+          <div class="chart-preview rounded-lg" style="font-size: 12px; padding: 14px; line-height: 2;">
+<span class="cmt"># Script-backed</span>
+<span class="kw">python3</span> scan_ast.py  → ast.json
+<span class="kw">python3</span> scan_imports.py → deps.json
+<span class="kw">bash</span>    scan_git.sh     → git.txt
+<span class="cmt"># AI-backed</span>
+<span class="str">AI reasons architecture → sequence.mmd</span>
           </div>
         </div>
 
@@ -374,15 +376,13 @@
             </div>
           </div>
           <p class="text-gray-600 text-sm leading-relaxed mb-5">Generate Mermaid .mmd files organized by layer: structure, behavior, data, project, quality.</p>
-          <div class="chart-preview text-xs rounded-lg" style="font-size: 10px; padding: 12px;">
-.flowmem/
-  structure/
-    <span class="node">modules.mmd</span>
-    <span class="node">classes.mmd</span>
-  behavior/
-    <span class="node">auth_flow.mmd</span>
-  quality/
-    <span class="node">debt.mmd</span>
+          <div class="chart-preview rounded-lg" style="font-size: 12px; padding: 14px; line-height: 2;">
+<span class="cmt">.flowmem/</span>
+  structure/  <span class="node">modules.mmd</span>  <span class="node">classes.mmd</span>
+  behavior/   <span class="node">auth_flow.mmd</span>
+  data/       <span class="node">schema.mmd</span>
+  project/    <span class="node">roadmap.mmd</span>
+  quality/    <span class="node">debt.mmd</span>
           </div>
         </div>
 
@@ -396,13 +396,15 @@
             </div>
           </div>
           <p class="text-gray-600 text-sm leading-relaxed mb-5">AI loads only relevant charts per question. Script-backed charts refresh on demand for live data.</p>
-          <div class="chart-preview text-xs rounded-lg" style="font-size: 10px; padding: 12px;">
-<span class="cmt">"How does auth work?"</span>
-→ load behavior/ charts
-<span class="cmt">"Where is tech debt?"</span>
-→ load quality/debt.mmd
-<span class="cmt">"Refresh data"</span>
-→ run refresh_all.sh
+          <div class="chart-preview rounded-lg" style="font-size: 12px; padding: 14px; line-height: 2;">
+<span class="str">"How does auth work?"</span>
+  → load <span class="node">behavior/</span> charts
+
+<span class="str">"Where is tech debt?"</span>
+  → load <span class="node">quality/debt.mmd</span>
+
+<span class="str">"Refresh data"</span>
+  → run <span class="kw">refresh_all.sh</span>
           </div>
         </div>
       </div>

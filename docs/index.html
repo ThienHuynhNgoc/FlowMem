@@ -535,134 +535,158 @@
   </section>
 
   <!-- REAL CHART GALLERY -->
-  <section class="py-20 px-6 section-alt">
+  <section id="gallery" class="py-20 px-6 section-white">
     <div class="max-w-6xl mx-auto">
       <h2 class="text-3xl font-bold text-center text-gray-900 mb-3">Real Output — Rendered Charts</h2>
-      <p class="text-gray-600 text-center mb-3">Auto-generated from the <strong class="text-blue-700">flowmem project itself</strong> — live output from running FlowMem on its own codebase.</p>
-      <p class="text-gray-400 text-center text-sm mb-12">View any chart in <a href="https://mermaid.live" class="text-blue-600 hover:text-blue-700 font-medium">mermaid.live</a> · or open <code class="bg-blue-50 text-blue-700 px-1 rounded text-xs">.flowmem/index.html</code> locally</p>
+      <p class="text-gray-600 text-center mb-2">Auto-generated from the <strong class="text-blue-700">flowmem project itself</strong> — live output from running FlowMem on its own codebase.</p>
+      <p class="text-gray-400 text-center text-sm mb-10">View any chart in <a href="https://mermaid.live" class="text-blue-600 hover:text-blue-700 font-medium">mermaid.live</a> · or open <code class="bg-blue-50 text-blue-700 px-1 rounded text-xs">.flowmem/index.html</code> locally</p>
+      <p class="text-center text-xs text-blue-500 mb-10 opacity-70">👆 Click any chart to expand</p>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid md:grid-cols-2 gap-8">
 
-        <div class="card-white overflow-hidden">
-          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
-            <img src="screenshots/modules_flowchart.svg" alt="Module Graph" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
-          </div>
-          <div class="p-4">
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-gray-900 font-semibold text-sm">Module Graph</span>
-              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">flowchart LR</span>
+        <div class="card-white overflow-hidden cursor-pointer group gallery-card" onclick="openLightbox('screenshots/modules_flowchart.svg','Module Graph','flowchart LR','structure layer')">
+          <div class="bg-gray-50 p-6 flex items-center justify-center border-b border-blue-50 relative" style="min-height:280px;">
+            <img src="screenshots/modules_flowchart.svg" alt="Module Graph" style="max-width:100%;max-height:260px;object-fit:contain;" />
+            <div class="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <span class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg">🔍 Click to expand</span>
             </div>
-            <span class="text-gray-400 text-xs">structure layer</span>
+          </div>
+          <div class="p-4 flex items-center justify-between">
+            <div><span class="text-gray-900 font-semibold text-sm">Module Graph</span><div class="text-gray-400 text-xs mt-0.5">structure layer</div></div>
+            <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">flowchart LR</span>
           </div>
         </div>
 
-        <div class="card-white overflow-hidden">
-          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
-            <img src="screenshots/architecture_c4.svg" alt="System Architecture" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
-          </div>
-          <div class="p-4">
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-gray-900 font-semibold text-sm">System Architecture</span>
-              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">C4Context</span>
+        <div class="card-white overflow-hidden cursor-pointer group gallery-card" onclick="openLightbox('screenshots/architecture_c4.svg','System Architecture','flowchart TD','structure layer')">
+          <div class="bg-gray-50 p-6 flex items-center justify-center border-b border-blue-50 relative" style="min-height:280px;">
+            <img src="screenshots/architecture_c4.svg" alt="System Architecture" style="max-width:100%;max-height:260px;object-fit:contain;" />
+            <div class="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <span class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg">🔍 Click to expand</span>
             </div>
-            <span class="text-gray-400 text-xs">structure layer</span>
+          </div>
+          <div class="p-4 flex items-center justify-between">
+            <div><span class="text-gray-900 font-semibold text-sm">System Architecture</span><div class="text-gray-400 text-xs mt-0.5">structure layer</div></div>
+            <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">flowchart TD</span>
           </div>
         </div>
 
-        <div class="card-white overflow-hidden">
-          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
-            <img src="screenshots/api_sequence.svg" alt="Generation Flow" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
-          </div>
-          <div class="p-4">
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-gray-900 font-semibold text-sm">Generation Flow</span>
-              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">sequenceDiagram</span>
+        <div class="card-white overflow-hidden cursor-pointer group gallery-card" onclick="openLightbox('screenshots/api_sequence.svg','Generation Flow','sequenceDiagram','behavior layer')">
+          <div class="bg-gray-50 p-6 flex items-center justify-center border-b border-blue-50 relative" style="min-height:280px;">
+            <img src="screenshots/api_sequence.svg" alt="Generation Flow" style="max-width:100%;max-height:260px;object-fit:contain;" />
+            <div class="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <span class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg">🔍 Click to expand</span>
             </div>
-            <span class="text-gray-400 text-xs">behavior layer</span>
+          </div>
+          <div class="p-4 flex items-center justify-between">
+            <div><span class="text-gray-900 font-semibold text-sm">Generation Flow</span><div class="text-gray-400 text-xs mt-0.5">behavior layer</div></div>
+            <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">sequenceDiagram</span>
           </div>
         </div>
 
-        <div class="card-white overflow-hidden">
-          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
-            <img src="screenshots/traverse_sequence.svg" alt="Traversal Protocol" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
-          </div>
-          <div class="p-4">
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-gray-900 font-semibold text-sm">Traversal Protocol</span>
-              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">sequenceDiagram</span>
+        <div class="card-white overflow-hidden cursor-pointer group gallery-card" onclick="openLightbox('screenshots/traverse_sequence.svg','Traversal Protocol','sequenceDiagram','behavior layer')">
+          <div class="bg-gray-50 p-6 flex items-center justify-center border-b border-blue-50 relative" style="min-height:280px;">
+            <img src="screenshots/traverse_sequence.svg" alt="Traversal Protocol" style="max-width:100%;max-height:260px;object-fit:contain;" />
+            <div class="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <span class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg">🔍 Click to expand</span>
             </div>
-            <span class="text-gray-400 text-xs">behavior layer</span>
+          </div>
+          <div class="p-4 flex items-center justify-between">
+            <div><span class="text-gray-900 font-semibold text-sm">Traversal Protocol</span><div class="text-gray-400 text-xs mt-0.5">behavior layer</div></div>
+            <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">sequenceDiagram</span>
           </div>
         </div>
 
-        <div class="card-white overflow-hidden">
-          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
-            <img src="screenshots/dataflow_sankey.svg" alt="Data Flow" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
-          </div>
-          <div class="p-4">
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-gray-900 font-semibold text-sm">Data Flow</span>
-              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">sankey-beta</span>
+        <div class="card-white overflow-hidden cursor-pointer group gallery-card" onclick="openLightbox('screenshots/dataflow_sankey.svg','Data Flow','sankey-beta','data layer')">
+          <div class="bg-gray-50 p-6 flex items-center justify-center border-b border-blue-50 relative" style="min-height:280px;">
+            <img src="screenshots/dataflow_sankey.svg" alt="Data Flow" style="max-width:100%;max-height:260px;object-fit:contain;" />
+            <div class="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <span class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg">🔍 Click to expand</span>
             </div>
-            <span class="text-gray-400 text-xs">data layer</span>
+          </div>
+          <div class="p-4 flex items-center justify-between">
+            <div><span class="text-gray-900 font-semibold text-sm">Data Flow</span><div class="text-gray-400 text-xs mt-0.5">data layer</div></div>
+            <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">sankey-beta</span>
           </div>
         </div>
 
-        <div class="card-white overflow-hidden">
-          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
-            <img src="screenshots/roadmap_gantt.svg" alt="Development Roadmap" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
-          </div>
-          <div class="p-4">
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-gray-900 font-semibold text-sm">Development Roadmap</span>
-              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">gantt</span>
+        <div class="card-white overflow-hidden cursor-pointer group gallery-card" onclick="openLightbox('screenshots/roadmap_gantt.svg','Development Roadmap','gantt','project layer')">
+          <div class="bg-gray-50 p-6 flex items-center justify-center border-b border-blue-50 relative" style="min-height:280px;">
+            <img src="screenshots/roadmap_gantt.svg" alt="Development Roadmap" style="max-width:100%;max-height:260px;object-fit:contain;" />
+            <div class="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <span class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg">🔍 Click to expand</span>
             </div>
-            <span class="text-gray-400 text-xs">project layer</span>
+          </div>
+          <div class="p-4 flex items-center justify-between">
+            <div><span class="text-gray-900 font-semibold text-sm">Development Roadmap</span><div class="text-gray-400 text-xs mt-0.5">project layer</div></div>
+            <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">gantt</span>
           </div>
         </div>
 
-        <div class="card-white overflow-hidden">
-          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
-            <img src="screenshots/tasks_kanban.svg" alt="Task Board" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
-          </div>
-          <div class="p-4">
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-gray-900 font-semibold text-sm">Task Board</span>
-              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">kanban</span>
+        <div class="card-white overflow-hidden cursor-pointer group gallery-card" onclick="openLightbox('screenshots/tasks_kanban.svg','Task Board','kanban','project layer')">
+          <div class="bg-gray-50 p-6 flex items-center justify-center border-b border-blue-50 relative" style="min-height:280px;">
+            <img src="screenshots/tasks_kanban.svg" alt="Task Board" style="max-width:100%;max-height:260px;object-fit:contain;" />
+            <div class="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <span class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg">🔍 Click to expand</span>
             </div>
-            <span class="text-gray-400 text-xs">project layer</span>
+          </div>
+          <div class="p-4 flex items-center justify-between">
+            <div><span class="text-gray-900 font-semibold text-sm">Task Board</span><div class="text-gray-400 text-xs mt-0.5">project layer</div></div>
+            <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">kanban</span>
           </div>
         </div>
 
-        <div class="card-white overflow-hidden">
-          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
-            <img src="screenshots/debt_mindmap.svg" alt="Tech Debt Map" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
-          </div>
-          <div class="p-4">
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-gray-900 font-semibold text-sm">Tech Debt Map</span>
-              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">mindmap</span>
+        <div class="card-white overflow-hidden cursor-pointer group gallery-card" onclick="openLightbox('screenshots/debt_mindmap.svg','Tech Debt Map','mindmap','quality layer')">
+          <div class="bg-gray-50 p-6 flex items-center justify-center border-b border-blue-50 relative" style="min-height:280px;">
+            <img src="screenshots/debt_mindmap.svg" alt="Tech Debt Map" style="max-width:100%;max-height:260px;object-fit:contain;" />
+            <div class="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <span class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg">🔍 Click to expand</span>
             </div>
-            <span class="text-gray-400 text-xs">quality layer</span>
+          </div>
+          <div class="p-4 flex items-center justify-between">
+            <div><span class="text-gray-900 font-semibold text-sm">Tech Debt Map</span><div class="text-gray-400 text-xs mt-0.5">quality layer</div></div>
+            <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">mindmap</span>
           </div>
         </div>
 
-        <div class="card-white overflow-hidden">
-          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
-            <img src="screenshots/bugs_pie.svg" alt="File Distribution" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
-          </div>
-          <div class="p-4">
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-gray-900 font-semibold text-sm">File Distribution</span>
-              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">pie</span>
+        <div class="card-white overflow-hidden cursor-pointer group gallery-card md:col-span-2" onclick="openLightbox('screenshots/bugs_pie.svg','File Distribution','pie','quality layer')">
+          <div class="bg-gray-50 p-6 flex items-center justify-center border-b border-blue-50 relative" style="min-height:280px;">
+            <img src="screenshots/bugs_pie.svg" alt="File Distribution" style="max-width:100%;max-height:260px;object-fit:contain;" />
+            <div class="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <span class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg">🔍 Click to expand</span>
             </div>
-            <span class="text-gray-400 text-xs">quality layer</span>
+          </div>
+          <div class="p-4 flex items-center justify-between">
+            <div><span class="text-gray-900 font-semibold text-sm">File Distribution</span><div class="text-gray-400 text-xs mt-0.5">quality layer</div></div>
+            <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">pie</span>
           </div>
         </div>
 
       </div>
     </div>
   </section>
+
+  <!-- LIGHTBOX MODAL -->
+  <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center" style="background:rgba(0,0,0,0.85);" onclick="closeLightbox(event)">
+    <div class="relative bg-white rounded-2xl shadow-2xl mx-4 overflow-hidden" style="max-width:90vw;max-height:90vh;display:flex;flex-direction:column;">
+      <!-- Header -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50">
+        <div class="flex items-center gap-3">
+          <span id="lb-title" class="font-bold text-gray-900 text-base"></span>
+          <span id="lb-type" class="badge bg-blue-100 text-blue-700 text-xs font-mono"></span>
+          <span id="lb-layer" class="text-gray-400 text-xs"></span>
+        </div>
+        <button onclick="closeLightbox()" class="text-gray-400 hover:text-gray-700 text-2xl leading-none font-light transition-colors">&times;</button>
+      </div>
+      <!-- Image -->
+      <div class="overflow-auto p-6 flex items-center justify-center" style="max-height:80vh;">
+        <img id="lb-img" src="" alt="" style="max-width:80vw;max-height:72vh;object-fit:contain;" />
+      </div>
+      <!-- Footer -->
+      <div class="px-6 py-3 border-t border-gray-100 bg-gray-50 text-xs text-gray-400 text-center">
+        Press <kbd class="bg-white border border-gray-200 rounded px-1.5 py-0.5 font-mono text-gray-600">ESC</kbd> or click outside to close
+      </div>
+    </div>
+  </div>
 
 
   <!-- RELATED PRODUCTS -->
@@ -777,5 +801,29 @@
     </div>
   </footer>
 
+  <script>
+    function openLightbox(src, title, type, layer) {
+      document.getElementById('lb-img').src = src;
+      document.getElementById('lb-title').textContent = title;
+      document.getElementById('lb-type').textContent = type;
+      document.getElementById('lb-layer').textContent = layer;
+      const lb = document.getElementById('lightbox');
+      lb.style.display = 'flex';
+      requestAnimationFrame(() => lb.classList.remove('hidden'));
+      document.addEventListener('keydown', lbKeyHandler);
+    }
+    function closeLightbox(e) {
+      if (e && e.target !== document.getElementById('lightbox')) return;
+      const lb = document.getElementById('lightbox');
+      lb.style.display = 'none';
+      document.removeEventListener('keydown', lbKeyHandler);
+    }
+    function lbKeyHandler(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('lightbox').style.display = 'none';
+        document.removeEventListener('keydown', lbKeyHandler);
+      }
+    }
+  </script>
 </body>
 </html>

@@ -110,9 +110,9 @@
         <a href="#how-it-works" class="hover:text-blue-600 transition-colors font-medium">How it works</a>
         <a href="#gallery" class="hover:text-blue-600 transition-colors font-medium">Gallery</a>
         <a href="#install" class="hover:text-blue-600 transition-colors font-medium">Install</a>
-        <a href="https://github.com/ThienHuynhNgoc/flowmem" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-          <img src="https://img.shields.io/github/stars/ThienHuynhNgoc/FlowMem?style=flat-square&color=white&logo=github" alt="stars" style="height:16px;border-radius:4px;vertical-align:middle;margin-left:4px;" />
+        <a href="https://github.com/ThienHuynhNgoc/FlowMem" class="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span class="text-sm font-semibold">GitHub</span>
         </a>
       </div>
     </div>
@@ -666,164 +666,139 @@
   </section>
 
   <!-- LIGHTBOX MODAL -->
-  <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center" style="background:rgba(0,0,0,0.85);" onclick="closeLightbox(event)">
-    <div class="relative bg-white rounded-2xl shadow-2xl mx-4 overflow-hidden" style="max-width:90vw;max-height:90vh;display:flex;flex-direction:column;">
-      <!-- Header -->
-      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50">
-        <div class="flex items-center gap-3">
-          <span id="lb-title" class="font-bold text-gray-900 text-base"></span>
-          <span id="lb-type" class="badge bg-blue-100 text-blue-700 text-xs font-mono"></span>
-          <span id="lb-layer" class="text-gray-400 text-xs"></span>
-        </div>
-        <button onclick="closeLightbox()" class="text-gray-400 hover:text-gray-700 text-2xl leading-none font-light transition-colors">&times;</button>
+  <div id="lightbox" onclick="lbBgClick(event)" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);flex-direction:column;">
+    <!-- Header bar -->
+    <div style="display:flex;align-items:center;gap:10px;padding:12px 20px;background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.1);flex-shrink:0;">
+      <span id="lb-title" style="color:#fff;font-weight:700;font-size:16px;"></span>
+      <span id="lb-type" style="background:#1d4ed8;color:#bfdbfe;padding:2px 10px;border-radius:99px;font-size:11px;font-family:monospace;font-weight:600;"></span>
+      <span id="lb-layer" style="color:#94a3b8;font-size:12px;"></span>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:12px;">
+        <span style="color:#64748b;font-size:12px;">scroll to zoom · drag to pan</span>
+        <button onclick="resetZoom()" style="color:#94a3b8;background:rgba(255,255,255,0.1);border:none;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:12px;">Reset</button>
+        <button onclick="closeLightbox()" style="color:#fff;background:none;border:none;font-size:28px;line-height:1;cursor:pointer;padding:0 4px;opacity:0.7;">&times;</button>
       </div>
-      <!-- Image -->
-      <div class="overflow-auto p-6 flex items-center justify-center" style="max-height:80vh;">
-        <img id="lb-img" src="" alt="" style="max-width:80vw;max-height:72vh;object-fit:contain;" />
+    </div>
+    <!-- Zoom/pan canvas -->
+    <div id="lb-canvas" style="flex:1;overflow:hidden;cursor:grab;position:relative;">
+      <div id="lb-transform" style="position:absolute;top:50%;left:50%;transform-origin:center center;transform:translate(-50%,-50%) scale(1);">
+        <img id="lb-img" src="" alt="" style="display:block;max-width:none;" />
       </div>
-      <!-- Footer -->
-      <div class="px-6 py-3 border-t border-gray-100 bg-gray-50 text-xs text-gray-400 text-center">
-        Press <kbd class="bg-white border border-gray-200 rounded px-1.5 py-0.5 font-mono text-gray-600">ESC</kbd> or click outside to close
-      </div>
+    </div>
+    <!-- Footer -->
+    <div style="padding:8px 20px;text-align:center;color:#475569;font-size:11px;flex-shrink:0;border-top:1px solid rgba(255,255,255,0.05);">
+      Press <kbd style="background:rgba(255,255,255,0.1);color:#94a3b8;border-radius:4px;padding:1px 6px;font-family:monospace;">ESC</kbd> to close &nbsp;·&nbsp;
+      <kbd style="background:rgba(255,255,255,0.1);color:#94a3b8;border-radius:4px;padding:1px 6px;font-family:monospace;">scroll</kbd> to zoom &nbsp;·&nbsp;
+      <kbd style="background:rgba(255,255,255,0.1);color:#94a3b8;border-radius:4px;padding:1px 6px;font-family:monospace;">drag</kbd> to pan
     </div>
   </div>
 
-
-  <!-- RELATED PRODUCTS -->
-  <section class="py-20 px-6 section-white">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-12">
-        <span class="badge bg-blue-100 text-blue-700 mb-4">From the same team</span>
-        <h2 class="text-3xl font-bold text-gray-900 mt-3 mb-3">Built Together. Better Together.</h2>
-        <p class="text-gray-500">FlowMem is part of a growing suite of open-source AI tooling.</p>
-      </div>
-
-      <div class="card-white p-8 flex flex-col md:flex-row items-start gap-8">
-        <div class="w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center text-white text-3xl flex-shrink-0 shadow-lg">
-          ⚡
-        </div>
-        <div class="flex-1">
-          <div class="flex items-center gap-3 mb-2">
-            <h3 class="text-xl font-bold text-gray-900">FlowSkill</h3>
-            <span class="badge bg-blue-100 text-blue-700 text-xs">Open Source</span>
-            <span class="badge bg-green-100 text-green-700 text-xs">Apache 2.0</span>
-          </div>
-          <p class="text-gray-600 leading-relaxed mb-4">
-            A Mermaid-powered visual canvas editor — the best way to <strong>view, edit, and share</strong> 
-            FlowMem charts visually. Built for low-code users and developers who want to work with 
-            Mermaid diagrams interactively.
-          </p>
-          <ul class="text-sm text-gray-600 space-y-2 mb-6">
-            <li class="flex items-center gap-2"><span class="text-blue-500">→</span> Paste any <code class="bg-blue-50 text-blue-700 px-1 rounded">.mmd</code> file from <code class="bg-blue-50 text-blue-700 px-1 rounded">.flowmem/charts/</code> to view it visually</li>
-            <li class="flex items-center gap-2"><span class="text-blue-500">→</span> Click nodes to select, change shapes, add colors, export SVG/PNG</li>
-            <li class="flex items-center gap-2"><span class="text-blue-500">→</span> Built with React + Zustand + mermaid.js — runs 100% in the browser</li>
-            <li class="flex items-center gap-2"><span class="text-blue-500">→</span> Optional companion to FlowMem — FlowMem works great without it</li>
-          </ul>
-          <a href="https://github.com/ThienHuynhNgoc/FlowSkill" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-all text-sm">
-            <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-            View FlowSkill on GitHub
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- INSTALL -->
-  <section id="install" class="py-20 px-6 section-white">
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-3xl font-bold text-gray-900 mb-3">Install in 10 seconds</h2>
-      <p class="text-gray-500 mb-12">FlowMem is a Claude Code skill. Copy it into your project or global skills directory.</p>
-
-      <div class="space-y-6 text-left">
-        <div>
-          <div class="text-xs text-blue-600 mb-2 font-mono font-bold uppercase tracking-wide">Option A — Per-project</div>
-          <div class="chart-preview rounded-xl border border-gray-200">
-<span class="cmt"># From your project root</span>
-<span class="kw">mkdir</span> -p .claude/skills
-<span class="kw">cp</span> -r /path/to/flowmem .claude/skills/flowmem
-          </div>
-        </div>
-        <div>
-          <div class="text-xs text-blue-600 mb-2 font-mono font-bold uppercase tracking-wide">Option B — Global (all projects)</div>
-          <div class="chart-preview rounded-xl border border-gray-200">
-<span class="kw">cp</span> -r /path/to/flowmem ~/.claude/skills/flowmem
-          </div>
-        </div>
-        <div>
-          <div class="text-xs text-blue-600 mb-2 font-mono font-bold uppercase tracking-wide">Then trigger in Claude Code</div>
-          <div class="chart-preview rounded-xl border border-gray-200">
-<span class="cmt"># Any of these phrases work:</span>
-<span class="str">"generate flowmem for this project"</span>
-<span class="str">"build memory charts"</span>
-<span class="str">"index this codebase as mermaid"</span>
-<span class="str">"create mermaid memory"</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="py-20 px-6 gradient-hero text-center relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px); background-size: 40px 40px;"></div>
-    <div class="max-w-2xl mx-auto relative">
-      <div class="text-5xl mb-6">🧠</div>
-      <h2 class="text-3xl font-bold text-white mb-4">Ready to give your AI a memory?</h2>
-      <p class="text-blue-200 mb-8">Open source. Apache 2.0. Contributions welcome.</p>
-      <div class="flex flex-wrap justify-center gap-4">
-        <a href="https://github.com/ThienHuynhNgoc/flowmem" class="inline-flex items-center gap-2 bg-white text-blue-700 hover:bg-blue-50 font-bold px-8 py-4 rounded-xl transition-all text-lg shadow-lg">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-          <img src="https://img.shields.io/github/stars/ThienHuynhNgoc/FlowMem?style=flat-square&color=white&logo=github" alt="stars" style="height:16px;border-radius:4px;vertical-align:middle;margin-left:4px;" />
-        </a>
-        <a href="#install" class="inline-flex items-center gap-2 border-2 border-white/40 hover:border-white text-white font-semibold px-8 py-4 rounded-xl transition-all text-lg hover:bg-white/10">
-          Get Started
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="py-12 px-6 border-t border-blue-100 bg-white">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-      <div class="flex items-center gap-2">
-        <span class="text-xl">🧠</span>
-        <span class="font-bold text-blue-900">FlowMem</span>
-        <span class="text-gray-400 text-sm ml-2">v1.0.0</span>
-      </div>
-      <div class="text-sm text-gray-500 flex flex-wrap gap-6 justify-center">
-        <a href="https://github.com/ThienHuynhNgoc/flowmem" class="hover:text-blue-600 transition-colors">GitHub</a>
-        <a href="https://github.com/ThienHuynhNgoc/flowmem/blob/main/LICENSE" class="hover:text-blue-600 transition-colors">Apache 2.0</a>
-        <a href="https://mermaid.js.org" class="hover:text-blue-600 transition-colors">Mermaid.js</a>
-        <a href="https://claude.ai/code" class="hover:text-blue-600 transition-colors">Claude Code</a>
-        <a href="https://github.com/ThienHuynhNgoc/FlowSkill" class="hover:text-blue-600 transition-colors font-medium text-blue-600">FlowSkill ↗</a>
-      </div>
-      <div class="text-sm text-gray-400">Made with ♥ for AI engineers</div>
-    </div>
-  </footer>
-
   <script>
+    let lbScale = 1, lbX = 0, lbY = 0;
+    let isDragging = false, dragStartX = 0, dragStartY = 0, dragStartLbX = 0, dragStartLbY = 0;
+
+    function applyTransform() {
+      document.getElementById('lb-transform').style.transform =
+        `translate(calc(-50% + ${lbX}px), calc(-50% + ${lbY}px)) scale(${lbScale})`;
+    }
+
+    function resetZoom() {
+      lbScale = 1; lbX = 0; lbY = 0;
+      applyTransform();
+    }
+
     function openLightbox(src, title, type, layer) {
-      document.getElementById('lb-img').src = src;
+      const img = document.getElementById('lb-img');
+      img.src = '';
+      img.onload = () => {
+        // Size the image to fill ~85% of the viewport, then let user zoom in
+        const vw = window.innerWidth * 0.85;
+        const vh = (window.innerHeight - 100) * 0.85;
+        const ratio = Math.min(vw / img.naturalWidth, vh / img.naturalHeight, 1);
+        img.style.width = Math.round(img.naturalWidth * ratio) + 'px';
+        img.style.height = 'auto';
+        resetZoom();
+      };
+      img.src = src;
+
       document.getElementById('lb-title').textContent = title;
       document.getElementById('lb-type').textContent = type;
       document.getElementById('lb-layer').textContent = layer;
+
       const lb = document.getElementById('lightbox');
       lb.style.display = 'flex';
-      requestAnimationFrame(() => lb.classList.remove('hidden'));
       document.addEventListener('keydown', lbKeyHandler);
     }
-    function closeLightbox(e) {
-      if (e && e.target !== document.getElementById('lightbox')) return;
-      const lb = document.getElementById('lightbox');
-      lb.style.display = 'none';
+
+    function closeLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
       document.removeEventListener('keydown', lbKeyHandler);
     }
-    function lbKeyHandler(e) {
-      if (e.key === 'Escape') {
-        document.getElementById('lightbox').style.display = 'none';
-        document.removeEventListener('keydown', lbKeyHandler);
+
+    function lbBgClick(e) {
+      if (e.target === document.getElementById('lightbox') || e.target === document.getElementById('lb-canvas')) {
+        closeLightbox();
       }
     }
+
+    function lbKeyHandler(e) {
+      if (e.key === 'Escape') closeLightbox();
+    }
+
+    // Scroll to zoom
+    document.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('lb-canvas');
+
+      canvas.addEventListener('wheel', (e) => {
+        if (document.getElementById('lightbox').style.display === 'none') return;
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? 0.85 : 1.18;
+        lbScale = Math.min(Math.max(lbScale * delta, 0.3), 10);
+        applyTransform();
+      }, { passive: false });
+
+      // Drag to pan
+      canvas.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        dragStartX = e.clientX; dragStartY = e.clientY;
+        dragStartLbX = lbX; dragStartLbY = lbY;
+        canvas.style.cursor = 'grabbing';
+        e.preventDefault();
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        lbX = dragStartLbX + (e.clientX - dragStartX);
+        lbY = dragStartLbY + (e.clientY - dragStartY);
+        applyTransform();
+      });
+
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+        document.getElementById('lb-canvas').style.cursor = 'grab';
+      });
+
+      // Touch pinch-to-zoom
+      let lastTouchDist = null;
+      canvas.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+          lastTouchDist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+        }
+      });
+      canvas.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2 && lastTouchDist) {
+          e.preventDefault();
+          const dist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+          lbScale = Math.min(Math.max(lbScale * (dist / lastTouchDist), 0.3), 10);
+          lastTouchDist = dist;
+          applyTransform();
+        }
+      }, { passive: false });
+    });
   </script>
 </body>
-</html>

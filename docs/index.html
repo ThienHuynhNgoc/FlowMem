@@ -6,7 +6,7 @@
   <title>FlowMem — AI Memory in Plain Mermaid</title>
   <meta name="description" content="Turn any codebase into a rich Mermaid chart memory system. Human-readable, AI-traversable, open source." />
   <meta property="og:title" content="FlowMem — AI Memory in Plain Mermaid" />
-  <meta property="og:description" content="Claude Code skill that indexes your codebase into .mmd chart files. Free, open source, Apache 2.0." />
+  <meta property="og:description" content="Works with Claude Code, Cursor, Windsurf, GitHub Copilot, Kiro and any AI assistant. Indexes your codebase into .mmd chart files. Free, open source, Apache 2.0." />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -109,9 +109,9 @@
         <a href="#how-it-works" class="hover:text-blue-600 transition-colors font-medium">How it works</a>
         <a href="#gallery" class="hover:text-blue-600 transition-colors font-medium">Gallery</a>
         <a href="#install" class="hover:text-blue-600 transition-colors font-medium">Install</a>
-        <a href="https://github.com/YOUR_USERNAME/flowmem" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all">
+        <a href="https://github.com/ThienHuynhNgoc/flowmem" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all">
           <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-          Star on GitHub
+          <img src="https://img.shields.io/github/stars/ThienHuynhNgoc/FlowMem?style=flat-square&color=white&logo=github" alt="stars" style="height:16px;border-radius:4px;vertical-align:middle;margin-left:4px;" />
         </a>
       </div>
     </div>
@@ -129,6 +129,7 @@
           <span class="badge bg-white/20 text-white border border-white/30">Claude Code Skill</span>
           <span class="badge bg-white/20 text-white border border-white/30">Apache 2.0</span>
           <span class="badge bg-white/20 text-white border border-white/30">Open Source</span>
+          <span class="badge bg-white/20 text-white border border-white/30">Any AI Assistant</span>
         </div>
 
         <h1 class="text-5xl lg:text-6xl font-extrabold leading-tight mb-6 text-white">
@@ -138,7 +139,7 @@
 
         <p class="text-xl text-blue-100 leading-relaxed mb-8">
           Turn any codebase into a navigable <strong class="text-white">.mmd chart system</strong>.
-          Human-readable in VS Code. AI-traversable without custom tooling.
+          Human-readable in VS Code. Traversable by <strong class="text-white">any AI coding assistant</strong>.
           Editable in any text editor.
         </p>
 
@@ -147,7 +148,7 @@
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2v20M2 12l10 10 10-10"/></svg>
             Install Skill
           </a>
-          <a href="https://github.com/YOUR_USERNAME/flowmem" class="inline-flex items-center gap-2 border-2 border-white/40 hover:border-white text-white font-semibold px-6 py-3 rounded-xl transition-all hover:bg-white/10">
+          <a href="https://github.com/ThienHuynhNgoc/flowmem" class="inline-flex items-center gap-2 border-2 border-white/40 hover:border-white text-white font-semibold px-6 py-3 rounded-xl transition-all hover:bg-white/10">
             View on GitHub →
           </a>
         </div>
@@ -253,6 +254,69 @@
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- MULTI-ASSISTANT SUPPORT -->
+  <section class="py-20 px-6 section-white">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold text-center text-gray-900 mb-3">Works with Any AI Assistant</h2>
+      <p class="text-gray-500 text-center mb-12">Generate once with Claude Code. The <code class="bg-blue-50 text-blue-700 px-1 rounded">.flowmem/</code> output works with every major AI coding assistant.</p>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        <div class="card-white p-4 text-center">
+          <div class="text-2xl mb-2">🤖</div>
+          <div class="font-bold text-gray-900 text-sm">Claude Code</div>
+          <div class="text-xs text-blue-600 font-medium mt-1">Native Skill</div>
+        </div>
+        <div class="card-white p-4 text-center">
+          <div class="text-2xl mb-2">⚡</div>
+          <div class="font-bold text-gray-900 text-sm">Cursor</div>
+          <div class="text-xs text-gray-500 mt-1">.cursorrules</div>
+        </div>
+        <div class="card-white p-4 text-center">
+          <div class="text-2xl mb-2">🌊</div>
+          <div class="font-bold text-gray-900 text-sm">Windsurf</div>
+          <div class="text-xs text-gray-500 mt-1">.windsurfrules</div>
+        </div>
+        <div class="card-white p-4 text-center">
+          <div class="text-2xl mb-2">🐙</div>
+          <div class="font-bold text-gray-900 text-sm">GitHub Copilot</div>
+          <div class="text-xs text-gray-500 mt-1">copilot-instructions.md</div>
+        </div>
+        <div class="card-white p-4 text-center">
+          <div class="text-2xl mb-2">🔮</div>
+          <div class="font-bold text-gray-900 text-sm">Kiro</div>
+          <div class="text-xs text-gray-500 mt-1">specs/</div>
+        </div>
+        <div class="card-white p-4 text-center">
+          <div class="text-2xl mb-2">💎</div>
+          <div class="font-bold text-gray-900 text-sm">Gemini CLI</div>
+          <div class="text-xs text-gray-500 mt-1">system prompt</div>
+        </div>
+        <div class="card-white p-4 text-center">
+          <div class="text-2xl mb-2">🦾</div>
+          <div class="font-bold text-gray-900 text-sm">Continue / Codeium</div>
+          <div class="text-xs text-gray-500 mt-1">context window</div>
+        </div>
+        <div class="card-white p-4 text-center">
+          <div class="text-2xl mb-2">🧩</div>
+          <div class="font-bold text-gray-900 text-sm">Any LLM</div>
+          <div class="text-xs text-gray-500 mt-1">paste INDEX.md</div>
+        </div>
+      </div>
+
+      <div class="card-blue rounded-2xl p-6">
+        <div class="text-blue-800 font-bold text-sm uppercase tracking-wide mb-3">Add to CLAUDE.md / .cursorrules / .windsurfrules / copilot-instructions.md</div>
+        <div class="chart-preview rounded-xl text-xs" style="font-size: 11px; padding: 14px;">
+<span class="cmt">## Memory</span>
+<span class="cmt">On session start:</span>
+<span class="str">1.</span> Read <span class="node">.flowmem/INDEX.md</span>
+<span class="str">2.</span> Load charts per <span class="node">.flowmem/TRAVERSE.md</span>
+<span class="str">3.</span> Run <span class="kw">bash .flowmem/scripts/refresh_all.sh</span> if stale
+        </div>
       </div>
     </div>
   </section>
@@ -612,7 +676,7 @@
             <li class="flex items-center gap-2"><span class="text-blue-500">→</span> Built with React + Zustand + mermaid.js — runs 100% in the browser</li>
             <li class="flex items-center gap-2"><span class="text-blue-500">→</span> Optional companion to FlowMem — FlowMem works great without it</li>
           </ul>
-          <a href="https://github.com/YOUR_USERNAME/FlowSkill" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-all text-sm">
+          <a href="https://github.com/ThienHuynhNgoc/FlowSkill" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-all text-sm">
             <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
             View FlowSkill on GitHub
           </a>
@@ -664,9 +728,9 @@
       <h2 class="text-3xl font-bold text-white mb-4">Ready to give your AI a memory?</h2>
       <p class="text-blue-200 mb-8">Open source. Apache 2.0. Contributions welcome.</p>
       <div class="flex flex-wrap justify-center gap-4">
-        <a href="https://github.com/YOUR_USERNAME/flowmem" class="inline-flex items-center gap-2 bg-white text-blue-700 hover:bg-blue-50 font-bold px-8 py-4 rounded-xl transition-all text-lg shadow-lg">
+        <a href="https://github.com/ThienHuynhNgoc/flowmem" class="inline-flex items-center gap-2 bg-white text-blue-700 hover:bg-blue-50 font-bold px-8 py-4 rounded-xl transition-all text-lg shadow-lg">
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-          Star on GitHub
+          <img src="https://img.shields.io/github/stars/ThienHuynhNgoc/FlowMem?style=flat-square&color=white&logo=github" alt="stars" style="height:16px;border-radius:4px;vertical-align:middle;margin-left:4px;" />
         </a>
         <a href="#install" class="inline-flex items-center gap-2 border-2 border-white/40 hover:border-white text-white font-semibold px-8 py-4 rounded-xl transition-all text-lg hover:bg-white/10">
           Get Started
@@ -684,11 +748,11 @@
         <span class="text-gray-400 text-sm ml-2">v1.0.0</span>
       </div>
       <div class="text-sm text-gray-500 flex flex-wrap gap-6 justify-center">
-        <a href="https://github.com/YOUR_USERNAME/flowmem" class="hover:text-blue-600 transition-colors">GitHub</a>
-        <a href="https://github.com/YOUR_USERNAME/flowmem/blob/main/LICENSE" class="hover:text-blue-600 transition-colors">Apache 2.0</a>
+        <a href="https://github.com/ThienHuynhNgoc/flowmem" class="hover:text-blue-600 transition-colors">GitHub</a>
+        <a href="https://github.com/ThienHuynhNgoc/flowmem/blob/main/LICENSE" class="hover:text-blue-600 transition-colors">Apache 2.0</a>
         <a href="https://mermaid.js.org" class="hover:text-blue-600 transition-colors">Mermaid.js</a>
         <a href="https://claude.ai/code" class="hover:text-blue-600 transition-colors">Claude Code</a>
-        <a href="https://github.com/YOUR_USERNAME/FlowSkill" class="hover:text-blue-600 transition-colors font-medium text-blue-600">FlowSkill ↗</a>
+        <a href="https://github.com/ThienHuynhNgoc/FlowSkill" class="hover:text-blue-600 transition-colors font-medium text-blue-600">FlowSkill ↗</a>
       </div>
       <div class="text-sm text-gray-400">Made with ♥ for AI engineers</div>
     </div>

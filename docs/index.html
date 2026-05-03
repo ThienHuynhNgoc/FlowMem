@@ -162,32 +162,49 @@
 
       <!-- Right: Live code preview -->
       <div class="animate-float">
-        <div class="chart-preview rounded-2xl shadow-2xl" style="max-height: 380px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15);">
-<span class="cmt">%% FlowMem | type=classDiagram | layer=structure</span>
-<span class="cmt">%% method=script | refresh=scan_ast.py | last-updated=2026-05-03</span>
-<span class="kw">classDiagram</span>
+        <!-- File card -->
+        <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); border-radius:16px; overflow:hidden; box-shadow: 0 24px 48px rgba(0,0,0,0.3);">
 
-  <span class="kw">class</span> <span class="node">AuthStore</span> {
-    +<span class="str">login</span>(<span class="edge">email</span>, <span class="edge">password</span>) <span class="node">bool</span>
-    +<span class="str">logout</span>() <span class="node">void</span>
-    +<span class="str">currentUser</span> <span class="node">User</span>
-  }
+          <!-- Card header: filename + badges -->
+          <div style="background:rgba(255,255,255,0.1); padding:12px 18px; display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
+            <span style="color:#93c5fd; font-size:13px;">📄</span>
+            <span style="color:#e0f2fe; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600;">classes.mmd</span>
+            <div style="margin-left:auto; display:flex; gap:6px; flex-wrap:wrap;">
+              <span style="background:rgba(34,197,94,0.2); color:#86efac; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:600;">structure</span>
+              <span style="background:rgba(59,130,246,0.25); color:#93c5fd; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:600;">script</span>
+              <span style="background:rgba(250,204,21,0.15); color:#fde047; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:600; font-family:monospace;">classDiagram</span>
+            </div>
+          </div>
 
-  <span class="kw">class</span> <span class="node">WorkspaceStore</span> {
-    +<span class="str">create</span>(<span class="edge">name</span>) <span class="node">Workspace</span>
-    +<span class="str">load</span>(<span class="edge">id</span>) <span class="node">Promise</span>
-    +<span class="str">save</span>() <span class="node">void</span>
-  }
+          <!-- Code body: clean, spacious -->
+          <div style="padding:24px 24px 20px; font-family:'JetBrains Mono',monospace; font-size:13px; line-height:2;">
+            <div style="color:#7dd3fc; margin-bottom:16px; font-size:14px; font-weight:700; letter-spacing:0.02em;">classDiagram</div>
 
-  <span class="kw">class</span> <span class="node">MermaidStore</span> {
-    +<span class="str">validateAndSet</span>(<span class="edge">text</span>) <span class="node">bool</span>
-    +<span class="str">parse</span>() <span class="node">Graph</span>
-  }
+            <div style="margin-bottom:14px; padding-left:4px;">
+              <div style="color:#e2e8f0; font-weight:600;">  class <span style="color:#fbbf24;">AuthStore</span></div>
+              <div style="color:#94a3b8; padding-left:16px;">  +<span style="color:#86efac;">login</span>(<span style="color:#f9a8d4;">email, password</span>) bool</div>
+              <div style="color:#94a3b8; padding-left:16px;">  +<span style="color:#86efac;">logout</span>() void</div>
+            </div>
 
-  <span class="node">AuthStore</span> --> <span class="node">WorkspaceStore</span> : <span class="str">owns</span>
-  <span class="node">WorkspaceStore</span> --> <span class="node">MermaidStore</span> : <span class="str">uses</span>
+            <div style="margin-bottom:14px; padding-left:4px;">
+              <div style="color:#e2e8f0; font-weight:600;">  class <span style="color:#fbbf24;">WorkspaceStore</span></div>
+              <div style="color:#94a3b8; padding-left:16px;">  +<span style="color:#86efac;">create</span>(<span style="color:#f9a8d4;">name</span>) Workspace</div>
+              <div style="color:#94a3b8; padding-left:16px;">  +<span style="color:#86efac;">save</span>() void</div>
+            </div>
+
+            <div style="margin-bottom:18px; padding-left:4px;">
+              <div style="color:#e2e8f0; font-weight:600;">  class <span style="color:#fbbf24;">MermaidStore</span></div>
+              <div style="color:#94a3b8; padding-left:16px;">  +<span style="color:#86efac;">validateAndSet</span>(<span style="color:#f9a8d4;">text</span>) bool</div>
+            </div>
+
+            <div style="border-top:1px solid rgba(255,255,255,0.07); padding-top:14px; color:#94a3b8; font-size:12px;">
+              <div><span style="color:#fbbf24;">AuthStore</span> <span style="color:#7dd3fc;">--&gt;</span> <span style="color:#fbbf24;">WorkspaceStore</span> <span style="color:#64748b;">: owns</span></div>
+              <div><span style="color:#fbbf24;">WorkspaceStore</span> <span style="color:#7dd3fc;">--&gt;</span> <span style="color:#fbbf24;">MermaidStore</span> <span style="color:#64748b;">: uses</span></div>
+            </div>
+          </div>
         </div>
-        <p class="text-center text-xs text-blue-200 mt-3">Auto-generated from the flowmem codebase itself</p>
+
+        <p class="text-center text-xs text-blue-200 mt-4 opacity-70">Auto-generated from the flowmem codebase itself</p>
       </div>
     </div>
   </section>

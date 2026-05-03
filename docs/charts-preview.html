@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>FlowMem Charts Viewer</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <style>
+    body { font-family: Inter, sans-serif; background: #0d1117; color: #e6edf3; margin: 0; padding: 20px; }
+    h1 { color: #6366f1; text-align: center; margin-bottom: 40px; }
+    .chart-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 24px; margin-bottom: 32px; }
+    h2 { color: #79c0ff; font-family: monospace; font-size: 14px; margin-top: 0; margin-bottom: 16px; }
+    .mermaid { background: white; border-radius: 8px; padding: 20px; }
+  </style>
+</head>
+<body>
+  <h1>🧠 FlowMem — Generated Charts</h1>
+
+    <div class="chart-card" id="structure-overview">
+      <h2>structure/overview.mmd</h2>
+      <div class="mermaid">C4Context
+    title System Context — FlowMem
+
+    Person(dev, "Developer / AI Engineer", "Uses Claude Code to work on any codebase")
+    System(flowmem, "FlowMem Skill", "Indexes codebase into Mermaid .mmd charts, organized by layer")
+    System_Ext(vscode, "VS Code", "Renders .mmd files with Mermaid Preview extension")
+    System_Ext(flowskill, "FlowSkill", "Browser-based Mermaid editor and workflow runner")
+    System_Ext(mermaid_live, "mermaid.live", "Online Mermaid renderer")
+    System_Ext(claude, "Claude Code", "AI assistant that traverses FlowMem memory")
+
+    Rel(dev, flowmem, "Triggers with phrase", "Claude Code")
+    Rel(flowmem, vscode, "Writes .mmd files to .flowmem/")
+    Rel(dev, flowskill, "Pastes charts for visual editing")
+    Rel(dev, mermaid_live, "Pastes charts for quick preview")
+    Rel(claude, flowmem, "Reads INDEX.md, loads charts by layer")</div>
+    </div>
+
+    <div class="chart-card" id="structure-modules">
+      <h2>structure/modules.mmd</h2>
+      <div class="mermaid">flowchart LR
+    subgraph SKILL["Skill Core"]
+        SKILL_MD["SKILL.md\n(Entry point)"]
+    end
+
+    subgraph REFS["References"]
+        REF1["chart-selector.md"]
+        REF2["mermaid-cheatsheet.md"]
+        REF3["traversal-protocol.md"]
+        REF4["output-format.md"]
+    end
+
+    subgraph SCRIPTS["Extraction Scripts"]
+        PY["Python Scripts\n(scan_ast, scan_imports,\nscan_todos, scan_metrics)"]
+        NODE["Node Scripts\n(scan_packages,\nscan_ts_exports)"]
+        BASH["Bash Scripts\n(scan_git, scan_files,\nrefresh_all)"]
+    end
+
+    subgraph TEMPLATES["Templates"]
+        TMPL_IDX["INDEX.md.tmpl"]
+        TMPL_TRV["TRAVERSE.md.tmpl"]
+        CHART_TMPLS["16 .mmd.tmpl\nchart templates"]
+    end
+
+    subgraph OUTPUT[".flowmem/ Output"]
+        INDEX["INDEX.md"]
+        TRAVERSE["TRAVERSE.md"]
+        CHARTS["charts/ by layer"]
+        SCRIPT_COPIES["scripts/ (copies)"]
+    end
+
+    SKILL_MD --> REFS
+    SKILL_MD --> SCRIPTS
+    SKILL_MD --> TEMPLATES
+    SCRIPTS --> OUTPUT
+    TEMPLATES --> OUTPUT</div>
+    </div>
+
+    <div class="chart-card" id="behavior-traverse_flow">
+      <h2>behavior/traverse_flow.mmd</h2>
+      <div class="mermaid">sequenceDiagram
+    actor Dev as Developer
+    participant CC as Claude Code
+    participant FM as FlowMem (Traverse Mode)
+    participant FS as .flowmem/ Files
+    participant Scripts as Refresh Scripts
+
+    Dev->>CC: "How does auth work in this project?"
+
+    CC->>FS: Read .flowmem/INDEX.md
+    FS-->>CC: Chart map (all layers)
+
+    Note over CC,FM: Identify relevant layer = behavior
+    CC->>FS: Read charts/behavior/auth_flow.mmd metadata
+    FS-->>CC: method=script (needs refresh)
+
+    CC->>Scripts: Run scan_ast.py
+    Scripts-->>CC: Fresh class data
+
+    CC->>FS: Read charts/behavior/auth_flow.mmd
+    FS-->>CC: sequenceDiagram content
+
+    CC-->>Dev: Answer with specific node names from chart</div>
+    </div>
+
+    <div class="chart-card" id="behavior-generate_flow">
+      <h2>behavior/generate_flow.mmd</h2>
+      <div class="mermaid">sequenceDiagram
+    actor Dev as Developer
+    participant CC as Claude Code
+    participant FM as FlowMem Skill
+    participant Scripts as Extraction Scripts
+    participant FS as File System
+
+    Dev->>CC: "generate flowmem for this project"
+    CC->>FM: Invoke SKILL.md
+
+    Note over FM: Phase 1 — Classify
+    FM->>FS: Read README, src/ tree
+    FS-->>FM: Project structure
+
+    Note over FM: Phase 2 — Extract
+    FM->>Scripts: Run scan_ast.py
+    Scripts-->>FM: ast.json (classes, functions)
+    FM->>Scripts: Run scan_todos.py
+    Scripts-->>FM: todos.json (debt map)
+    FM->>Scripts: Run scan_git.sh
+    Scripts-->>FM: git.txt (history)
+
+    Note over FM: Phase 3 — Chart
+    FM->>FS: Write .mmd files to .flowmem/charts/
+
+    Note over FM: Phase 4 — Index
+    FM->>FS: Write INDEX.md + TRAVERSE.md
+
+    FM-->>CC: "Generated N charts in X layers"
+    CC-->>Dev: Summary + how-to-view</div>
+    </div>
+
+    <div class="chart-card" id="data-data_flow">
+      <h2>data/data_flow.mmd</h2>
+      <div class="mermaid">sankey-beta
+    Codebase, Python AST Parser, 30
+    Codebase, Import Graph Parser, 20
+    Codebase, TODO Scanner, 15
+    Codebase, Metrics Analyzer, 15
+    Codebase, Git History, 10
+    Codebase, File Scanner, 10
+    Python AST Parser, classDiagram, 30
+    Import Graph Parser, flowchart, 20
+    TODO Scanner, mindmap, 15
+    Metrics Analyzer, quadrantChart, 15
+    Git History, gitGraph, 10
+    File Scanner, pie, 10</div>
+    </div>
+
+    <div class="chart-card" id="project-tasks">
+      <h2>project/tasks.mmd</h2>
+      <div class="mermaid">kanban
+    Backlog
+        task1[Go language scanner]
+        task2[Rust language scanner]
+        task3[Java/Kotlin support]
+        task4[MCP server mode]
+        task5[CI GitHub Action auto-refresh]
+        task6[Team memory sync feature]
+    In Progress
+        task7[Screenshot generation for README]
+        task8[Product Hunt launch prep]
+    Done
+        task9[Core SKILL.md - 3 modes]
+        task10[8 extraction scripts]
+        task11[16 chart templates]
+        task12[GitHub Pages site]
+        task13[Apache 2.0 license]
+        task14[Eval test cases]</div>
+    </div>
+
+    <div class="chart-card" id="project-roadmap">
+      <h2>project/roadmap.mmd</h2>
+      <div class="mermaid">gantt
+    title FlowMem Development Roadmap
+    dateFormat YYYY-MM-DD
+
+    section v1.0 — Released
+    Core SKILL.md (3 modes)         :done, s1, 2026-05-01, 2026-05-03
+    8 extraction scripts            :done, s2, 2026-05-01, 2026-05-03
+    16 Mermaid chart templates      :done, s3, 2026-05-01, 2026-05-03
+    OSS README + Apache 2.0         :done, s4, 2026-05-01, 2026-05-03
+    GitHub Pages landing site       :done, s5, 2026-05-01, 2026-05-03
+
+    section v1.1 — Planned
+    Go language support             :p1, 2026-05-10, 7d
+    Rust language support           :p2, 2026-05-17, 7d
+    Java/Kotlin support             :p3, 2026-05-24, 7d
+    CI/CD auto-refresh action       :p4, 2026-05-10, 14d
+
+    section v2.0 — Future
+    MCP server mode                 :f1, 2026-06-01, 30d
+    Interactive chart editor        :f2, 2026-06-15, 21d
+    Team memory sync                :f3, 2026-07-01, 30d</div>
+    </div>
+
+    <div class="chart-card" id="quality-debt">
+      <h2>quality/debt.mmd</h2>
+      <div class="mermaid">mindmap
+  root((Tech Debt\n& Notes))
+
+    TODO
+      , FIXME, HACK, NOTE, BUG annotations across source files.
+      ', 'FIXME', 'HACK', 'NOTE', 'BUG', 'XXX', 'OPTIMIZE', 'REFAC
+    Code Quality
+      All scripts use stdlib only
+      No external runtime deps
+    Documentation
+      SKILL.md is the living spec
+      References are comprehensive</div>
+    </div>
+
+    <div class="chart-card" id="quality-complexity">
+      <h2>quality/complexity.mmd</h2>
+      <div class="mermaid">quadrantChart
+    title Script Complexity vs File Size
+    x-axis Low Complexity --> High Complexity
+    y-axis Small File --> Large File
+    quadrant-1 Refactor Candidates
+    quadrant-2 Large & Complex
+    quadrant-3 Simple & Small
+    quadrant-4 Large but Simple
+    scan_imports: [1.0, 0.67]
+    scan_metrics: [0.91, 1.0]
+    scan_ast: [0.91, 0.95]
+    scan_todos: [0.56, 0.61]
+    scan_packages: [0.1, 0.78]
+    scan_ts_exports: [0.09, 0.71]</div>
+    </div>
+
+    <div class="chart-card" id="quality-distribution">
+      <h2>quality/distribution.mmd</h2>
+      <div class="mermaid">pie showData
+    title FlowMem File Type Distribution
+    "Templates (.tmpl)" : 18
+    "Python scripts" : 8
+    "Markdown docs" : 7
+    "Bash scripts" : 6
+    "Node.js scripts" : 4
+    "Other (json, html)" : 3</div>
+    </div>
+
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+  </script>
+</body>
+</html>

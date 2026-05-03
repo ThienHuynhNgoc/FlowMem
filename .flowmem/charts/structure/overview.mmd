@@ -1,0 +1,17 @@
+%%{init: {'theme': 'default'}}%%
+%% FlowMem | type=C4Context | layer=structure | method=ai | refresh=none | last-updated=2026-05-03 %%
+C4Context
+    title System Context — FlowMem
+
+    Person(dev, "Developer / AI Engineer", "Uses Claude Code to work on any codebase")
+    System(flowmem, "FlowMem Skill", "Indexes codebase into Mermaid .mmd charts, organized by layer")
+    System_Ext(vscode, "VS Code", "Renders .mmd files with Mermaid Preview extension")
+    System_Ext(flowskill, "FlowSkill", "Browser-based Mermaid editor and workflow runner")
+    System_Ext(mermaid_live, "mermaid.live", "Online Mermaid renderer")
+    System_Ext(claude, "Claude Code", "AI assistant that traverses FlowMem memory")
+
+    Rel(dev, flowmem, "Triggers with phrase", "Claude Code")
+    Rel(flowmem, vscode, "Writes .mmd files to .flowmem/")
+    Rel(dev, flowskill, "Pastes charts for visual editing")
+    Rel(dev, mermaid_live, "Pastes charts for quick preview")
+    Rel(claude, flowmem, "Reads INDEX.md, loads charts by layer")

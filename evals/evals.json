@@ -1,0 +1,73 @@
+{
+  "skill_name": "flowmem",
+  "version": "1.0.0",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Generate FlowMem memory for this Python library project",
+      "expected_output": "Creates .flowmem/ with at minimum: structure/modules.mmd, structure/classes.mmd, quality/debt.mmd, and INDEX.md",
+      "files": [
+        "evals/fixtures/python-lib/"
+      ],
+      "expectations": [
+        ".flowmem/INDEX.md is created",
+        ".flowmem/TRAVERSE.md is created",
+        "At least one chart in structure/ layer",
+        "At least one chart in quality/ layer",
+        "All .mmd files have FlowMem metadata comment on line 2",
+        "All .mmd files have valid Mermaid syntax (no syntax errors)",
+        "INDEX.md lists all generated charts with layer and method columns"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Generate FlowMem memory for this Node.js application",
+      "expected_output": "Creates .flowmem/ with flowchart (npm deps), classDiagram (TS exports), and behavior charts",
+      "files": [
+        "evals/fixtures/node-app/"
+      ],
+      "expectations": [
+        ".flowmem/INDEX.md is created",
+        "structure/modules.mmd uses flowchart type",
+        "scan_packages.js output is used for module graph",
+        "scan_ts_exports.js output is used for class diagram",
+        "Charts use 'last-updated' with today's date"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Show me the flowmem index",
+      "expected_output": "Reads and presents .flowmem/INDEX.md in a readable format",
+      "files": [],
+      "expectations": [
+        "Reads .flowmem/INDEX.md (not all chart files)",
+        "Lists charts by layer",
+        "Does not load every .mmd file upfront"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "How does authentication work in this project?",
+      "expected_output": "Loads behavior layer charts related to auth, reads them, and answers using specific node names from the chart",
+      "files": [],
+      "expectations": [
+        "Reads .flowmem/INDEX.md first",
+        "Identifies behavior layer as relevant",
+        "Reads auth-related .mmd files",
+        "References specific participants/nodes from the chart in the answer",
+        "Does not load unrelated layers"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Refresh all FlowMem charts",
+      "expected_output": "Runs refresh_all.sh and reports which script-backed charts were updated",
+      "files": [],
+      "expectations": [
+        "Runs bash .flowmem/scripts/refresh_all.sh",
+        "Lists charts that may need regeneration",
+        "Updates last-updated dates for regenerated charts"
+      ]
+    }
+  ]
+}

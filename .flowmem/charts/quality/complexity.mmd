@@ -1,0 +1,18 @@
+%%{init: {'theme': 'default'}}%%
+%% FlowMem | type=quadrantChart | layer=quality | method=script | refresh=.flowmem/scripts/scan_metrics.py | last-updated=2026-05-03 %%
+quadrantChart
+    title Script Complexity vs File Size
+    x-axis Low Complexity --> High Complexity
+    y-axis Small File --> Large File
+    quadrant-1 Refactor Candidates
+    quadrant-2 Large and Complex
+    quadrant-3 Simple and Small
+    quadrant-4 Large but Simple
+    scan-metrics: [1.0, 0.67]
+    scan-ast: [0.99, 0.63]
+    scan-imports: [0.83, 0.44]
+    scan-todos: [0.52, 0.40]
+    scan-packages: [0.08, 0.52]
+    scan-ts-exports: [0.07, 0.64]
+    scan-files: [0.06, 0.35]
+    scan-git: [0.05, 0.28]

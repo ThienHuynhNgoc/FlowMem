@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowMem — AI Memory in Plain Mermaid</title>
+  <meta name="description" content="Turn any codebase into a rich Mermaid chart memory system. Human-readable, AI-traversable, open source." />
+  <meta property="og:title" content="FlowMem — AI Memory in Plain Mermaid" />
+  <meta property="og:description" content="Claude Code skill that indexes your codebase into .mmd chart files. Free, open source, Apache 2.0." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#2563eb',
+            brandDark: '#1e40af',
+            brandLight: '#eff6ff',
+          },
+          fontFamily: {
+            mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #111827; }
+
+    .gradient-hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #1d4ed8 100%);
+    }
+    .section-alt { background: #eff6ff; }
+    .section-white { background: #ffffff; }
+    .section-blue-dark { background: #1e3a8a; }
+
+    .card-white {
+      background: #ffffff;
+      border: 1px solid #bfdbfe;
+      border-radius: 16px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .card-white:hover { box-shadow: 0 8px 32px rgba(37,99,235,0.12); border-color: #93c5fd; }
+
+    .card-blue {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 16px;
+    }
+
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600; }
+
+    .chart-preview {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      line-height: 1.7;
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 10px;
+      padding: 16px;
+      overflow: hidden;
+    }
+    .kw  { color: #7dd3fc; }
+    .str { color: #86efac; }
+    .cmt { color: #94a3b8; }
+    .node { color: #fbbf24; }
+    .edge { color: #f9a8d4; }
+
+    pre { tab-size: 2; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .animate-float { animation: float 4s ease-in-out infinite; }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(37,99,235,0.25); }
+      50% { box-shadow: 0 0 40px rgba(37,99,235,0.5); }
+    }
+    .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+
+    .step-number {
+      width: 36px; height: 36px;
+      background: #2563eb; color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .table-header { background: #2563eb; color: white; }
+    .table-row-alt { background: #f0f7ff; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 w-full z-50 bg-white border-b border-blue-100 shadow-sm">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">🧠</span>
+        <span class="font-bold text-blue-900 text-lg">FlowMem</span>
+        <span class="badge bg-blue-100 text-blue-700 ml-2">v1.0</span>
+      </div>
+      <div class="flex items-center gap-6 text-sm text-gray-600">
+        <a href="#how-it-works" class="hover:text-blue-600 transition-colors font-medium">How it works</a>
+        <a href="#gallery" class="hover:text-blue-600 transition-colors font-medium">Gallery</a>
+        <a href="#install" class="hover:text-blue-600 transition-colors font-medium">Install</a>
+        <a href="https://github.com/YOUR_USERNAME/flowmem" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-3 py-1.5 text-xs font-semibold transition-all">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          Star on GitHub
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="gradient-hero min-h-screen flex items-center justify-center pt-14 px-6 overflow-hidden relative">
+    <!-- Subtle dot grid -->
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+    <div class="max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center py-24">
+      <!-- Left: Text -->
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <span class="badge bg-white/20 text-white border border-white/30">Claude Code Skill</span>
+          <span class="badge bg-white/20 text-white border border-white/30">Apache 2.0</span>
+          <span class="badge bg-white/20 text-white border border-white/30">Open Source</span>
+        </div>
+
+        <h1 class="text-5xl lg:text-6xl font-extrabold leading-tight mb-6 text-white">
+          AI Memory<br/>
+          <span style="background: linear-gradient(90deg, #bfdbfe, #ffffff, #ddd6fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">in Plain Mermaid</span>
+        </h1>
+
+        <p class="text-xl text-blue-100 leading-relaxed mb-8">
+          Turn any codebase into a navigable <strong class="text-white">.mmd chart system</strong>.
+          Human-readable in VS Code. AI-traversable without custom tooling.
+          Editable in any text editor.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="#install" class="inline-flex items-center gap-2 bg-white text-blue-700 hover:bg-blue-50 font-bold px-6 py-3 rounded-xl transition-all animate-pulse-glow shadow-lg">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2v20M2 12l10 10 10-10"/></svg>
+            Install Skill
+          </a>
+          <a href="https://github.com/YOUR_USERNAME/flowmem" class="inline-flex items-center gap-2 border-2 border-white/40 hover:border-white text-white font-semibold px-6 py-3 rounded-xl transition-all hover:bg-white/10">
+            View on GitHub →
+          </a>
+        </div>
+
+        <div class="mt-8 flex items-center gap-6 text-sm text-blue-200">
+          <span>🧩 26 Mermaid chart types</span>
+          <span>⚡ 8 extraction scripts</span>
+          <span>🔍 3 operation modes</span>
+        </div>
+      </div>
+
+      <!-- Right: Live code preview -->
+      <div class="animate-float">
+        <div class="chart-preview rounded-2xl shadow-2xl" style="max-height: 380px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15);">
+<span class="cmt">%% FlowMem | type=classDiagram | layer=structure</span>
+<span class="cmt">%% method=script | refresh=scan_ast.py | last-updated=2026-05-03</span>
+<span class="kw">classDiagram</span>
+
+  <span class="kw">class</span> <span class="node">AuthStore</span> {
+    +<span class="str">login</span>(<span class="edge">email</span>, <span class="edge">password</span>) <span class="node">bool</span>
+    +<span class="str">logout</span>() <span class="node">void</span>
+    +<span class="str">currentUser</span> <span class="node">User</span>
+  }
+
+  <span class="kw">class</span> <span class="node">WorkspaceStore</span> {
+    +<span class="str">create</span>(<span class="edge">name</span>) <span class="node">Workspace</span>
+    +<span class="str">load</span>(<span class="edge">id</span>) <span class="node">Promise</span>
+    +<span class="str">save</span>() <span class="node">void</span>
+  }
+
+  <span class="kw">class</span> <span class="node">MermaidStore</span> {
+    +<span class="str">validateAndSet</span>(<span class="edge">text</span>) <span class="node">bool</span>
+    +<span class="str">parse</span>() <span class="node">Graph</span>
+  }
+
+  <span class="node">AuthStore</span> --> <span class="node">WorkspaceStore</span> : <span class="str">owns</span>
+  <span class="node">WorkspaceStore</span> --> <span class="node">MermaidStore</span> : <span class="str">uses</span>
+        </div>
+        <p class="text-center text-xs text-blue-200 mt-3">Auto-generated from the flowmem codebase itself</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY FLOWMEM -->
+  <section class="py-20 px-6 section-white">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-center text-gray-900 mb-3">Why FlowMem?</h2>
+      <p class="text-gray-500 text-center mb-12">No proprietary formats. No servers. No lock-in.</p>
+
+      <div class="overflow-x-auto rounded-2xl border border-blue-100 shadow-sm">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="table-header">
+              <th class="text-left px-6 py-4 font-semibold">Feature</th>
+              <th class="px-4 py-4 font-medium opacity-80">MemPalace</th>
+              <th class="px-4 py-4 font-medium opacity-80">GitNexus</th>
+              <th class="px-4 py-4 font-medium opacity-80">Graphify</th>
+              <th class="px-4 py-4 font-bold">FlowMem</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-blue-50">
+            <tr class="hover:bg-blue-50/50 transition-colors">
+              <td class="px-6 py-3 text-gray-700 font-medium">Format</td>
+              <td class="px-4 py-3 text-center text-gray-400 text-xs">Proprietary</td>
+              <td class="px-4 py-3 text-center text-gray-400 text-xs">Proprietary</td>
+              <td class="px-4 py-3 text-center text-gray-400 text-xs">Graph DB</td>
+              <td class="px-4 py-3 text-center text-blue-700 font-semibold">Plain .mmd files</td>
+            </tr>
+            <tr class="table-row-alt hover:bg-blue-50 transition-colors">
+              <td class="px-6 py-3 text-gray-700 font-medium">Human-readable</td>
+              <td class="px-4 py-3 text-center text-red-400">❌</td>
+              <td class="px-4 py-3 text-center text-yellow-500">Partial</td>
+              <td class="px-4 py-3 text-center text-red-400">❌</td>
+              <td class="px-4 py-3 text-center text-green-600">✅ VS Code</td>
+            </tr>
+            <tr class="hover:bg-blue-50/50 transition-colors">
+              <td class="px-6 py-3 text-gray-700 font-medium">Works offline</td>
+              <td class="px-4 py-3 text-center text-red-400">❌</td>
+              <td class="px-4 py-3 text-center text-red-400">❌</td>
+              <td class="px-4 py-3 text-center text-red-400">❌</td>
+              <td class="px-4 py-3 text-center text-green-600">✅</td>
+            </tr>
+            <tr class="table-row-alt hover:bg-blue-50 transition-colors">
+              <td class="px-6 py-3 text-gray-700 font-medium">Edit by hand</td>
+              <td class="px-4 py-3 text-center text-red-400">❌</td>
+              <td class="px-4 py-3 text-center text-red-400">❌</td>
+              <td class="px-4 py-3 text-center text-red-400">❌</td>
+              <td class="px-4 py-3 text-center text-green-600">✅ Any editor</td>
+            </tr>
+            <tr class="hover:bg-blue-50/50 transition-colors">
+              <td class="px-6 py-3 text-gray-700 font-medium">Chart types</td>
+              <td class="px-4 py-3 text-center text-gray-400">—</td>
+              <td class="px-4 py-3 text-center text-gray-400">—</td>
+              <td class="px-4 py-3 text-center text-gray-400">—</td>
+              <td class="px-4 py-3 text-center text-green-600">✅ 26 types</td>
+            </tr>
+            <tr class="table-row-alt hover:bg-blue-50 transition-colors">
+              <td class="px-6 py-3 text-gray-700 font-medium">Open source</td>
+              <td class="px-4 py-3 text-center text-red-400">❌</td>
+              <td class="px-4 py-3 text-center text-red-400">❌</td>
+              <td class="px-4 py-3 text-center text-red-400">❌</td>
+              <td class="px-4 py-3 text-center text-green-600">✅ Apache 2.0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" class="py-20 px-6 section-alt">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold text-center text-gray-900 mb-3">How it works</h2>
+      <p class="text-gray-500 text-center mb-16">Three steps. Zero config.</p>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Step 1 -->
+        <div class="card-white p-8">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="step-number">1</div>
+            <div>
+              <div class="text-blue-600 font-mono text-xs font-semibold uppercase tracking-wide">Scan</div>
+              <h3 class="text-lg font-bold text-gray-900">Extract</h3>
+            </div>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-5">Scripts extract classes, imports, TODOs, git history. AI reasons about architecture and behavior.</p>
+          <div class="chart-preview text-xs rounded-lg" style="font-size: 10px; padding: 12px;">
+<span class="cmt"># scan_ast.py</span>
+<span class="kw">python3</span> scan_ast.py
+→ ast.json
+<span class="kw">bash</span> scan_git.sh
+→ git.txt
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="card-white p-8" style="border-color: #93c5fd; box-shadow: 0 8px 32px rgba(37,99,235,0.1);">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="step-number">2</div>
+            <div>
+              <div class="text-blue-600 font-mono text-xs font-semibold uppercase tracking-wide">Chart</div>
+              <h3 class="text-lg font-bold text-gray-900">Generate</h3>
+            </div>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-5">Generate Mermaid .mmd files organized by layer: structure, behavior, data, project, quality.</p>
+          <div class="chart-preview text-xs rounded-lg" style="font-size: 10px; padding: 12px;">
+.flowmem/
+  structure/
+    <span class="node">modules.mmd</span>
+    <span class="node">classes.mmd</span>
+  behavior/
+    <span class="node">auth_flow.mmd</span>
+  quality/
+    <span class="node">debt.mmd</span>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="card-white p-8">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="step-number">3</div>
+            <div>
+              <div class="text-blue-600 font-mono text-xs font-semibold uppercase tracking-wide">Traverse</div>
+              <h3 class="text-lg font-bold text-gray-900">Query</h3>
+            </div>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-5">AI loads only relevant charts per question. Script-backed charts refresh on demand for live data.</p>
+          <div class="chart-preview text-xs rounded-lg" style="font-size: 10px; padding: 12px;">
+<span class="cmt">"How does auth work?"</span>
+→ load behavior/ charts
+<span class="cmt">"Where is tech debt?"</span>
+→ load quality/debt.mmd
+<span class="cmt">"Refresh data"</span>
+→ run refresh_all.sh
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHART GALLERY -->
+  <section id="gallery" class="py-20 px-6 section-white">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center text-gray-900 mb-3">Chart Gallery</h2>
+      <p class="text-gray-500 text-center mb-12">16 Mermaid chart types, covering every knowledge domain in your codebase.</p>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">🗺️</div>
+          <div class="text-xs font-mono text-blue-600 font-semibold">flowchart LR</div>
+          <div class="text-sm font-bold text-gray-900 text-center">Module Graph</div>
+          <div class="text-xs text-gray-500 text-center">Import dependencies</div>
+          <span class="badge bg-blue-100 text-blue-700 text-xs">script</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">🏗️</div>
+          <div class="text-xs font-mono text-blue-600 font-semibold">classDiagram</div>
+          <div class="text-sm font-bold text-gray-900 text-center">Class Hierarchy</div>
+          <div class="text-xs text-gray-500 text-center">Types & methods</div>
+          <span class="badge bg-blue-100 text-blue-700 text-xs">script</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">🔄</div>
+          <div class="text-xs font-mono text-indigo-600 font-semibold">sequenceDiagram</div>
+          <div class="text-sm font-bold text-gray-900 text-center">API Sequence</div>
+          <div class="text-xs text-gray-500 text-center">Request/response flows</div>
+          <span class="badge bg-indigo-100 text-indigo-700 text-xs">AI</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">⚙️</div>
+          <div class="text-xs font-mono text-indigo-600 font-semibold">stateDiagram-v2</div>
+          <div class="text-sm font-bold text-gray-900 text-center">State Machine</div>
+          <div class="text-xs text-gray-500 text-center">Lifecycle & transitions</div>
+          <span class="badge bg-indigo-100 text-indigo-700 text-xs">AI</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">🗃️</div>
+          <div class="text-xs font-mono text-teal-600 font-semibold">erDiagram</div>
+          <div class="text-sm font-bold text-gray-900 text-center">ER Diagram</div>
+          <div class="text-xs text-gray-500 text-center">Database schema</div>
+          <span class="badge bg-indigo-100 text-indigo-700 text-xs">AI</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">📅</div>
+          <div class="text-xs font-mono text-orange-600 font-semibold">gantt</div>
+          <div class="text-sm font-bold text-gray-900 text-center">Gantt Roadmap</div>
+          <div class="text-xs text-gray-500 text-center">Feature timeline</div>
+          <span class="badge bg-indigo-100 text-indigo-700 text-xs">AI</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">🧠</div>
+          <div class="text-xs font-mono text-blue-600 font-semibold">mindmap</div>
+          <div class="text-sm font-bold text-gray-900 text-center">Tech Debt Map</div>
+          <div class="text-xs text-gray-500 text-center">TODO clusters</div>
+          <span class="badge bg-blue-100 text-blue-700 text-xs">script</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">🌿</div>
+          <div class="text-xs font-mono text-green-600 font-semibold">gitGraph</div>
+          <div class="text-sm font-bold text-gray-900 text-center">Git History</div>
+          <div class="text-xs text-gray-500 text-center">Branches & commits</div>
+          <span class="badge bg-blue-100 text-blue-700 text-xs">script</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">📡</div>
+          <div class="text-xs font-mono text-pink-600 font-semibold">radar</div>
+          <div class="text-sm font-bold text-gray-900 text-center">Coverage Radar</div>
+          <div class="text-xs text-gray-500 text-center">Test coverage by module</div>
+          <span class="badge bg-indigo-100 text-indigo-700 text-xs">AI</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">⬜</div>
+          <div class="text-xs font-mono text-cyan-600 font-semibold">quadrantChart</div>
+          <div class="text-sm font-bold text-gray-900 text-center">Complexity Matrix</div>
+          <div class="text-xs text-gray-500 text-center">File complexity vs value</div>
+          <span class="badge bg-blue-100 text-blue-700 text-xs">script</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">🏛️</div>
+          <div class="text-xs font-mono text-indigo-600 font-semibold">C4Context</div>
+          <div class="text-sm font-bold text-gray-900 text-center">Architecture</div>
+          <div class="text-xs text-gray-500 text-center">System context view</div>
+          <span class="badge bg-indigo-100 text-indigo-700 text-xs">AI</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">🕐</div>
+          <div class="text-xs font-mono text-teal-600 font-semibold">timeline</div>
+          <div class="text-sm font-bold text-gray-900 text-center">Timeline</div>
+          <div class="text-xs text-gray-500 text-center">Project milestones</div>
+          <span class="badge bg-indigo-100 text-indigo-700 text-xs">AI</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">📋</div>
+          <div class="text-xs font-mono text-yellow-600 font-semibold">kanban</div>
+          <div class="text-sm font-bold text-gray-900 text-center">Task Board</div>
+          <div class="text-xs text-gray-500 text-center">Feature status board</div>
+          <span class="badge bg-indigo-100 text-indigo-700 text-xs">AI</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">🌊</div>
+          <div class="text-xs font-mono text-blue-600 font-semibold">sankey-beta</div>
+          <div class="text-sm font-bold text-gray-900 text-center">Data Flow</div>
+          <div class="text-xs text-gray-500 text-center">Resource/data flows</div>
+          <span class="badge bg-indigo-100 text-indigo-700 text-xs">AI</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">🥧</div>
+          <div class="text-xs font-mono text-red-500 font-semibold">pie</div>
+          <div class="text-sm font-bold text-gray-900 text-center">File Distribution</div>
+          <div class="text-xs text-gray-500 text-center">Extension breakdown</div>
+          <span class="badge bg-blue-100 text-blue-700 text-xs">script</span>
+        </div>
+        <div class="card-white p-4 flex flex-col items-center gap-3 cursor-pointer">
+          <div class="text-2xl">📋</div>
+          <div class="text-xs font-mono text-blue-600 font-semibold">requirementDiagram</div>
+          <div class="text-sm font-bold text-gray-900 text-center">Requirements</div>
+          <div class="text-xs text-gray-500 text-center">Formal requirements</div>
+          <span class="badge bg-indigo-100 text-indigo-700 text-xs">AI</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REAL CHART GALLERY -->
+  <section class="py-20 px-6 section-alt">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center text-gray-900 mb-3">Real Output — Rendered Charts</h2>
+      <p class="text-gray-600 text-center mb-3">Auto-generated from the <strong class="text-blue-700">flowmem project itself</strong> — live output from running FlowMem on its own codebase.</p>
+      <p class="text-gray-400 text-center text-sm mb-12">View any chart in <a href="https://mermaid.live" class="text-blue-600 hover:text-blue-700 font-medium">mermaid.live</a> · or open <code class="bg-blue-50 text-blue-700 px-1 rounded text-xs">.flowmem/index.html</code> locally</p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="card-white overflow-hidden">
+          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
+            <img src="screenshots/modules_flowchart.svg" alt="Module Graph" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-gray-900 font-semibold text-sm">Module Graph</span>
+              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">flowchart LR</span>
+            </div>
+            <span class="text-gray-400 text-xs">structure layer</span>
+          </div>
+        </div>
+
+        <div class="card-white overflow-hidden">
+          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
+            <img src="screenshots/architecture_c4.svg" alt="System Architecture" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-gray-900 font-semibold text-sm">System Architecture</span>
+              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">C4Context</span>
+            </div>
+            <span class="text-gray-400 text-xs">structure layer</span>
+          </div>
+        </div>
+
+        <div class="card-white overflow-hidden">
+          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
+            <img src="screenshots/api_sequence.svg" alt="Generation Flow" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-gray-900 font-semibold text-sm">Generation Flow</span>
+              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">sequenceDiagram</span>
+            </div>
+            <span class="text-gray-400 text-xs">behavior layer</span>
+          </div>
+        </div>
+
+        <div class="card-white overflow-hidden">
+          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
+            <img src="screenshots/traverse_sequence.svg" alt="Traversal Protocol" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-gray-900 font-semibold text-sm">Traversal Protocol</span>
+              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">sequenceDiagram</span>
+            </div>
+            <span class="text-gray-400 text-xs">behavior layer</span>
+          </div>
+        </div>
+
+        <div class="card-white overflow-hidden">
+          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
+            <img src="screenshots/dataflow_sankey.svg" alt="Data Flow" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-gray-900 font-semibold text-sm">Data Flow</span>
+              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">sankey-beta</span>
+            </div>
+            <span class="text-gray-400 text-xs">data layer</span>
+          </div>
+        </div>
+
+        <div class="card-white overflow-hidden">
+          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
+            <img src="screenshots/roadmap_gantt.svg" alt="Development Roadmap" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-gray-900 font-semibold text-sm">Development Roadmap</span>
+              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">gantt</span>
+            </div>
+            <span class="text-gray-400 text-xs">project layer</span>
+          </div>
+        </div>
+
+        <div class="card-white overflow-hidden">
+          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
+            <img src="screenshots/tasks_kanban.svg" alt="Task Board" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-gray-900 font-semibold text-sm">Task Board</span>
+              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">kanban</span>
+            </div>
+            <span class="text-gray-400 text-xs">project layer</span>
+          </div>
+        </div>
+
+        <div class="card-white overflow-hidden">
+          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
+            <img src="screenshots/debt_mindmap.svg" alt="Tech Debt Map" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-gray-900 font-semibold text-sm">Tech Debt Map</span>
+              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">mindmap</span>
+            </div>
+            <span class="text-gray-400 text-xs">quality layer</span>
+          </div>
+        </div>
+
+        <div class="card-white overflow-hidden">
+          <div class="bg-white p-4 flex items-center justify-center border-b border-blue-50" style="min-height: 200px; max-height: 240px; overflow: hidden;">
+            <img src="screenshots/bugs_pie.svg" alt="File Distribution" style="max-width: 100%; max-height: 220px; object-fit: contain;" />
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-gray-900 font-semibold text-sm">File Distribution</span>
+              <span class="badge bg-blue-100 text-blue-700 text-xs font-mono">pie</span>
+            </div>
+            <span class="text-gray-400 text-xs">quality layer</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- RELATED PRODUCTS -->
+  <section class="py-20 px-6 section-white">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <span class="badge bg-blue-100 text-blue-700 mb-4">From the same team</span>
+        <h2 class="text-3xl font-bold text-gray-900 mt-3 mb-3">Built Together. Better Together.</h2>
+        <p class="text-gray-500">FlowMem is part of a growing suite of open-source AI tooling.</p>
+      </div>
+
+      <div class="card-white p-8 flex flex-col md:flex-row items-start gap-8">
+        <div class="w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center text-white text-3xl flex-shrink-0 shadow-lg">
+          ⚡
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-2">
+            <h3 class="text-xl font-bold text-gray-900">FlowSkill</h3>
+            <span class="badge bg-blue-100 text-blue-700 text-xs">Open Source</span>
+            <span class="badge bg-green-100 text-green-700 text-xs">Apache 2.0</span>
+          </div>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            A Mermaid-powered visual canvas editor — the best way to <strong>view, edit, and share</strong> 
+            FlowMem charts visually. Built for low-code users and developers who want to work with 
+            Mermaid diagrams interactively.
+          </p>
+          <ul class="text-sm text-gray-600 space-y-2 mb-6">
+            <li class="flex items-center gap-2"><span class="text-blue-500">→</span> Paste any <code class="bg-blue-50 text-blue-700 px-1 rounded">.mmd</code> file from <code class="bg-blue-50 text-blue-700 px-1 rounded">.flowmem/charts/</code> to view it visually</li>
+            <li class="flex items-center gap-2"><span class="text-blue-500">→</span> Click nodes to select, change shapes, add colors, export SVG/PNG</li>
+            <li class="flex items-center gap-2"><span class="text-blue-500">→</span> Built with React + Zustand + mermaid.js — runs 100% in the browser</li>
+            <li class="flex items-center gap-2"><span class="text-blue-500">→</span> Optional companion to FlowMem — FlowMem works great without it</li>
+          </ul>
+          <a href="https://github.com/YOUR_USERNAME/FlowSkill" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-all text-sm">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+            View FlowSkill on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install" class="py-20 px-6 section-white">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-gray-900 mb-3">Install in 10 seconds</h2>
+      <p class="text-gray-500 mb-12">FlowMem is a Claude Code skill. Copy it into your project or global skills directory.</p>
+
+      <div class="space-y-6 text-left">
+        <div>
+          <div class="text-xs text-blue-600 mb-2 font-mono font-bold uppercase tracking-wide">Option A — Per-project</div>
+          <div class="chart-preview rounded-xl border border-gray-200">
+<span class="cmt"># From your project root</span>
+<span class="kw">mkdir</span> -p .claude/skills
+<span class="kw">cp</span> -r /path/to/flowmem .claude/skills/flowmem
+          </div>
+        </div>
+        <div>
+          <div class="text-xs text-blue-600 mb-2 font-mono font-bold uppercase tracking-wide">Option B — Global (all projects)</div>
+          <div class="chart-preview rounded-xl border border-gray-200">
+<span class="kw">cp</span> -r /path/to/flowmem ~/.claude/skills/flowmem
+          </div>
+        </div>
+        <div>
+          <div class="text-xs text-blue-600 mb-2 font-mono font-bold uppercase tracking-wide">Then trigger in Claude Code</div>
+          <div class="chart-preview rounded-xl border border-gray-200">
+<span class="cmt"># Any of these phrases work:</span>
+<span class="str">"generate flowmem for this project"</span>
+<span class="str">"build memory charts"</span>
+<span class="str">"index this codebase as mermaid"</span>
+<span class="str">"create mermaid memory"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 px-6 gradient-hero text-center relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px); background-size: 40px 40px;"></div>
+    <div class="max-w-2xl mx-auto relative">
+      <div class="text-5xl mb-6">🧠</div>
+      <h2 class="text-3xl font-bold text-white mb-4">Ready to give your AI a memory?</h2>
+      <p class="text-blue-200 mb-8">Open source. Apache 2.0. Contributions welcome.</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="https://github.com/YOUR_USERNAME/flowmem" class="inline-flex items-center gap-2 bg-white text-blue-700 hover:bg-blue-50 font-bold px-8 py-4 rounded-xl transition-all text-lg shadow-lg">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          Star on GitHub
+        </a>
+        <a href="#install" class="inline-flex items-center gap-2 border-2 border-white/40 hover:border-white text-white font-semibold px-8 py-4 rounded-xl transition-all text-lg hover:bg-white/10">
+          Get Started
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-12 px-6 border-t border-blue-100 bg-white">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-2">
+        <span class="text-xl">🧠</span>
+        <span class="font-bold text-blue-900">FlowMem</span>
+        <span class="text-gray-400 text-sm ml-2">v1.0.0</span>
+      </div>
+      <div class="text-sm text-gray-500 flex flex-wrap gap-6 justify-center">
+        <a href="https://github.com/YOUR_USERNAME/flowmem" class="hover:text-blue-600 transition-colors">GitHub</a>
+        <a href="https://github.com/YOUR_USERNAME/flowmem/blob/main/LICENSE" class="hover:text-blue-600 transition-colors">Apache 2.0</a>
+        <a href="https://mermaid.js.org" class="hover:text-blue-600 transition-colors">Mermaid.js</a>
+        <a href="https://claude.ai/code" class="hover:text-blue-600 transition-colors">Claude Code</a>
+        <a href="https://github.com/YOUR_USERNAME/FlowSkill" class="hover:text-blue-600 transition-colors font-medium text-blue-600">FlowSkill ↗</a>
+      </div>
+      <div class="text-sm text-gray-400">Made with ♥ for AI engineers</div>
+    </div>
+  </footer>
+
+</body>
+</html>

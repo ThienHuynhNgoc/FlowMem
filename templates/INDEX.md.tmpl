@@ -1,0 +1,52 @@
+# FlowMem Index — {{PROJECT_NAME}}
+Generated: {{DATE}} | Charts: {{CHART_COUNT}} | Skill version: 1.0
+
+> AI Traversal: Read this file first. Load charts by layer based on your question.
+> Full refresh: `bash .flowmem/scripts/refresh_all.sh`
+
+---
+
+## Structure Layer — Code Organization
+
+| Chart | Type | Method | Description |
+|-------|------|--------|-------------|
+{{STRUCTURE_ROWS}}
+
+## Behavior Layer — Dynamic Flows
+
+| Chart | Type | Method | Description |
+|-------|------|--------|-------------|
+{{BEHAVIOR_ROWS}}
+
+## Data Layer — Models & Schemas
+
+| Chart | Type | Method | Description |
+|-------|------|--------|-------------|
+{{DATA_ROWS}}
+
+## Project Layer — Planning & History
+
+| Chart | Type | Method | Description |
+|-------|------|--------|-------------|
+{{PROJECT_ROWS}}
+
+## Quality Layer — Health Metrics
+
+| Chart | Type | Method | Description |
+|-------|------|--------|-------------|
+{{QUALITY_ROWS}}
+
+---
+
+## AI Quick Reference
+
+**For architecture questions** → structure layer, start with `overview.mmd`
+**For API/flow questions** → behavior layer
+**For data model questions** → data layer
+**For planning context** → project layer
+**For tech debt / history** → quality layer
+
+**Script-backed charts (method=script):** Run `.flowmem/scripts/refresh_all.sh` first.
+**AI-backed charts (method=ai):** Read directly; regenerate only on major refactors.
+
+See `.flowmem/TRAVERSE.md` for project-specific traversal guidance.

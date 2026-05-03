@@ -1,0 +1,25 @@
+%%{init: {'theme': 'default'}}%%
+%% FlowMem | type=sequenceDiagram | layer=behavior | method=ai | refresh=none | last-updated=2026-05-03 %%
+sequenceDiagram
+    actor Dev as Developer
+    participant CC as Claude Code
+    participant FM as FlowMem (Traverse Mode)
+    participant FS as .flowmem/ Files
+    participant Scripts as Refresh Scripts
+
+    Dev->>CC: "How does auth work in this project?"
+
+    CC->>FS: Read .flowmem/INDEX.md
+    FS-->>CC: Chart map (all layers)
+
+    Note over CC,FM: Identify relevant layer = behavior
+    CC->>FS: Read charts/behavior/auth_flow.mmd metadata
+    FS-->>CC: method=script (needs refresh)
+
+    CC->>Scripts: Run scan_ast.py
+    Scripts-->>CC: Fresh class data
+
+    CC->>FS: Read charts/behavior/auth_flow.mmd
+    FS-->>CC: sequenceDiagram content
+
+    CC-->>Dev: Answer with specific node names from chart

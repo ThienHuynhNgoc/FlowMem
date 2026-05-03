@@ -1,0 +1,11 @@
+%%{init: {'theme': 'default'}}%%
+%% FlowMem | type=quadrantChart | layer=quality | method=script | refresh=.flowmem/scripts/scan_metrics.py | last-updated={{DATE}} %%
+quadrantChart
+    title File Complexity vs Size
+    x-axis Low Complexity --> High Complexity
+    y-axis Small File --> Large File
+    quadrant-1 Refactor Candidates
+    quadrant-2 Watch Carefully
+    quadrant-3 Simple & Small
+    quadrant-4 Large but Simple
+    {{FILE_POINTS}}

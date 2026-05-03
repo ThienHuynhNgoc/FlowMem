@@ -1,0 +1,38 @@
+%%{init: {'theme': 'default'}}%%
+%% FlowMem | type=flowchart | layer=structure | method=script | refresh=.flowmem/scripts/scan_files.sh | last-updated=2026-05-03 %%
+flowchart LR
+    subgraph SKILL["Skill Core"]
+        SKILL_MD["SKILL.md\n(Entry point)"]
+    end
+
+    subgraph REFS["References"]
+        REF1["chart-selector.md"]
+        REF2["mermaid-cheatsheet.md"]
+        REF3["traversal-protocol.md"]
+        REF4["output-format.md"]
+    end
+
+    subgraph SCRIPTS["Extraction Scripts"]
+        PY["Python Scripts\n(scan_ast, scan_imports,\nscan_todos, scan_metrics)"]
+        NODE["Node Scripts\n(scan_packages,\nscan_ts_exports)"]
+        BASH["Bash Scripts\n(scan_git, scan_files,\nrefresh_all)"]
+    end
+
+    subgraph TEMPLATES["Templates"]
+        TMPL_IDX["INDEX.md.tmpl"]
+        TMPL_TRV["TRAVERSE.md.tmpl"]
+        CHART_TMPLS["16 .mmd.tmpl\nchart templates"]
+    end
+
+    subgraph OUTPUT[".flowmem/ Output"]
+        INDEX["INDEX.md"]
+        TRAVERSE["TRAVERSE.md"]
+        CHARTS["charts/ by layer"]
+        SCRIPT_COPIES["scripts/ (copies)"]
+    end
+
+    SKILL_MD --> REFS
+    SKILL_MD --> SCRIPTS
+    SKILL_MD --> TEMPLATES
+    SCRIPTS --> OUTPUT
+    TEMPLATES --> OUTPUT

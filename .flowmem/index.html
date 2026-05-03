@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowMem Memory — flowmem</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, system-ui, sans-serif; background: #f0f7ff; color: #111827; }
+    nav {
+      background: #1e40af; color: white; padding: 0 24px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 8px rgba(30,64,175,0.3);
+    }
+    .nav-title { font-weight: 700; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+    .nav-meta { font-size: 12px; opacity: 0.75; }
+    .layout { display: flex; min-height: calc(100vh - 56px); }
+    .toc {
+      width: 240px; flex-shrink: 0; padding: 20px 16px;
+      background: white; border-right: 1px solid #bfdbfe;
+      position: sticky; top: 56px; height: calc(100vh - 56px); overflow-y: auto;
+    }
+    .toc-layer {
+      font-weight: 700; color: #1e40af; font-size: 11px; text-transform: uppercase;
+      letter-spacing: .08em; margin: 16px 0 4px; padding: 0 8px;
+    }
+    .toc a {
+      display: block; font-size: 13px; color: #374151; text-decoration: none;
+      padding: 4px 10px; border-radius: 6px; margin: 1px 0; font-family: monospace;
+    }
+    .toc a:hover { background: #dbeafe; color: #1e40af; }
+    .main { flex: 1; padding: 28px 32px; max-width: calc(100% - 240px); }
+    .search-bar {
+      width: 100%; padding: 10px 16px; border: 1.5px solid #bfdbfe; border-radius: 10px;
+      font-size: 14px; margin-bottom: 28px; outline: none; background: white;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-bar:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .layer-section { margin-bottom: 48px; }
+    .layer-title {
+      font-size: 18px; font-weight: 700; color: #1e40af;
+      border-bottom: 2px solid #bfdbfe; padding-bottom: 10px; margin-bottom: 20px;
+    }
+    .chart-card {
+      background: white; border: 1.5px solid #bfdbfe; border-radius: 14px;
+      margin-bottom: 20px; overflow: hidden;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .chart-card:hover { box-shadow: 0 4px 20px rgba(37,99,235,0.1); border-color: #93c5fd; }
+    .chart-header {
+      background: #eff6ff; padding: 10px 18px; display: flex; align-items: center;
+      gap: 10px; border-bottom: 1px solid #bfdbfe; flex-wrap: wrap;
+    }
+    .chart-name { font-weight: 700; color: #1e3a8a; font-size: 14px; font-family: monospace; }
+    .badge {
+      padding: 2px 10px; border-radius: 9999px; font-size: 11px; font-weight: 600;
+      display: inline-flex; align-items: center;
+    }
+    .badge-script { background: #dbeafe; color: #1e40af; }
+    .badge-ai { background: #ede9fe; color: #5b21b6; }
+    .badge-layer { background: #dcfce7; color: #15803d; }
+    .chart-meta { font-size: 11px; color: #9ca3af; margin-left: auto; font-family: monospace; }
+    .chart-body { padding: 20px 24px; overflow-x: auto; background: white; }
+    .chart-body .mermaid { display: flex; justify-content: center; align-items: flex-start; }
+    footer {
+      text-align: center; padding: 20px; color: #9ca3af; font-size: 12px;
+      border-top: 1px solid #e5e7eb; background: white; margin-top: 32px;
+    }
+    footer a { color: #2563eb; text-decoration: none; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-title">🧠 FlowMem Memory — <em style="font-weight:400;font-style:normal;opacity:0.9">flowmem</em></div>
+    <div class="nav-meta">10 charts · 5 layers · Generated 2026-05-03</div>
+  </nav>
+
+  <div class="layout">
+    <aside class="toc">
+      <div style="font-size:12px;color:#6b7280;padding:0 8px 12px;border-bottom:1px solid #e5e7eb;margin-bottom:8px;">
+        📋 10 charts · 5 layers
+      </div>
+      <div class="toc-layer">🏗️ Structure</div>
+      <a href="#modules-mmd">modules.mmd</a>
+      <a href="#overview-mmd">overview.mmd</a>
+      <div class="toc-layer">🔄 Behavior</div>
+      <a href="#generate_flow-mmd">generate_flow.mmd</a>
+      <a href="#traverse_flow-mmd">traverse_flow.mmd</a>
+      <div class="toc-layer">🗃️ Data</div>
+      <a href="#data_flow-mmd">data_flow.mmd</a>
+      <div class="toc-layer">📅 Project</div>
+      <a href="#roadmap-mmd">roadmap.mmd</a>
+      <a href="#tasks-mmd">tasks.mmd</a>
+      <div class="toc-layer">🔍 Quality</div>
+      <a href="#complexity-mmd">complexity.mmd</a>
+      <a href="#debt-mmd">debt.mmd</a>
+      <a href="#distribution-mmd">distribution.mmd</a>
+    </aside>
+
+    <main class="main">
+      <input class="search-bar" type="text" placeholder="🔍  Search charts by name, type, or content..."
+             id="search" oninput="filterCharts(this.value)" />
+
+      <div class="layer-section" id="layer-structure">
+        <div class="layer-title">🏗️ Structure Layer</div>
+        <div class="chart-card" id="modules-mmd" data-layer="structure">
+    <div class="chart-header">
+      <span class="chart-name">📄 modules.mmd</span>
+      <span class="badge badge-layer">structure</span>
+      <span class="badge badge-script">script</span>
+      <span class="badge" style="background:#fef3c7;color:#92400e;font-family:monospace;font-size:10px">flowchart</span>
+      <span class="chart-meta">updated: 2026-05-03</span>
+    </div>
+    <div class="chart-body">
+      <div class="mermaid">
+flowchart LR
+    subgraph SKILL["Skill Core"]
+        SKILL_MD["SKILL.md\n(Entry point)"]
+    end
+
+    subgraph REFS["References"]
+        REF1["chart-selector.md"]
+        REF2["mermaid-cheatsheet.md"]
+        REF3["traversal-protocol.md"]
+        REF4["output-format.md"]
+    end
+
+    subgraph SCRIPTS["Extraction Scripts"]
+        PY["Python Scripts\n(scan_ast, scan_imports,\nscan_todos, scan_metrics)"]
+        NODE["Node Scripts\n(scan_packages,\nscan_ts_exports)"]
+        BASH["Bash Scripts\n(scan_git, scan_files,\nrefresh_all)"]
+    end
+
+    subgraph TEMPLATES["Templates"]
+        TMPL_IDX["INDEX.md.tmpl"]
+        TMPL_TRV["TRAVERSE.md.tmpl"]
+        CHART_TMPLS["16 .mmd.tmpl\nchart templates"]
+    end
+
+    subgraph OUTPUT[".flowmem/ Output"]
+        INDEX["INDEX.md"]
+        TRAVERSE["TRAVERSE.md"]
+        CHARTS["charts/ by layer"]
+        SCRIPT_COPIES["scripts/ (copies)"]
+    end
+
+    SKILL_MD --> REFS
+    SKILL_MD --> SCRIPTS
+    SKILL_MD --> TEMPLATES
+    SCRIPTS --> OUTPUT
+    TEMPLATES --> OUTPUT
+      </div>
+    </div>
+  </div>
+        <div class="chart-card" id="overview-mmd" data-layer="structure">
+    <div class="chart-header">
+      <span class="chart-name">📄 overview.mmd</span>
+      <span class="badge badge-layer">structure</span>
+      <span class="badge badge-ai">ai</span>
+      <span class="badge" style="background:#fef3c7;color:#92400e;font-family:monospace;font-size:10px">C4Context</span>
+      <span class="chart-meta">updated: 2026-05-03</span>
+    </div>
+    <div class="chart-body">
+      <div class="mermaid">
+C4Context
+    title System Context — FlowMem
+
+    Person(dev, "Developer / AI Engineer", "Uses Claude Code to work on any codebase")
+    System(flowmem, "FlowMem Skill", "Indexes codebase into Mermaid .mmd charts, organized by layer")
+    System_Ext(vscode, "VS Code", "Renders .mmd files with Mermaid Preview extension")
+    System_Ext(flowskill, "FlowSkill", "Browser-based Mermaid editor and workflow runner")
+    System_Ext(mermaid_live, "mermaid.live", "Online Mermaid renderer")
+    System_Ext(claude, "Claude Code", "AI assistant that traverses FlowMem memory")
+
+    Rel(dev, flowmem, "Triggers with phrase", "Claude Code")
+    Rel(flowmem, vscode, "Writes .mmd files to .flowmem/")
+    Rel(dev, flowskill, "Pastes charts for visual editing")
+    Rel(dev, mermaid_live, "Pastes charts for quick preview")
+    Rel(claude, flowmem, "Reads INDEX.md, loads charts by layer")
+      </div>
+    </div>
+  </div>
+      </div>
+      <div class="layer-section" id="layer-behavior">
+        <div class="layer-title">🔄 Behavior Layer</div>
+        <div class="chart-card" id="generate_flow-mmd" data-layer="behavior">
+    <div class="chart-header">
+      <span class="chart-name">📄 generate_flow.mmd</span>
+      <span class="badge badge-layer">behavior</span>
+      <span class="badge badge-ai">ai</span>
+      <span class="badge" style="background:#fef3c7;color:#92400e;font-family:monospace;font-size:10px">sequenceDiagram</span>
+      <span class="chart-meta">updated: 2026-05-03</span>
+    </div>
+    <div class="chart-body">
+      <div class="mermaid">
+sequenceDiagram
+    actor Dev as Developer
+    participant CC as Claude Code
+    participant FM as FlowMem Skill
+    participant Scripts as Extraction Scripts
+    participant FS as File System
+
+    Dev->>CC: "generate flowmem for this project"
+    CC->>FM: Invoke SKILL.md
+
+    Note over FM: Phase 1 — Classify
+    FM->>FS: Read README, src/ tree
+    FS-->>FM: Project structure
+
+    Note over FM: Phase 2 — Extract
+    FM->>Scripts: Run scan_ast.py
+    Scripts-->>FM: ast.json (classes, functions)
+    FM->>Scripts: Run scan_todos.py
+    Scripts-->>FM: todos.json (debt map)
+    FM->>Scripts: Run scan_git.sh
+    Scripts-->>FM: git.txt (history)
+
+    Note over FM: Phase 3 — Chart
+    FM->>FS: Write .mmd files to .flowmem/charts/
+
+    Note over FM: Phase 4 — Index
+    FM->>FS: Write INDEX.md + TRAVERSE.md
+
+    FM-->>CC: "Generated N charts in X layers"
+    CC-->>Dev: Summary + how-to-view
+      </div>
+    </div>
+  </div>
+        <div class="chart-card" id="traverse_flow-mmd" data-layer="behavior">
+    <div class="chart-header">
+      <span class="chart-name">📄 traverse_flow.mmd</span>
+      <span class="badge badge-layer">behavior</span>
+      <span class="badge badge-ai">ai</span>
+      <span class="badge" style="background:#fef3c7;color:#92400e;font-family:monospace;font-size:10px">sequenceDiagram</span>
+      <span class="chart-meta">updated: 2026-05-03</span>
+    </div>
+    <div class="chart-body">
+      <div class="mermaid">
+sequenceDiagram
+    actor Dev as Developer
+    participant CC as Claude Code
+    participant FM as FlowMem (Traverse Mode)
+    participant FS as .flowmem/ Files
+    participant Scripts as Refresh Scripts
+
+    Dev->>CC: "How does auth work in this project?"
+
+    CC->>FS: Read .flowmem/INDEX.md
+    FS-->>CC: Chart map (all layers)
+
+    Note over CC,FM: Identify relevant layer = behavior
+    CC->>FS: Read charts/behavior/auth_flow.mmd metadata
+    FS-->>CC: method=script (needs refresh)
+
+    CC->>Scripts: Run scan_ast.py
+    Scripts-->>CC: Fresh class data
+
+    CC->>FS: Read charts/behavior/auth_flow.mmd
+    FS-->>CC: sequenceDiagram content
+
+    CC-->>Dev: Answer with specific node names from chart
+      </div>
+    </div>
+  </div>
+      </div>
+      <div class="layer-section" id="layer-data">
+        <div class="layer-title">🗃️ Data Layer</div>
+        <div class="chart-card" id="data_flow-mmd" data-layer="data">
+    <div class="chart-header">
+      <span class="chart-name">📄 data_flow.mmd</span>
+      <span class="badge badge-layer">data</span>
+      <span class="badge badge-ai">ai</span>
+      <span class="badge" style="background:#fef3c7;color:#92400e;font-family:monospace;font-size:10px">sankey</span>
+      <span class="chart-meta">updated: 2026-05-03</span>
+    </div>
+    <div class="chart-body">
+      <div class="mermaid">
+sankey-beta
+    Codebase, Python AST Parser, 30
+    Codebase, Import Graph Parser, 20
+    Codebase, TODO Scanner, 15
+    Codebase, Metrics Analyzer, 15
+    Codebase, Git History, 10
+    Codebase, File Scanner, 10
+    Python AST Parser, classDiagram, 30
+    Import Graph Parser, flowchart, 20
+    TODO Scanner, mindmap, 15
+    Metrics Analyzer, quadrantChart, 15
+    Git History, gitGraph, 10
+    File Scanner, pie, 10
+      </div>
+    </div>
+  </div>
+      </div>
+      <div class="layer-section" id="layer-project">
+        <div class="layer-title">📅 Project Layer</div>
+        <div class="chart-card" id="roadmap-mmd" data-layer="project">
+    <div class="chart-header">
+      <span class="chart-name">📄 roadmap.mmd</span>
+      <span class="badge badge-layer">project</span>
+      <span class="badge badge-ai">ai</span>
+      <span class="badge" style="background:#fef3c7;color:#92400e;font-family:monospace;font-size:10px">gantt</span>
+      <span class="chart-meta">updated: 2026-05-03</span>
+    </div>
+    <div class="chart-body">
+      <div class="mermaid">
+gantt
+    title FlowMem Development Roadmap
+    dateFormat YYYY-MM-DD
+
+    section v1.0 — Released
+    Core SKILL.md (3 modes)         :done, s1, 2026-05-01, 2026-05-03
+    8 extraction scripts            :done, s2, 2026-05-01, 2026-05-03
+    16 Mermaid chart templates      :done, s3, 2026-05-01, 2026-05-03
+    OSS README + Apache 2.0         :done, s4, 2026-05-01, 2026-05-03
+    GitHub Pages landing site       :done, s5, 2026-05-01, 2026-05-03
+
+    section v1.1 — Planned
+    Go language support             :p1, 2026-05-10, 7d
+    Rust language support           :p2, 2026-05-17, 7d
+    Java/Kotlin support             :p3, 2026-05-24, 7d
+    CI/CD auto-refresh action       :p4, 2026-05-10, 14d
+
+    section v2.0 — Future
+    MCP server mode                 :f1, 2026-06-01, 30d
+    Interactive chart editor        :f2, 2026-06-15, 21d
+    Team memory sync                :f3, 2026-07-01, 30d
+      </div>
+    </div>
+  </div>
+        <div class="chart-card" id="tasks-mmd" data-layer="project">
+    <div class="chart-header">
+      <span class="chart-name">📄 tasks.mmd</span>
+      <span class="badge badge-layer">project</span>
+      <span class="badge badge-ai">ai</span>
+      <span class="badge" style="background:#fef3c7;color:#92400e;font-family:monospace;font-size:10px">kanban</span>
+      <span class="chart-meta">updated: 2026-05-03</span>
+    </div>
+    <div class="chart-body">
+      <div class="mermaid">
+kanban
+    Backlog
+        task1[Go language scanner]
+        task2[Rust language scanner]
+        task3[Java/Kotlin support]
+        task4[MCP server mode]
+        task5[CI GitHub Action auto-refresh]
+        task6[Team memory sync feature]
+    In Progress
+        task7[Screenshot generation for README]
+        task8[Product Hunt launch prep]
+    Done
+        task9[Core SKILL.md - 3 modes]
+        task10[8 extraction scripts]
+        task11[16 chart templates]
+        task12[GitHub Pages site]
+        task13[Apache 2.0 license]
+        task14[Eval test cases]
+      </div>
+    </div>
+  </div>
+      </div>
+      <div class="layer-section" id="layer-quality">
+        <div class="layer-title">🔍 Quality Layer</div>
+        <div class="chart-card" id="complexity-mmd" data-layer="quality">
+    <div class="chart-header">
+      <span class="chart-name">📄 complexity.mmd</span>
+      <span class="badge badge-layer">quality</span>
+      <span class="badge badge-script">script</span>
+      <span class="badge" style="background:#fef3c7;color:#92400e;font-family:monospace;font-size:10px">quadrantChart</span>
+      <span class="chart-meta">updated: 2026-05-03</span>
+    </div>
+    <div class="chart-body">
+      <div class="mermaid">
+quadrantChart
+    title Script Complexity vs File Size
+    x-axis Low Complexity --> High Complexity
+    y-axis Small File --> Large File
+    quadrant-1 Refactor Candidates
+    quadrant-2 Large and Complex
+    quadrant-3 Simple and Small
+    quadrant-4 Large but Simple
+    scan-metrics: [1.0, 0.67]
+    scan-ast: [0.99, 0.63]
+    scan-imports: [0.83, 0.44]
+    scan-todos: [0.52, 0.40]
+    scan-packages: [0.08, 0.52]
+    scan-ts-exports: [0.07, 0.64]
+    scan-files: [0.06, 0.35]
+    scan-git: [0.05, 0.28]
+      </div>
+    </div>
+  </div>
+        <div class="chart-card" id="debt-mmd" data-layer="quality">
+    <div class="chart-header">
+      <span class="chart-name">📄 debt.mmd</span>
+      <span class="badge badge-layer">quality</span>
+      <span class="badge badge-script">script</span>
+      <span class="badge" style="background:#fef3c7;color:#92400e;font-family:monospace;font-size:10px">mindmap</span>
+      <span class="chart-meta">updated: 2026-05-03</span>
+    </div>
+    <div class="chart-body">
+      <div class="mermaid">
+mindmap
+  root((Tech Debt\n& Notes))
+
+    TODO
+      , FIXME, HACK, NOTE, BUG annotations across source files.
+      ', 'FIXME', 'HACK', 'NOTE', 'BUG', 'XXX', 'OPTIMIZE', 'REFAC
+    Code Quality
+      All scripts use stdlib only
+      No external runtime deps
+    Documentation
+      SKILL.md is the living spec
+      References are comprehensive
+      </div>
+    </div>
+  </div>
+        <div class="chart-card" id="distribution-mmd" data-layer="quality">
+    <div class="chart-header">
+      <span class="chart-name">📄 distribution.mmd</span>
+      <span class="badge badge-layer">quality</span>
+      <span class="badge badge-script">script</span>
+      <span class="badge" style="background:#fef3c7;color:#92400e;font-family:monospace;font-size:10px">pie</span>
+      <span class="chart-meta">updated: 2026-05-03</span>
+    </div>
+    <div class="chart-body">
+      <div class="mermaid">
+pie showData
+    title FlowMem File Type Distribution
+    "Templates (.tmpl)" : 18
+    "Python scripts" : 8
+    "Markdown docs" : 7
+    "Bash scripts" : 6
+    "Node.js scripts" : 4
+    "Other (json, html)" : 3
+      </div>
+    </div>
+  </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    FlowMem v1.0 &nbsp;·&nbsp;
+    <a href="https://github.com/YOUR_USERNAME/flowmem">GitHub</a> &nbsp;·&nbsp;
+    Apache 2.0 &nbsp;·&nbsp;
+    Powered by <a href="https://mermaid.js.org">Mermaid.js</a>
+  </footer>
+
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+
+    function filterCharts(q) {
+      const lower = q.toLowerCase();
+      document.querySelectorAll('.chart-card').forEach(card => {
+        const matches = !q || card.textContent.toLowerCase().includes(lower);
+        card.style.display = matches ? '' : 'none';
+      });
+      document.querySelectorAll('.layer-section').forEach(section => {
+        const visibleCards = section.querySelectorAll('.chart-card:not([style*="none"])');
+        section.style.display = visibleCards.length ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

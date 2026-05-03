@@ -1,0 +1,32 @@
+%%{init: {'theme': 'default'}}%%
+%% FlowMem | type=sequenceDiagram | layer=behavior | method=ai | refresh=none | last-updated=2026-05-03 %%
+sequenceDiagram
+    actor Dev as Developer
+    participant CC as Claude Code
+    participant FM as FlowMem Skill
+    participant Scripts as Extraction Scripts
+    participant FS as File System
+
+    Dev->>CC: "generate flowmem for this project"
+    CC->>FM: Invoke SKILL.md
+
+    Note over FM: Phase 1 — Classify
+    FM->>FS: Read README, src/ tree
+    FS-->>FM: Project structure
+
+    Note over FM: Phase 2 — Extract
+    FM->>Scripts: Run scan_ast.py
+    Scripts-->>FM: ast.json (classes, functions)
+    FM->>Scripts: Run scan_todos.py
+    Scripts-->>FM: todos.json (debt map)
+    FM->>Scripts: Run scan_git.sh
+    Scripts-->>FM: git.txt (history)
+
+    Note over FM: Phase 3 — Chart
+    FM->>FS: Write .mmd files to .flowmem/charts/
+
+    Note over FM: Phase 4 — Index
+    FM->>FS: Write INDEX.md + TRAVERSE.md
+
+    FM-->>CC: "Generated N charts in X layers"
+    CC-->>Dev: Summary + how-to-view

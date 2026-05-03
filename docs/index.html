@@ -163,44 +163,44 @@
 
       <!-- Right: Live code preview -->
       <div class="animate-float">
-        <!-- File card -->
-        <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); border-radius:16px; overflow:hidden; box-shadow: 0 24px 48px rgba(0,0,0,0.3);">
+        <!-- File card — white theme -->
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:16px; overflow:hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.25);">
 
-          <!-- Card header: filename + badges -->
-          <div style="background:rgba(255,255,255,0.1); padding:12px 18px; display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
-            <span style="color:#93c5fd; font-size:13px;">📄</span>
-            <span style="color:#e0f2fe; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600;">classes.mmd</span>
+          <!-- Card header -->
+          <div style="background:#f8fafc; padding:12px 18px; display:flex; align-items:center; gap:10px; border-bottom:1px solid #e2e8f0;">
+            <span style="font-size:13px;">📄</span>
+            <span style="color:#1e40af; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700;">classes.mmd</span>
             <div style="margin-left:auto; display:flex; gap:6px; flex-wrap:wrap;">
-              <span style="background:rgba(34,197,94,0.2); color:#86efac; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:600;">structure</span>
-              <span style="background:rgba(59,130,246,0.25); color:#93c5fd; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:600;">script</span>
-              <span style="background:rgba(250,204,21,0.15); color:#fde047; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:600; font-family:monospace;">classDiagram</span>
+              <span style="background:#dcfce7; color:#16a34a; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:600;">structure</span>
+              <span style="background:#dbeafe; color:#2563eb; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:600;">script</span>
+              <span style="background:#fef9c3; color:#92400e; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:600; font-family:monospace;">classDiagram</span>
             </div>
           </div>
 
-          <!-- Code body: clean, spacious -->
-          <div style="padding:24px 24px 20px; font-family:'JetBrains Mono',monospace; font-size:13px; line-height:2;">
-            <div style="color:#7dd3fc; margin-bottom:16px; font-size:14px; font-weight:700; letter-spacing:0.02em;">classDiagram</div>
+          <!-- Code body -->
+          <div style="padding:24px 24px 20px; font-family:'JetBrains Mono',monospace; font-size:13px; line-height:2; background:#ffffff;">
+            <div style="color:#2563eb; margin-bottom:16px; font-size:14px; font-weight:700; letter-spacing:0.02em;">classDiagram</div>
 
             <div style="margin-bottom:14px; padding-left:4px;">
-              <div style="color:#e2e8f0; font-weight:600;">  class <span style="color:#fbbf24;">AuthStore</span></div>
-              <div style="color:#94a3b8; padding-left:16px;">  +<span style="color:#86efac;">login</span>(<span style="color:#f9a8d4;">email, password</span>) bool</div>
-              <div style="color:#94a3b8; padding-left:16px;">  +<span style="color:#86efac;">logout</span>() void</div>
+              <div style="color:#111827; font-weight:600;">  class <span style="color:#d97706;">AuthStore</span></div>
+              <div style="color:#6b7280; padding-left:16px;">  +<span style="color:#16a34a;">login</span>(<span style="color:#db2777;">email, password</span>) bool</div>
+              <div style="color:#6b7280; padding-left:16px;">  +<span style="color:#16a34a;">logout</span>() void</div>
             </div>
 
             <div style="margin-bottom:14px; padding-left:4px;">
-              <div style="color:#e2e8f0; font-weight:600;">  class <span style="color:#fbbf24;">WorkspaceStore</span></div>
-              <div style="color:#94a3b8; padding-left:16px;">  +<span style="color:#86efac;">create</span>(<span style="color:#f9a8d4;">name</span>) Workspace</div>
-              <div style="color:#94a3b8; padding-left:16px;">  +<span style="color:#86efac;">save</span>() void</div>
+              <div style="color:#111827; font-weight:600;">  class <span style="color:#d97706;">WorkspaceStore</span></div>
+              <div style="color:#6b7280; padding-left:16px;">  +<span style="color:#16a34a;">create</span>(<span style="color:#db2777;">name</span>) Workspace</div>
+              <div style="color:#6b7280; padding-left:16px;">  +<span style="color:#16a34a;">save</span>() void</div>
             </div>
 
             <div style="margin-bottom:18px; padding-left:4px;">
-              <div style="color:#e2e8f0; font-weight:600;">  class <span style="color:#fbbf24;">MermaidStore</span></div>
-              <div style="color:#94a3b8; padding-left:16px;">  +<span style="color:#86efac;">validateAndSet</span>(<span style="color:#f9a8d4;">text</span>) bool</div>
+              <div style="color:#111827; font-weight:600;">  class <span style="color:#d97706;">MermaidStore</span></div>
+              <div style="color:#6b7280; padding-left:16px;">  +<span style="color:#16a34a;">validateAndSet</span>(<span style="color:#db2777;">text</span>) bool</div>
             </div>
 
-            <div style="border-top:1px solid rgba(255,255,255,0.07); padding-top:14px; color:#94a3b8; font-size:12px;">
-              <div><span style="color:#fbbf24;">AuthStore</span> <span style="color:#7dd3fc;">--&gt;</span> <span style="color:#fbbf24;">WorkspaceStore</span> <span style="color:#64748b;">: owns</span></div>
-              <div><span style="color:#fbbf24;">WorkspaceStore</span> <span style="color:#7dd3fc;">--&gt;</span> <span style="color:#fbbf24;">MermaidStore</span> <span style="color:#64748b;">: uses</span></div>
+            <div style="border-top:1px solid #e2e8f0; padding-top:14px; font-size:12px;">
+              <div><span style="color:#d97706;">AuthStore</span> <span style="color:#2563eb;">--&gt;</span> <span style="color:#d97706;">WorkspaceStore</span> <span style="color:#9ca3af;">: owns</span></div>
+              <div><span style="color:#d97706;">WorkspaceStore</span> <span style="color:#2563eb;">--&gt;</span> <span style="color:#d97706;">MermaidStore</span> <span style="color:#9ca3af;">: uses</span></div>
             </div>
           </div>
         </div>

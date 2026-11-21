@@ -1,21 +1,31 @@
-# FlowMem v2.0 Benchmark Results (`FlowMem-LongMem-50`)
+# FlowMem v2.0 Audited Benchmark Results (`FlowMem-LongMem-50`)
 
-Reproducible 50-query evaluation comparing **FlowMem v2.0 Dense Diagram-Markdown (DDM)** against architectural baselines modeled on **Graphiti**, **Zep**, **Mem0**, and **Supermemory (Vector RAG)**.
+Audited 50-query evaluation comparing **FlowMem v2.0 (Dense Diagram-Markdown)** against standalone implementations of **Graphiti (Bi-Temporal JSON)**, **Mem0 (Atomic Fact Store)**, **Zep (Episodic + Entity Summaries)**, and **Supermemory (Hybrid BM25+Vector RAG)**.
 
-## Leaderboard
+## 1. Fixed Memory-Slot Budget Leaderboard (`110 tokens` max context)
 
-| Rank | Architecture | Overall | Single-Hop | Multi-Hop | Temporal | Knowledge Update | Abstention | Avg Context Tokens |
+| Rank | Architecture | Budget Acc | 1-Hop | Multi-Hop | Temporal | Update | Abstain | Avg Raw Tokens |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|
-| 1 | **FlowMem v2.0 (DDM)** | **98.0%** | 100.0% | 90.0% | 100.0% | 100.0% | 100.0% | ~63.3 tok |
-| 2 | Mem0 (Flat Fact Store) | 70.0% | 100.0% | 70.0% | 20.0% | 60.0% | 100.0% | ~34.9 tok |
-| 3 | Zep (Session + Facts) | 66.0% | 70.0% | 80.0% | 90.0% | 0.0% | 90.0% | ~98.1 tok |
-| 4 | Supermemory (Vector RAG) | 66.0% | 80.0% | 80.0% | 90.0% | 0.0% | 80.0% | ~106.6 tok |
-| 5 | Graphiti (JSON Graph) | 60.0% | 60.0% | 30.0% | 80.0% | 30.0% | 100.0% | ~480.3 tok |
+| 1 | **FlowMem v2.0 (DDM .mmd)** | **94.0%** | 100.0% | 80.0% | 90.0% | 100.0% | 100.0% | ~114.9 tok |
+| 2 | Graphiti (Bi-Temporal JSON Graph) | 80.0% | 100.0% | 20.0% | 80.0% | 100.0% | 100.0% | ~418.6 tok |
+| 3 | Mem0 (Atomic Fact Store) | 68.0% | 100.0% | 100.0% | 20.0% | 70.0% | 50.0% | ~29.1 tok |
+| 4 | Zep (Episodic + Fact Summaries) | 60.0% | 100.0% | 60.0% | 90.0% | 20.0% | 30.0% | ~147.3 tok |
+| 5 | Supermemory (Hybrid RAG) | 56.0% | 70.0% | 40.0% | 90.0% | 40.0% | 40.0% | ~111.5 tok |
 
-## Why FlowMem DDM Wins
-1. **Bi-Temporal Edges (`-->` `#valid` vs `-.->` `#superseded`):** Preserves historical lineage for temporal queries without polluting current-state knowledge updates.
-2. **3-Hop Graph Traversal:** Traverses transitive dependencies (`ACME Corp -> Project Atlas -> AuthService -> Valkey 8.0`) that flat vector/fact stores miss.
-3. **Ultra-Dense Token Footprint:** Mermaid syntax encodes entity + relation + timestamp + state in ~14 tokens per fact—fewer tokens than JSON triplets or prose transcripts.
-4. **Confidence-Gated Abstention:** Refuses to hallucinate when seed entities do not exist in the graph.
+## 2. Unconstrained Retrieval Leaderboard (Full Context)
 
-Run yourself: `python3 benchmarks/run_benchmark.py`
+| Architecture | Full Acc | 1-Hop | Multi-Hop | Temporal | Update | Abstain | Avg Context |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| FlowMem v2.0 (DDM .mmd) | 94.0% | 100.0% | 80.0% | 90.0% | 100.0% | 100.0% | ~114.9 tok |
+| Graphiti (Bi-Temporal JSON Graph) | 94.0% | 100.0% | 80.0% | 90.0% | 100.0% | 100.0% | ~418.6 tok |
+| Supermemory (Hybrid RAG) | 72.0% | 90.0% | 80.0% | 90.0% | 60.0% | 40.0% | ~111.5 tok |
+| Mem0 (Atomic Fact Store) | 68.0% | 100.0% | 100.0% | 20.0% | 70.0% | 50.0% | ~29.1 tok |
+| Zep (Episodic + Fact Summaries) | 68.0% | 100.0% | 90.0% | 90.0% | 30.0% | 30.0% | ~147.3 tok |
+
+## Reproducibility & Anti-Cheat Verification
+```bash
+bash benchmarks/verify_all.sh
+```
+- `benchmarks/audit_fairness.py` asserts zero dataset entities or expected answers appear in `scripts/python/memory_engine.py`.
+- `GraphitiBaseline` runs the exact same 3-hop BFS algorithm as FlowMem to isolate **Mermaid `.mmd` vs JSON** token density cleanly.
+- Optional live SDK adapters (`benchmarks/baselines/live_sdk_adapter.py`) detect `mem0`, `zep_cloud`, `supermemory`, and `graphiti_core` when installed with API keys.

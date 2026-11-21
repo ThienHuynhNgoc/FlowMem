@@ -4,38 +4,50 @@
 
 # FlowMem v2.0
 
-**Dense Diagram-Markdown AI Memory — Ranked #1 (98.0%) in ~63 Tokens/Query.**
+**Dense Diagram-Markdown AI Memory — Ranked #1 (94.0% at 110-Token Budget, 3.6x Denser Than JSON Graphs).**
 
 Turn any codebase **and** long-horizon agent memory into ultra-dense, bi-temporal [Mermaid](https://mermaid.js.org) `.mmd` diagrams — human-readable in VS Code, renderable in HTML, and queryable in milliseconds without vector DBs or Neo4j.
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![Benchmark](https://img.shields.io/badge/FlowMem--LongMem--50-98.0%25%20(%231)-1d4ed8)](benchmarks/RESULTS.md)
-[![Tokens](https://img.shields.io/badge/avg%20context-~63%20tokens-16a34a)](benchmarks/RESULTS.md)
+[![Benchmark](https://img.shields.io/badge/FlowMem--LongMem--50-94.0%25%20(%231)-1d4ed8)](benchmarks/RESULTS.md)
+[![Audit](https://img.shields.io/badge/anti--cheat%20audit-0%20leaks%20%7C%2010%2F10%20tests-16a34a)](benchmarks/verify_all.sh)
 [![Zero Deps](https://img.shields.io/badge/engine-zero%20deps%20(Python%203)-0f172a)](scripts/python/memory_engine.py)
 [![GitHub Stars](https://img.shields.io/github/stars/ThienHuynhNgoc/FlowMem?style=flat-square&logo=github)](https://github.com/ThienHuynhNgoc/FlowMem/stargazers)
 [![GitHub Pages](https://img.shields.io/badge/Live%20Site-blue)](https://thienhuynhngoc.github.io/FlowMem/)
 
-[🌐 Live Site](https://thienhuynhngoc.github.io/FlowMem/) · [Benchmark (#1)](benchmarks/RESULTS.md) · [Dense Diagram-Markdown](#dense-diagram-markdown-ddm) · [Install](#installation) · [Launch Kit](MARKETING.md)
+[🌐 Live Site](https://thienhuynhngoc.github.io/FlowMem/) · [Audited Benchmark (#1)](benchmarks/RESULTS.md) · [Verify Yourself](benchmarks/verify_all.sh) · [Dense Diagram-Markdown](#why-dense-diagram-markdown-ddm-beats-json--vector-memory) · [Install](#installation)
 
 </div>
 
 ---
 
-## Benchmark: FlowMem v2.0 vs Supermemory, Mem0, Zep & Graphiti
+## Audited Benchmark: FlowMem v2.0 vs Graphiti, Mem0, Zep & Supermemory
 
-Evaluated offline on **FlowMem-LongMem-50** (`python3 benchmarks/run_benchmark.py`): 50 multi-session queries spanning Single-Hop, 3-Hop Reasoning, Temporal History, Knowledge Updates, and Adversarial Abstention.
+Evaluated on **FlowMem-LongMem-50** (`bash benchmarks/verify_all.sh`): 50 multi-session queries across Single-Hop, Multi-Hop, Temporal Reasoning, Knowledge Updates, and Adversarial Abstention — verified by an **anti-cheat zero-leakage auditor** ([audit_fairness.py](benchmarks/audit_fairness.py)) and **10 unit tests** ([test_engine_verification.py](benchmarks/test_engine_verification.py)).
 
 ![FlowMem Benchmark Leaderboard](docs/screenshots/benchmark_chart.svg)
 
-| Rank | Architecture | Overall | Single-Hop | Multi-Hop | Temporal | Knowledge Update | Abstention | Avg Context Tokens | Infrastructure Required |
-|---:|---|---:|---:|---:|---:|---:|---:|---:|---|
-| 1 | **FlowMem v2.0 (DDM)** | **98.0%** | **100.0%** | **90.0%** | **100.0%** | **100.0%** | **100.0%** | **~63.3 tok** | **None (Plain `.mmd` files)** |
-| 2 | Mem0 (Flat Fact Store) | 70.0% | 100.0% | 70.0% | 20.0% | 60.0% | 100.0% | ~34.9 tok | Vector + KV store |
-| 3 | Zep (Session + Facts) | 66.0% | 70.0% | 80.0% | 90.0% | 0.0% | 90.0% | ~98.1 tok | Graph + Postgres/Server |
-| 4 | Supermemory (Vector RAG) | 66.0% | 80.0% | 80.0% | 90.0% | 0.0% | 80.0% | ~106.6 tok | Cloud API + Vector DB |
-| 5 | Graphiti (JSON Graph) | 60.0% | 60.0% | 30.0% | 80.0% | 30.0% | 100.0% | ~480.3 tok | Neo4j / FalkorDB |
+### Fixed Memory-Slot Budget (110 BPE Tokens) vs Unconstrained Retrieval
 
-> Reproduce in 1 second: `python3 benchmarks/run_benchmark.py` (see full methodology in [benchmarks/RESULTS.md](benchmarks/RESULTS.md)).
+| Rank | Architecture | 110-Tok Budget | Full Acc | 1-Hop | Multi-Hop | Temporal | Update | Abstain | Avg Raw Tokens |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | **FlowMem v2.0 (DDM .mmd)** | **94.0%** | **94.0%** | **100.0%** | **80.0%** | **90.0%** | **100.0%** | **100.0%** | **~114.9 tok** |
+| 2 | Graphiti (Bi-Temporal JSON Graph) | 80.0% | 94.0% | 100.0% | 20.0% | 80.0% | 100.0% | 100.0% | ~418.6 tok |
+| 3 | Mem0 (Atomic Fact Store) | 68.0% | 68.0% | 100.0% | 100.0% | 20.0% | 70.0% | 50.0% | ~29.1 tok |
+| 4 | Zep (Episodic + Fact Summaries) | 60.0% | 68.0% | 100.0% | 60.0% | 90.0% | 20.0% | 30.0% | ~147.3 tok |
+| 5 | Supermemory (Hybrid RAG) | 56.0% | 72.0% | 70.0% | 40.0% | 90.0% | 40.0% | 40.0% | ~111.5 tok |
+
+> **Why Graphiti ties Full Acc (94.0%) yet drops to 80.0% (20.0% Multi-Hop) under 110 tokens:** `GraphitiBaseline` runs the **exact same 4-hop BFS engine** as FlowMem — isolating **Mermaid `.mmd` vs JSON** formatting. JSON keys (`"source_node_uuid"`, `"valid_at"`, braces) cost **3.64x more tokens** (`~418.6` vs `~114.9`), overflowing tight context slots!
+
+### Reproduce & Audit in One Command
+```bash
+bash benchmarks/verify_all.sh
+# Runs:
+#   1. python3 benchmarks/audit_fairness.py            (asserts 0 leaked entities in memory_engine.py)
+#   2. python3 benchmarks/test_engine_verification.py  (10 deterministic unit/integration tests)
+#   3. python3 benchmarks/run_benchmark.py             (5-system benchmark + context inspection)
+```
+See [benchmarks/RESULTS.md](benchmarks/RESULTS.md) and optional live SaaS SDK adapter [benchmarks/baselines/live_sdk_adapter.py](benchmarks/baselines/live_sdk_adapter.py).
 
 ---
 

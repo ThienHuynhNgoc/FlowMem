@@ -20,7 +20,7 @@ description: >
   - AI-backed architectural charts: semantic reasoning generates sequences, C4, ER, and state machines
   - Bi-temporal Dense Diagram-Markdown (DDM) engine (`memory_engine.py`): stores evolving facts with
     `-->|rel @t=... #valid|` and `-.->|rel @t=... #superseded|` edges and answers multi-hop & temporal
-    queries in ~63 tokens (98.0% on FlowMem-LongMem-50).
+    queries at 94.0% (110-tok budget) on FlowMem-LongMem-50 (`bash benchmarks/verify_all.sh`).
 ---
 
 # FlowMem v2.0 — Dense Diagram-Markdown (DDM) AI Memory
@@ -149,12 +149,12 @@ python3 .flowmem/scripts/memory_engine.py query \
 
 ---
 
-## Mode 7: Benchmark (`FlowMem-LongMem-50`)
+## Mode 7: Benchmark & Anti-Cheat Verification (`FlowMem-LongMem-50`)
 
-Run the reproducible 50-query benchmark comparing FlowMem v2.0 against Graphiti, Zep, Mem0, and Supermemory baselines:
+Run the audited 3-stage verification suite (anti-cheat zero-leakage audit + 10 unit tests + 50-query benchmark across FlowMem, Graphiti, Mem0, Zep, and Supermemory baselines):
 
 ```bash
-python3 benchmarks/run_benchmark.py
+bash benchmarks/verify_all.sh
 ```
 
 Outputs `benchmarks/RESULTS.md`, `benchmarks/results.json`, and SVG charts in `docs/screenshots/`.

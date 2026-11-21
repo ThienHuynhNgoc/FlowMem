@@ -16,7 +16,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - `stats` command reporting graph density and active/superseded edge counts
 - **FlowMem-LongMem-50 Benchmark Suite (`benchmarks/`)**:
   - 50-query multi-session dataset (`benchmarks/dataset.json`) covering Single-Hop, Multi-Hop, Temporal Reasoning, Knowledge Updates, and Adversarial Abstention
-  - Automated benchmark runner (`benchmarks/run_benchmark.py`) comparing FlowMem v2.0 against Mem0, Zep, Supermemory, and Graphiti baselines: **FlowMem v2.0 ranked #1 with 98.0% overall accuracy at ~63.3 tokens/query**
+  - Automated benchmark runner (`benchmarks/run_benchmark.py`), standalone baseline implementations (`benchmarks/baselines/`), anti-cheat zero-leakage auditor (`benchmarks/audit_fairness.py`), 10-test verification suite (`benchmarks/test_engine_verification.py`), and one-command runner (`bash benchmarks/verify_all.sh`): **FlowMem v2.0 ranked #1 with 94.0% accuracy under a 110-token memory budget (~114.9 raw BPE tokens vs ~418.6 for Graphiti JSON)**
   - Auto-generated `benchmarks/RESULTS.md`, `benchmarks/results.json`, `docs/screenshots/benchmark_chart.svg`, and `docs/screenshots/ddm_memory_graph.svg`
 - Updated `SKILL.md` with Modes 5–7 (`Remember`, `Recall`, `Benchmark`)
 - Added `MARKETING.md` launch playbook for Product Hunt, Hacker News, Reddit, X, and AI marketplaces

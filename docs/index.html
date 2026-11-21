@@ -218,10 +218,10 @@
 
       <div class="mb-10 grid md:grid-cols-2 gap-6 items-center">
         <div class="card-white p-4">
-          <img src="screenshots/benchmark_chart.svg" alt="FlowMem-LongMem-50 Benchmark Leaderboard" class="w-full rounded-xl cursor-pointer" onclick="openLightbox('screenshots/benchmark_chart.svg','FlowMem-LongMem-50 Benchmark','98.0% Overall (#1)','~63.3 tok/query')" />
+          <img src="screenshots/benchmark_chart.svg" alt="FlowMem-LongMem-50 Audited Leaderboard" class="w-full rounded-xl cursor-pointer" onclick="openLightbox('screenshots/benchmark_chart.svg','FlowMem-LongMem-50 Audited Benchmark','94.0% at 110-Tok Budget (#1)','~114.9 tok/query')" />
         </div>
         <div class="card-white p-4">
-          <img src="screenshots/ddm_memory_graph.svg" alt="Dense Diagram-Markdown vs JSON Memory" class="w-full rounded-xl cursor-pointer" onclick="openLightbox('screenshots/ddm_memory_graph.svg','Dense Diagram-Markdown (DDM)','#valid vs #superseded','7.6x denser than JSON')" />
+          <img src="screenshots/ddm_memory_graph.svg" alt="Dense Diagram-Markdown vs JSON Memory" class="w-full rounded-xl cursor-pointer" onclick="openLightbox('screenshots/ddm_memory_graph.svg','Dense Diagram-Markdown (DDM)','#valid vs #superseded','3.6x denser than JSON')" />
         </div>
       </div>
 
@@ -230,7 +230,8 @@
           <thead>
             <tr class="table-header">
               <th class="text-left px-5 py-4 font-semibold">Architecture</th>
-              <th class="px-3 py-4 font-bold">Overall</th>
+              <th class="px-3 py-4 font-bold">110-Tok Budget</th>
+              <th class="px-3 py-4 font-medium opacity-90">Full Acc</th>
               <th class="px-3 py-4 font-medium opacity-90">1-Hop</th>
               <th class="px-3 py-4 font-medium opacity-90">Multi-Hop</th>
               <th class="px-3 py-4 font-medium opacity-90">Temporal</th>
@@ -242,53 +243,58 @@
           <tbody class="divide-y divide-blue-50">
             <tr class="bg-blue-50/70 font-semibold text-blue-900">
               <td class="px-5 py-3">1. FlowMem v2.0 (DDM .mmd)</td>
-              <td class="px-3 py-3 text-center text-blue-700 font-extrabold">98.0%</td>
+              <td class="px-3 py-3 text-center text-blue-700 font-extrabold">94.0%</td>
+              <td class="px-3 py-3 text-center">94.0%</td>
               <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">80.0%</td>
               <td class="px-3 py-3 text-center">90.0%</td>
               <td class="px-3 py-3 text-center">100.0%</td>
               <td class="px-3 py-3 text-center">100.0%</td>
-              <td class="px-3 py-3 text-center">100.0%</td>
-              <td class="px-3 py-3 text-center font-mono text-green-700">~63.3 tok</td>
+              <td class="px-3 py-3 text-center font-mono text-green-700">~114.9 tok</td>
             </tr>
             <tr class="hover:bg-blue-50/30">
-              <td class="px-5 py-3 text-gray-700">2. Mem0 (Flat Fact Store)</td>
-              <td class="px-3 py-3 text-center">70.0%</td>
+              <td class="px-5 py-3 text-gray-700">2. Graphiti (JSON Graph)</td>
+              <td class="px-3 py-3 text-center">80.0%</td>
+              <td class="px-3 py-3 text-center">94.0%</td>
               <td class="px-3 py-3 text-center">100.0%</td>
-              <td class="px-3 py-3 text-center">70.0%</td>
               <td class="px-3 py-3 text-center text-red-500">20.0%</td>
-              <td class="px-3 py-3 text-center">60.0%</td>
+              <td class="px-3 py-3 text-center">80.0%</td>
               <td class="px-3 py-3 text-center">100.0%</td>
-              <td class="px-3 py-3 text-center font-mono">~34.9 tok</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center font-mono text-red-500">~418.6 tok</td>
             </tr>
             <tr class="table-row-alt">
-              <td class="px-5 py-3 text-gray-700">3. Zep (Session + Facts)</td>
-              <td class="px-3 py-3 text-center">66.0%</td>
+              <td class="px-5 py-3 text-gray-700">3. Mem0 (Atomic Fact Store)</td>
+              <td class="px-3 py-3 text-center">68.0%</td>
+              <td class="px-3 py-3 text-center">68.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center text-red-500">20.0%</td>
               <td class="px-3 py-3 text-center">70.0%</td>
-              <td class="px-3 py-3 text-center">80.0%</td>
-              <td class="px-3 py-3 text-center">90.0%</td>
-              <td class="px-3 py-3 text-center text-red-500">0.0%</td>
-              <td class="px-3 py-3 text-center">90.0%</td>
-              <td class="px-3 py-3 text-center font-mono">~98.1 tok</td>
+              <td class="px-3 py-3 text-center">50.0%</td>
+              <td class="px-3 py-3 text-center font-mono">~29.1 tok</td>
             </tr>
             <tr class="hover:bg-blue-50/30">
-              <td class="px-5 py-3 text-gray-700">4. Supermemory (Vector RAG)</td>
-              <td class="px-3 py-3 text-center">66.0%</td>
-              <td class="px-3 py-3 text-center">80.0%</td>
-              <td class="px-3 py-3 text-center">80.0%</td>
+              <td class="px-5 py-3 text-gray-700">4. Zep (Episodic + Facts)</td>
+              <td class="px-3 py-3 text-center">60.0%</td>
+              <td class="px-3 py-3 text-center">68.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">60.0%</td>
               <td class="px-3 py-3 text-center">90.0%</td>
-              <td class="px-3 py-3 text-center text-red-500">0.0%</td>
-              <td class="px-3 py-3 text-center">80.0%</td>
-              <td class="px-3 py-3 text-center font-mono">~106.6 tok</td>
+              <td class="px-3 py-3 text-center text-red-500">20.0%</td>
+              <td class="px-3 py-3 text-center">30.0%</td>
+              <td class="px-3 py-3 text-center font-mono">~147.3 tok</td>
             </tr>
             <tr class="table-row-alt">
-              <td class="px-5 py-3 text-gray-700">5. Graphiti (JSON Graph)</td>
-              <td class="px-3 py-3 text-center">60.0%</td>
-              <td class="px-3 py-3 text-center">60.0%</td>
-              <td class="px-3 py-3 text-center">30.0%</td>
-              <td class="px-3 py-3 text-center">80.0%</td>
-              <td class="px-3 py-3 text-center">30.0%</td>
-              <td class="px-3 py-3 text-center">100.0%</td>
-              <td class="px-3 py-3 text-center font-mono text-red-500">~480.3 tok</td>
+              <td class="px-5 py-3 text-gray-700">5. Supermemory (Hybrid RAG)</td>
+              <td class="px-3 py-3 text-center">56.0%</td>
+              <td class="px-3 py-3 text-center">72.0%</td>
+              <td class="px-3 py-3 text-center">70.0%</td>
+              <td class="px-3 py-3 text-center">40.0%</td>
+              <td class="px-3 py-3 text-center">90.0%</td>
+              <td class="px-3 py-3 text-center text-red-500">40.0%</td>
+              <td class="px-3 py-3 text-center">40.0%</td>
+              <td class="px-3 py-3 text-center font-mono">~111.5 tok</td>
             </tr>
           </tbody>
         </table>

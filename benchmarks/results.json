@@ -1,70 +1,116 @@
 {
   "benchmark": "FlowMem-LongMem-50",
+  "token_budget": 110,
   "results": [
     {
-      "system": "FlowMem v2.0 (DDM)",
-      "overall_accuracy": 98.0,
-      "categories": {
+      "system": "FlowMem v2.0 (DDM .mmd)",
+      "budget_accuracy": 94.0,
+      "full_accuracy": 94.0,
+      "avg_tokens": 114.9,
+      "accuracy_per_100_tok": 81.8,
+      "avg_latency_ms": 0.472,
+      "budget_categories": {
         "single_hop": 100.0,
-        "multi_hop": 90.0,
-        "temporal": 100.0,
+        "multi_hop": 80.0,
+        "temporal": 90.0,
         "knowledge_update": 100.0,
         "abstention": 100.0
       },
-      "avg_tokens": 63.3,
-      "avg_latency_ms": 0.209
-    },
-    {
-      "system": "Mem0 (Flat Fact Store)",
-      "overall_accuracy": 70.0,
-      "categories": {
+      "full_categories": {
         "single_hop": 100.0,
-        "multi_hop": 70.0,
-        "temporal": 20.0,
-        "knowledge_update": 60.0,
+        "multi_hop": 80.0,
+        "temporal": 90.0,
+        "knowledge_update": 100.0,
         "abstention": 100.0
-      },
-      "avg_tokens": 34.9,
-      "avg_latency_ms": 0.03
+      }
     },
     {
-      "system": "Zep (Session + Facts)",
-      "overall_accuracy": 66.0,
-      "categories": {
-        "single_hop": 70.0,
-        "multi_hop": 80.0,
-        "temporal": 90.0,
-        "knowledge_update": 0.0,
-        "abstention": 90.0
-      },
-      "avg_tokens": 98.1,
-      "avg_latency_ms": 0.046
-    },
-    {
-      "system": "Supermemory (Vector RAG)",
-      "overall_accuracy": 66.0,
-      "categories": {
-        "single_hop": 80.0,
-        "multi_hop": 80.0,
-        "temporal": 90.0,
-        "knowledge_update": 0.0,
-        "abstention": 80.0
-      },
-      "avg_tokens": 106.6,
-      "avg_latency_ms": 0.008
-    },
-    {
-      "system": "Graphiti (JSON Graph)",
-      "overall_accuracy": 60.0,
-      "categories": {
-        "single_hop": 60.0,
-        "multi_hop": 30.0,
+      "system": "Graphiti (Bi-Temporal JSON Graph)",
+      "budget_accuracy": 80.0,
+      "full_accuracy": 94.0,
+      "avg_tokens": 418.6,
+      "accuracy_per_100_tok": 22.5,
+      "avg_latency_ms": 0.594,
+      "budget_categories": {
+        "single_hop": 100.0,
+        "multi_hop": 20.0,
         "temporal": 80.0,
-        "knowledge_update": 30.0,
+        "knowledge_update": 100.0,
         "abstention": 100.0
       },
-      "avg_tokens": 480.3,
-      "avg_latency_ms": 0.07
+      "full_categories": {
+        "single_hop": 100.0,
+        "multi_hop": 80.0,
+        "temporal": 90.0,
+        "knowledge_update": 100.0,
+        "abstention": 100.0
+      }
+    },
+    {
+      "system": "Mem0 (Atomic Fact Store)",
+      "budget_accuracy": 68.0,
+      "full_accuracy": 68.0,
+      "avg_tokens": 29.1,
+      "accuracy_per_100_tok": 233.7,
+      "avg_latency_ms": 0.162,
+      "budget_categories": {
+        "single_hop": 100.0,
+        "multi_hop": 100.0,
+        "temporal": 20.0,
+        "knowledge_update": 70.0,
+        "abstention": 50.0
+      },
+      "full_categories": {
+        "single_hop": 100.0,
+        "multi_hop": 100.0,
+        "temporal": 20.0,
+        "knowledge_update": 70.0,
+        "abstention": 50.0
+      }
+    },
+    {
+      "system": "Zep (Episodic + Fact Summaries)",
+      "budget_accuracy": 60.0,
+      "full_accuracy": 68.0,
+      "avg_tokens": 147.3,
+      "accuracy_per_100_tok": 46.2,
+      "avg_latency_ms": 0.223,
+      "budget_categories": {
+        "single_hop": 100.0,
+        "multi_hop": 60.0,
+        "temporal": 90.0,
+        "knowledge_update": 20.0,
+        "abstention": 30.0
+      },
+      "full_categories": {
+        "single_hop": 100.0,
+        "multi_hop": 90.0,
+        "temporal": 90.0,
+        "knowledge_update": 30.0,
+        "abstention": 30.0
+      }
+    },
+    {
+      "system": "Supermemory (Hybrid RAG)",
+      "budget_accuracy": 56.0,
+      "full_accuracy": 72.0,
+      "avg_tokens": 111.5,
+      "accuracy_per_100_tok": 64.6,
+      "avg_latency_ms": 0.128,
+      "budget_categories": {
+        "single_hop": 70.0,
+        "multi_hop": 40.0,
+        "temporal": 90.0,
+        "knowledge_update": 40.0,
+        "abstention": 40.0
+      },
+      "full_categories": {
+        "single_hop": 90.0,
+        "multi_hop": 80.0,
+        "temporal": 90.0,
+        "knowledge_update": 60.0,
+        "abstention": 40.0
+      }
     }
   ]
 }

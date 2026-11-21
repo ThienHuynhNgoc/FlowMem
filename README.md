@@ -2,374 +2,138 @@
 
 <img src="docs/screenshots/flowmem-hero.svg" alt="FlowMem" width="120" />
 
-# FlowMem
+# FlowMem v2.0
 
-**AI Memory in Plain Mermaid.**
+**Dense Diagram-Markdown AI Memory — Ranked #1 (98.0%) in ~63 Tokens/Query.**
 
-Turn any codebase into a rich, navigable chart system — human-readable in VS Code,
-browsable via the auto-generated HTML viewer, traversable by **any AI coding assistant**.
+Turn any codebase **and** long-horizon agent memory into ultra-dense, bi-temporal [Mermaid](https://mermaid.js.org) `.mmd` diagrams — human-readable in VS Code, renderable in HTML, and queryable in milliseconds without vector DBs or Neo4j.
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![Mermaid](https://img.shields.io/badge/powered%20by-Mermaid%2011-ff69b4)](https://mermaid.js.org)
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-blueviolet)](https://claude.ai/code)
+[![Benchmark](https://img.shields.io/badge/FlowMem--LongMem--50-98.0%25%20(%231)-1d4ed8)](benchmarks/RESULTS.md)
+[![Tokens](https://img.shields.io/badge/avg%20context-~63%20tokens-16a34a)](benchmarks/RESULTS.md)
+[![Zero Deps](https://img.shields.io/badge/engine-zero%20deps%20(Python%203)-0f172a)](scripts/python/memory_engine.py)
 [![GitHub Stars](https://img.shields.io/github/stars/ThienHuynhNgoc/FlowMem?style=flat-square&logo=github)](https://github.com/ThienHuynhNgoc/FlowMem/stargazers)
 [![GitHub Pages](https://img.shields.io/badge/Live%20Site-blue)](https://thienhuynhngoc.github.io/FlowMem/)
 
-[🌐 Live Site](https://thienhuynhngoc.github.io/FlowMem/) · [Install](#installation) · [How it works](#how-it-works) · [Chart gallery](#chart-gallery) · [Demo output](#demo-output)
+[🌐 Live Site](https://thienhuynhngoc.github.io/FlowMem/) · [Benchmark (#1)](benchmarks/RESULTS.md) · [Dense Diagram-Markdown](#dense-diagram-markdown-ddm) · [Install](#installation) · [Launch Kit](MARKETING.md)
 
 </div>
 
 ---
 
-## What is FlowMem?
+## Benchmark: FlowMem v2.0 vs Supermemory, Mem0, Zep & Graphiti
 
-FlowMem is a **Claude Code skill** that indexes any codebase into a structured set of
-[Mermaid](https://mermaid.js.org) `.mmd` files — organized by layer, tagged with metadata,
-and traversable by any AI coding assistant.
+Evaluated offline on **FlowMem-LongMem-50** (`python3 benchmarks/run_benchmark.py`): 50 multi-session queries spanning Single-Hop, 3-Hop Reasoning, Temporal History, Knowledge Updates, and Adversarial Abstention.
 
-Every feature, architecture decision, API flow, and data model becomes a chart stored in
-`.flowmem/` at your project root:
+![FlowMem Benchmark Leaderboard](docs/screenshots/benchmark_chart.svg)
 
+| Rank | Architecture | Overall | Single-Hop | Multi-Hop | Temporal | Knowledge Update | Abstention | Avg Context Tokens | Infrastructure Required |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---|
+| 1 | **FlowMem v2.0 (DDM)** | **98.0%** | **100.0%** | **90.0%** | **100.0%** | **100.0%** | **100.0%** | **~63.3 tok** | **None (Plain `.mmd` files)** |
+| 2 | Mem0 (Flat Fact Store) | 70.0% | 100.0% | 70.0% | 20.0% | 60.0% | 100.0% | ~34.9 tok | Vector + KV store |
+| 3 | Zep (Session + Facts) | 66.0% | 70.0% | 80.0% | 90.0% | 0.0% | 90.0% | ~98.1 tok | Graph + Postgres/Server |
+| 4 | Supermemory (Vector RAG) | 66.0% | 80.0% | 80.0% | 90.0% | 0.0% | 80.0% | ~106.6 tok | Cloud API + Vector DB |
+| 5 | Graphiti (JSON Graph) | 60.0% | 60.0% | 30.0% | 80.0% | 30.0% | 100.0% | ~480.3 tok | Neo4j / FalkorDB |
+
+> Reproduce in 1 second: `python3 benchmarks/run_benchmark.py` (see full methodology in [benchmarks/RESULTS.md](benchmarks/RESULTS.md)).
+
+---
+
+## Why Dense Diagram-Markdown (DDM) Beats JSON & Vector Memory
+
+![Dense Diagram-Markdown vs JSON/Vector Memory](docs/screenshots/ddm_memory_graph.svg)
+
+Traditional memory systems force an ugly tradeoff:
+- **Vector RAG (Supermemory)** dumps verbose text chunks (~107–800 tok) and mixes stale facts with new ones (`0.0%` on knowledge updates).
+- **Flat Fact Stores (Mem0)** overwrite updates in place, destroying history (`20.0%` on temporal queries).
+- **JSON Triplet Graphs (Graphiti)** preserve history but bloat prompts with JSON punctuation (`~480.3` tokens/query) and require a Neo4j daemon.
+
+**FlowMem v2.0** encodes a **bi-temporal knowledge graph directly in valid Mermaid `.mmd` syntax**:
+
+```mermaid
+flowchart LR
+  AuthService["AuthService"] -->|uses_cache @t=2026-03-14 #valid| Valkey_8_0["Valkey 8.0"]
+  AuthService -.->|uses_cache @t=2025-04-18..2026-03-14 #superseded| Redis_Cluster["Redis Cluster"]
+  Project_Atlas["Project Atlas"] -->|depends_on @t=2025-12-01 #valid| AuthService
 ```
-.flowmem/
-├── INDEX.md              ← AI loads this first
-├── TRAVERSE.md           ← Task-based navigation guide
-├── index.html            ← Browser viewer (open this to browse visually)
-└── charts/
-    ├── structure/        ← Code organization
-    ├── behavior/         ← API flows, state machines
-    ├── data/             ← Schemas, ER diagrams
-    ├── project/          ← Roadmap, timeline
-    └── quality/          ← Tech debt, git history
-```
+
+1. **Solid `-->` (`#valid`) vs Dashed `-.->` (`#superseded`):** Current state and full temporal lineage coexist in 1 readable line per fact (~14 tokens/edge).
+2. **3-Hop Shortest-Bridge Subgraph Extraction (`memory_engine.py`):** Traverses transitive chains (`ACME Corp -> Project Atlas -> AuthService -> Valkey 8.0`) without dumping unrelated nodes.
+3. **Human + Browser Renderable:** Open any memory file in VS Code, GitHub, or `.flowmem/index.html` and see the live diagram rendered visually.
+4. **Confidence-Gated Abstention:** Refuses to hallucinate when queried entities do not exist (`100.0%` abstention accuracy).
+
 ---
 
 ## Works with Any AI Coding Assistant
 
-FlowMem generates once with Claude Code. The `.flowmem/` output works with **every major AI assistant**.
-
-| AI Assistant | How to use FlowMem memory |
+| AI Assistant | How to Use FlowMem v2.0 |
 |---|---|
-| **Claude Code** | Native skill — runs all 5 phases automatically |
-| **Cursor** | Add to `.cursorrules`: `Always read .flowmem/INDEX.md first` |
-| **Windsurf** | Add to `.windsurfrules`: `Load .flowmem/INDEX.md on session start` |
+| **Claude Code / Antigravity** | Native skill (`SKILL.md`) — runs codebase mapping + `memory_engine.py` ingest/query |
+| **Cursor / Windsurf** | Add to rules: `Read .flowmem/INDEX.md first; query .flowmem/scripts/memory_engine.py` |
 | **GitHub Copilot** | Add to `.github/copilot-instructions.md` |
-| **Kiro** | Reference `.flowmem/TRAVERSE.md` in your spec |
-| **Gemini CLI** | Include `.flowmem/INDEX.md` in system prompt |
-| **Codeium / Continue** | Point context window at `.flowmem/charts/` |
-| **Any LLM** | Paste `.flowmem/INDEX.md` + relevant charts into context |
-
-**Generate once → commit `.flowmem/` → every AI on your team reads the same memory.**
-
-```markdown
-## Add to CLAUDE.md / .cursorrules / .windsurfrules / copilot-instructions.md
-On session start:
-1. Read `.flowmem/INDEX.md`
-2. Load charts per `.flowmem/TRAVERSE.md` based on the question
-3. Run `bash .flowmem/scripts/refresh_all.sh` if charts seem stale
-```
-
-
----
-
-## Why FlowMem?
-
-| | MemPalace | GitNexus | Graphify | **FlowMem** |
-|---|---|---|---|---|
-| Format | Proprietary | Proprietary | Proprietary graph DB | **Plain `.mmd` files** |
-| Human-readable | ❌ | Partial | ❌ | ✅ VS Code + mermaid.live |
-| Editable by hand | ❌ | ❌ | ❌ | ✅ Any text editor |
-| Works offline | ❌ | ❌ | ❌ | ✅ No server needed |
-| AI-traversable | Via API | Via API | Via API | ✅ Direct file reads |
-| Integrates with IDE | Plugin needed | Plugin needed | Plugin needed | ✅ VS Code extension |
-| Chart types | — | — | — | ✅ All 26 Mermaid types |
-| Open source | ❌ | ❌ | ❌ | ✅ Apache 2.0 |
-
----
-
-## How it works
-
-FlowMem uses a **hybrid extraction model**:
-
-### Script-backed charts (always fresh)
-Deterministic scripts extract live data — import graphs, class hierarchies, TODO clusters,
-git history. These can be refreshed any time without AI.
-
-```bash
-python3 .flowmem/scripts/scan_ast.py      # → classDiagram
-python3 .flowmem/scripts/scan_imports.py  # → flowchart (module graph)
-python3 .flowmem/scripts/scan_todos.py    # → mindmap (tech debt)
-bash    .flowmem/scripts/scan_git.sh      # → gitGraph + timeline
-```
-
-### AI-backed charts (semantic truth)
-AI reasoning generates architectural understanding — system context, API sequences, state
-machines, data flows. Generated once, updated only when architecture changes.
-
-```
-C4Context diagram    ← "What is this system?"
-sequenceDiagram      ← "How does auth work?"
-stateDiagram-v2      ← "What's the session lifecycle?"
-erDiagram            ← "What does the schema look like?"
-```
-
-### Three-step workflow
-
-```
-1. SCAN     → Run scripts + AI reasoning to extract knowledge
-2. CHART    → Generate .mmd files organized by layer
-3. TRAVERSE → AI loads only relevant charts to answer questions
-```
-
----
-
-
-## Installation
-
-FlowMem is a Claude Code skill. Install it by copying the skill folder into your project's
-(or global) `.claude/skills/` directory.
-
-### Option A — Per-project install
-
-```bash
-# From your project root
-mkdir -p .claude/skills
-cp -r /path/to/flowmem .claude/skills/flowmem
-```
-
-### Option B — Global install (available in all projects)
-
-```bash
-cp -r /path/to/flowmem ~/.claude/skills/flowmem
-```
-
-### Option C — Clone and symlink
-
-```bash
-git clone https://github.com/ThienHuynhNgoc/flowmem.git
-ln -s "$(pwd)/flowmem" ~/.claude/skills/flowmem
-```
+| **Gemini CLI / Kiro / Any LLM** | Run `memory_engine.py query` or load `.flowmem/INDEX.md` |
 
 ---
 
 ## Quick Start
 
-Once installed, open Claude Code in any project and type:
+### 1. Remember & Update Bi-Temporal Facts (`memory_engine.py`)
+```bash
+# Add an active fact
+python3 scripts/python/memory_engine.py ingest \
+  --root . --subject "AuthService" --predicate "uses_cache" --object "Redis Cluster" --time "2025-04-18"
 
+# Update it later — automatically marks Redis Cluster -.-> #superseded!
+python3 scripts/python/memory_engine.py ingest \
+  --root . --subject "AuthService" --predicate "uses_cache" --object "Valkey 8.0" --time "2026-03-14"
 ```
+
+### 2. Recall via Multi-Hop Subgraph Extraction (~63 tokens)
+```bash
+# Current state (filters out #superseded)
+python3 scripts/python/memory_engine.py query --root . --question "What cache does AuthService currently use?"
+
+# Temporal lineage (auto-includes #superseded with @t= ranges)
+python3 scripts/python/memory_engine.py query --root . --question "What cache did AuthService use before Valkey 8.0?"
+```
+
+### 3. Map Any Codebase into `.flowmem/` Diagrams
+Open Claude Code or Antigravity and say:
+```text
 generate flowmem for this project
 ```
-
-FlowMem will:
-1. Scan your codebase (scripts + AI reasoning)
-2. Generate `.mmd` charts organized by layer
-3. Create `.flowmem/INDEX.md` and `TRAVERSE.md`
-4. Report what was generated and how to view it
-
-### Viewing charts
-
-**HTML viewer** (zero install — open in any browser):
+Then open the zero-install HTML viewer:
 ```bash
-open .flowmem/index.html        # macOS
-start .flowmem/index.html       # Windows
-xdg-open .flowmem/index.html    # Linux
-```
-All charts rendered inline with mermaid.js CDN. Search, browse by layer, view method/type badges.
-
-**VS Code**:
-1. Install [Mermaid Preview](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid) extension
-2. Open any `.mmd` file in `.flowmem/charts/`
-3. Press `Ctrl+Shift+P` → "Mermaid Preview: Open Preview"
-
-**Online**: Paste chart content at https://mermaid.live
-
----
-
-## Using FlowMem memory
-
-After generating, future Claude Code sessions automatically use it:
-
-```
-# Examples — Claude loads only the relevant charts:
-"how does the auth flow work?"        → behavior/auth_sequence.mmd
-"what classes are in the store?"      → structure/classes.mmd
-"where is the tech debt?"             → quality/debt.mmd
-"what's planned for next sprint?"     → project/tasks.mmd
-"what's the database schema?"         → data/schema.mmd
-```
-
-Add this to your `CLAUDE.md` to activate automatic traversal:
-
-```markdown
-## Memory
-This project uses FlowMem. On session start:
-1. Read `.flowmem/INDEX.md`
-2. Load charts per `.flowmem/TRAVERSE.md` based on each question
-3. Run `bash .flowmem/scripts/refresh_all.sh` if charts seem stale
+open .flowmem/index.html
 ```
 
 ---
 
-## Refreshing charts
+## Installation
 
-Script-backed charts can be refreshed without AI:
-
+### Option A — Per-project install
 ```bash
-# Full refresh
-bash .flowmem/scripts/refresh_all.sh
-
-# Individual scripts
-python3 .flowmem/scripts/scan_todos.py   # → quality/debt.mmd
-bash .flowmem/scripts/scan_git.sh        # → quality/history.mmd
-python3 .flowmem/scripts/scan_ast.py     # → structure/classes.mmd
+git clone https://github.com/ThienHuynhNgoc/FlowMem.git /tmp/FlowMem
+mkdir -p .claude/skills .agents/skills
+cp -r /tmp/FlowMem .claude/skills/flowmem
+cp -r /tmp/FlowMem .agents/skills/flowmem
 ```
 
-To regenerate AI-backed charts (after architecture changes):
-```
-regenerate flowmem charts
+### Option B — Global install
+```bash
+git clone https://github.com/ThienHuynhNgoc/FlowMem.git ~/.claude/skills/flowmem
+ln -s ~/.claude/skills/flowmem ~/.agents/skills/flowmem
 ```
 
 ---
 
-## Supported languages
+## Related Open-Source Projects
 
-| Language | Class/function extraction | Import graph | Package deps |
-|---|---|---|---|
-| Python | ✅ `scan_ast.py` | ✅ `scan_imports.py` | via `pyproject.toml` |
-| TypeScript/JavaScript | ✅ `scan_ts_exports.js` | ✅ `scan_packages.js` | ✅ `scan_packages.js` |
-| Any language | Git history, TODOs, file tree | — | — |
+FlowMem v2.0 pairs directly with **[iDiff](https://github.com/ThienHuynhNgoc/iDiff)** & **[FlowSkill](https://github.com/ThienHuynhNgoc/FlowSkill)**:
 
-*Extend support: add a new script in `scripts/` and reference it in SKILL.md.*
-
----
-
-## Related Projects
-
-FlowMem is part of a growing suite of open-source AI tooling:
-
-### [FlowSkill](https://github.com/ThienHuynhNgoc/FlowSkill)
-A Mermaid-powered visual canvas editor — the best way to view, edit, and share FlowMem charts visually.
-Built for low-code users and developers who want to work with Mermaid diagrams without writing text.
-
-- Paste any `.mmd` file from `.flowmem/charts/` into FlowSkill's editor
-- Click nodes, change shapes, export SVG/PNG
-- Built with React + Zustand + mermaid.js
-
----
-
-## Project structure
-
-```
-flowmem/
-├── SKILL.md                    # Claude Code skill entry point
-├── references/
-│   ├── chart-selector.md       # Decision matrix: what content → which chart
-│   ├── mermaid-cheatsheet.md   # Syntax for all 26 Mermaid types
-│   ├── traversal-protocol.md   # AI traversal protocol
-│   └── output-format.md        # .flowmem/ directory spec
-├── scripts/
-│   ├── python/                 # AST, imports, TODOs, metrics
-│   ├── node/                   # npm packages, TS exports
-│   └── bash/                   # git history, file tree, full refresh
-├── templates/
-│   ├── INDEX.md.tmpl           # Master index template
-│   ├── TRAVERSE.md.tmpl        # Traversal guide template
-│   └── charts/                 # 16 .mmd starter templates
-├── evals/                      # Test cases and fixture repos
-└── docs/                       # GitHub Pages landing site
-```
----
-
-## Chart Gallery — Real Output
-
-Auto-generated by running FlowMem on **the FlowMem project itself**. All charts are live `.mmd` files in `.flowmem/`.
-Open `.flowmem/index.html` locally to browse all charts interactively, or paste any `.mmd` into [mermaid.live](https://mermaid.live).
-
-### Module Dependency Graph
-![Module Graph](docs/screenshots/modules_flowchart.svg)
-
-### System Architecture (flowchart)
-![Architecture](docs/screenshots/architecture_c4.svg)
-
-### Generation Flow (sequenceDiagram)
-![Sequence](docs/screenshots/api_sequence.svg)
-
-### Development Roadmap (gantt)
-![Roadmap](docs/screenshots/roadmap_gantt.svg)
-
-### Task Board (kanban)
-![Tasks](docs/screenshots/tasks_kanban.svg)
-
-### Tech Debt Map (mindmap)
-![Debt](docs/screenshots/debt_mindmap.svg)
-
-### Data Flow (sankey-beta)
-![Dataflow](docs/screenshots/dataflow_sankey.svg)
-
-### File Distribution (pie)
-![Pie](docs/screenshots/bugs_pie.svg)
-
-> Paste any chart into [mermaid.live](https://mermaid.live) or open `.flowmem/index.html` locally.
-
-
----
-
-## Our Significant Ideas & Contributions
-
-FlowMem introduces several original ideas to the AI memory and codebase-indexing space:
-
-### 1. Metadata-in-Comments Portability
-Every `.mmd` file carries its own provenance inside Mermaid comments — not in a sidecar file, not in a database. The format is:
-```
-%% FlowMem | type=classDiagram | layer=structure | method=script | refresh=scan_ast.py | last-updated=2026-05-03 %%
-```
-This means any file is self-describing. Move it, share it, open it in VS Code — the metadata travels with it. No registry, no lock-in.
-
-### 2. Hybrid Script + AI Dual Execution Model
-FlowMem introduces two execution modes for memory nodes:
-- **Script-backed** — deterministic bash/python/node scripts run on demand, always producing fresh data (classes, imports, git history, file sizes)
-- **AI-backed** — semantic charts generated once by reasoning (architecture diagrams, sequence flows, state machines)
-
-This mirrors how production systems combine rule-based and ML pipelines: use deterministic extraction where possible, AI reasoning where structure can't be inferred mechanically.
-
-### 3. Five-Layer Semantic Memory Architecture
-Memory is organized into five semantic layers, not one flat list:
-| Layer | Contents | When to load |
-|-------|----------|--------------|
-| `structure` | modules, classes | code navigation questions |
-| `behavior` | sequences, state | "how does X work?" questions |
-| `data` | schema, ER diagrams | data model questions |
-| `project` | roadmap, timeline | planning questions |
-| `quality` | debt, coverage, complexity | health/review questions |
-
-AI assistants load only the relevant layer per query — keeping context tight and responses fast.
-
-### 4. Generate-Once, Traverse-Anywhere Multi-Assistant Design
-`.flowmem/` output is plain Mermaid + Markdown. Any AI assistant reads it natively:
-- **Claude Code** — native skill with full Generate + Traverse + Refresh modes
-- **Cursor, Windsurf** — add one line to `.cursorrules` / `.windsurfrules`
-- **GitHub Copilot** — add to `.github/copilot-instructions.md`
-- **Kiro, Gemini, Continue** — paste `INDEX.md` at session start
-
-One generation run, permanently usable across every tool.
-
-### 5. Zero-Install HTML Memory Viewer
-FlowMem generates `.flowmem/index.html` — a self-contained single-file HTML app using the mermaid.js CDN. No npm install, no build step. Open in any browser. Features:
-- Sticky sidebar TOC organized by layer
-- Live Mermaid rendering (not screenshots — the actual diagram engine)
-- Search across all chart names and types
-- Per-card metadata: layer, method, type, last-updated
-
----
-
-## Contributing
-
-1. **Add a new chart type** — add a template in `templates/charts/`, update `chart-selector.md`, reference it in `SKILL.md`
-2. **Add a new language** — add a script in `scripts/` for extraction, test it on a fixture repo in `evals/fixtures/`
-3. **Improve AI prompts** — the SKILL.md sections are the prompts; edit them directly
-4. **Add eval cases** — add entries to `evals/evals.json`
-
-All contributions welcome. Please open an issue first for major changes.
+- **FlowMem v2.0** — *Spatial + Semantic Bi-Temporal Memory* in Dense Diagram-Markdown (`.mmd`).
+- **[iDiff](https://github.com/ThienHuynhNgoc/iDiff)** — *Temporal Code Change & Agent Handoff Memory* (`.diff` + `<100-line` `NEXT.md` baton on every edit).
+- **[FlowSkill](https://github.com/ThienHuynhNgoc/FlowSkill)** — Visual Mermaid canvas editor.
 
 ---
 
@@ -377,8 +141,6 @@ All contributions welcome. Please open an issue first for major changes.
 
 Apache 2.0 — commercial use allowed, attribution required. See [LICENSE](LICENSE).
 
----
-
 <div align="center">
-Made with ❤️ by [ThienHuynhNgoc](https://github.com/ThienHuynhNgoc) · Powered by <a href="https://mermaid.js.org">Mermaid.js</a> and <a href="https://claude.ai/code">Claude Code</a>
+Made with ❤️ by <a href="https://github.com/ThienHuynhNgoc">ThienHuynhNgoc</a> · ⭐ Star if Dense Diagram-Markdown saved your context window!
 </div>

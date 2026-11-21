@@ -1,0 +1,183 @@
+{
+  "benchmark_name": "FlowMem-LongMem-50",
+  "version": "2.0.0",
+  "description": "50-query bi-temporal, multi-hop, knowledge-update, and adversarial abstention benchmark comparing AI memory architectures.",
+  "sessions": [
+    {
+      "session_id": "S01",
+      "date": "2025-02-10",
+      "transcript": "Alice Chen joined Nebula Cloud as Tech Lead for Project Nova. Project Nova initially runs on MongoDB 6 and deploys to AWS us-east-1.",
+      "facts": [
+        {"subject": "Alice Chen", "predicate": "leads", "object": "Project Nova", "time": "2025-02-10", "supersedes": false},
+        {"subject": "Project Nova", "predicate": "uses_db", "object": "MongoDB 6", "time": "2025-02-10", "supersedes": false},
+        {"subject": "Project Nova", "predicate": "deployed_in", "object": "AWS us-east-1", "time": "2025-02-10", "supersedes": false}
+      ]
+    },
+    {
+      "session_id": "S02",
+      "date": "2025-04-18",
+      "transcript": "Bob Patel owns the AuthService microservice. AuthService uses Redis Cluster for session caching and JWT RS256 for tokens.",
+      "facts": [
+        {"subject": "Bob Patel", "predicate": "owns", "object": "AuthService", "time": "2025-04-18", "supersedes": false},
+        {"subject": "AuthService", "predicate": "uses_cache", "object": "Redis Cluster", "time": "2025-04-18", "supersedes": false},
+        {"subject": "AuthService", "predicate": "auth_protocol", "object": "JWT RS256", "time": "2025-04-18", "supersedes": false}
+      ]
+    },
+    {
+      "session_id": "S03",
+      "date": "2025-07-03",
+      "transcript": "Carol Lin leads the BillingEngine team. BillingEngine integrates Stripe v2025 API and settles invoices in USD.",
+      "facts": [
+        {"subject": "Carol Lin", "predicate": "leads", "object": "BillingEngine", "time": "2025-07-03", "supersedes": false},
+        {"subject": "BillingEngine", "predicate": "payment_gateway", "object": "Stripe v2025", "time": "2025-07-03", "supersedes": false},
+        {"subject": "BillingEngine", "predicate": "settlement_currency", "object": "USD", "time": "2025-07-03", "supersedes": false}
+      ]
+    },
+    {
+      "session_id": "S04",
+      "date": "2025-10-12",
+      "transcript": "Project Nova grew into Project Atlas and migrated its primary database from MongoDB 6 to PostgreSQL 16 with pgvector.",
+      "facts": [
+        {"subject": "Project Nova", "predicate": "uses_db", "object": "PostgreSQL 16 pgvector", "time": "2025-10-12", "supersedes": true},
+        {"subject": "Alice Chen", "predicate": "leads", "object": "Project Atlas", "time": "2025-10-12", "supersedes": true}
+      ]
+    },
+    {
+      "session_id": "S05",
+      "date": "2025-12-01",
+      "transcript": "Project Atlas depends on AuthService for SSO and uses BillingEngine for metered usage billing. David Kim manages DevOps and maintains Terraform EKS.",
+      "facts": [
+        {"subject": "Project Atlas", "predicate": "depends_on", "object": "AuthService", "time": "2025-12-01", "supersedes": false},
+        {"subject": "Project Atlas", "predicate": "billing_via", "object": "BillingEngine", "time": "2025-12-01", "supersedes": false},
+        {"subject": "David Kim", "predicate": "maintains", "object": "Terraform EKS", "time": "2025-12-01", "supersedes": false}
+      ]
+    },
+    {
+      "session_id": "S06",
+      "date": "2026-01-20",
+      "transcript": "Project Atlas migrated hosting from AWS us-east-1 to Cloudflare Workers with AWS eu-central-1 backend. Terraform EKS now runs Kubernetes 1.31.",
+      "facts": [
+        {"subject": "Project Atlas", "predicate": "deployed_in", "object": "AWS eu-central-1", "time": "2026-01-20", "supersedes": true},
+        {"subject": "Project Atlas", "predicate": "edge_layer", "object": "Cloudflare Workers", "time": "2026-01-20", "supersedes": false},
+        {"subject": "Terraform EKS", "predicate": "runs_version", "object": "Kubernetes 1.31", "time": "2026-01-20", "supersedes": false}
+      ]
+    },
+    {
+      "session_id": "S07",
+      "date": "2026-03-14",
+      "transcript": "Incident INC-402 hit AuthService due to Redis Cluster failover timeout; Bob Patel replaced Redis Cluster with Valkey 8.0 and switched tokens from JWT RS256 to EdDSA Ed25519.",
+      "facts": [
+        {"subject": "AuthService", "predicate": "had_incident", "object": "INC-402", "time": "2026-03-14", "supersedes": false},
+        {"subject": "AuthService", "predicate": "uses_cache", "object": "Valkey 8.0", "time": "2026-03-14", "supersedes": true},
+        {"subject": "AuthService", "predicate": "auth_protocol", "object": "EdDSA Ed25519", "time": "2026-03-14", "supersedes": true}
+      ]
+    },
+    {
+      "session_id": "S08",
+      "date": "2026-05-05",
+      "transcript": "Elena Ortiz joined as Security Lead and oversees ZeroTrustPolicy. ZeroTrustPolicy requires EdDSA Ed25519 on AuthService and SOC2 audit logs in ClickHouse.",
+      "facts": [
+        {"subject": "Elena Ortiz", "predicate": "oversees", "object": "ZeroTrustPolicy", "time": "2026-05-05", "supersedes": false},
+        {"subject": "ZeroTrustPolicy", "predicate": "audit_store", "object": "ClickHouse", "time": "2026-05-05", "supersedes": false},
+        {"subject": "ZeroTrustPolicy", "predicate": "enforced_on", "object": "AuthService", "time": "2026-05-05", "supersedes": false}
+      ]
+    },
+    {
+      "session_id": "S09",
+      "date": "2026-07-19",
+      "transcript": "BillingEngine upgraded payment_gateway from Stripe v2025 to Adyen Enterprise and added EUR alongside USD. Carol Lin handed BillingEngine over to Frank Wu.",
+      "facts": [
+        {"subject": "BillingEngine", "predicate": "payment_gateway", "object": "Adyen Enterprise", "time": "2026-07-19", "supersedes": true},
+        {"subject": "BillingEngine", "predicate": "settlement_currency", "object": "USD and EUR", "time": "2026-07-19", "supersedes": true},
+        {"subject": "Frank Wu", "predicate": "leads", "object": "BillingEngine", "time": "2026-07-19", "supersedes": true},
+        {"subject": "Carol Lin", "predicate": "leads", "object": "BillingEngine", "time": "2026-07-19", "supersedes": true}
+      ]
+    },
+    {
+      "session_id": "S10",
+      "date": "2026-09-02",
+      "transcript": "Carol Lin took over as Director of AI Platform, leading the VectorGateway service written in Rust Axum. VectorGateway stores embeddings in Qdrant.",
+      "facts": [
+        {"subject": "Carol Lin", "predicate": "leads", "object": "VectorGateway", "time": "2026-09-02", "supersedes": true},
+        {"subject": "VectorGateway", "predicate": "written_in", "object": "Rust Axum", "time": "2026-09-02", "supersedes": false},
+        {"subject": "VectorGateway", "predicate": "vector_store", "object": "Qdrant", "time": "2026-09-02", "supersedes": false}
+      ]
+    },
+    {
+      "session_id": "S11",
+      "date": "2026-10-15",
+      "transcript": "Project Atlas adopted VectorGateway for semantic search and upgraded its database to PostgreSQL 17 with pgvectorscale. Terraform EKS upgraded to Kubernetes 1.32.",
+      "facts": [
+        {"subject": "Project Atlas", "predicate": "search_via", "object": "VectorGateway", "time": "2026-10-15", "supersedes": false},
+        {"subject": "Project Atlas", "predicate": "uses_db", "object": "PostgreSQL 17 pgvectorscale", "time": "2026-10-15", "supersedes": true},
+        {"subject": "Terraform EKS", "predicate": "runs_version", "object": "Kubernetes 1.32", "time": "2026-10-15", "supersedes": true}
+      ]
+    },
+    {
+      "session_id": "S12",
+      "date": "2026-11-18",
+      "transcript": "ACME Corp became the flagship enterprise customer on Project Atlas with a 99.99% SLA backed by PagerDuty escalation to Alice Chen and David Kim.",
+      "facts": [
+        {"subject": "ACME Corp", "predicate": "customer_of", "object": "Project Atlas", "time": "2026-11-18", "supersedes": false},
+        {"subject": "Project Atlas", "predicate": "sla_target", "object": "99.99%", "time": "2026-11-18", "supersedes": false},
+        {"subject": "Project Atlas", "predicate": "oncall_infra", "object": "David Kim", "time": "2026-11-18", "supersedes": false}
+      ]
+    }
+  ],
+  "queries": [
+    {"id": 1, "category": "single_hop", "question": "Who currently leads Project Atlas?", "expected": "Alice Chen", "tokens_required": ["Alice Chen"], "forbidden": []},
+    {"id": 2, "category": "single_hop", "question": "Who owns AuthService?", "expected": "Bob Patel", "tokens_required": ["Bob Patel"], "forbidden": []},
+    {"id": 3, "category": "single_hop", "question": "What language and framework is VectorGateway written in?", "expected": "Rust Axum", "tokens_required": ["Rust Axum"], "forbidden": []},
+    {"id": 4, "category": "single_hop", "question": "Where does ZeroTrustPolicy store SOC2 audit logs?", "expected": "ClickHouse", "tokens_required": ["ClickHouse"], "forbidden": []},
+    {"id": 5, "category": "single_hop", "question": "What vector store does VectorGateway use?", "expected": "Qdrant", "tokens_required": ["Qdrant"], "forbidden": []},
+    {"id": 6, "category": "single_hop", "question": "Who oversees ZeroTrustPolicy?", "expected": "Elena Ortiz", "tokens_required": ["Elena Ortiz"], "forbidden": []},
+    {"id": 7, "category": "single_hop", "question": "What edge layer does Project Atlas use?", "expected": "Cloudflare Workers", "tokens_required": ["Cloudflare Workers"], "forbidden": []},
+    {"id": 8, "category": "single_hop", "question": "Which incident affected AuthService?", "expected": "INC-402", "tokens_required": ["INC-402"], "forbidden": []},
+    {"id": 9, "category": "single_hop", "question": "What SLA target does Project Atlas commit to?", "expected": "99.99%", "tokens_required": ["99.99%"], "forbidden": []},
+    {"id": 10, "category": "single_hop", "question": "Which flagship enterprise customer runs on Project Atlas?", "expected": "ACME Corp", "tokens_required": ["ACME Corp"], "forbidden": []},
+
+    {"id": 11, "category": "multi_hop", "question": "Which cache engine backs the authentication service that ACME Corp's product depends on?", "expected": "Valkey 8.0", "tokens_required": ["ACME Corp", "Project Atlas", "AuthService", "Valkey 8.0"], "forbidden": []},
+    {"id": 12, "category": "multi_hop", "question": "Who leads the vector search service adopted by the product Alice Chen leads?", "expected": "Carol Lin", "tokens_required": ["Alice Chen", "Project Atlas", "VectorGateway", "Carol Lin"], "forbidden": []},
+    {"id": 13, "category": "multi_hop", "question": "What vector store holds semantic search embeddings for ACME Corp's platform?", "expected": "Qdrant", "tokens_required": ["ACME Corp", "Project Atlas", "VectorGateway", "Qdrant"], "forbidden": []},
+    {"id": 14, "category": "multi_hop", "question": "Who leads the billing system used by Project Atlas?", "expected": "Frank Wu", "tokens_required": ["Project Atlas", "BillingEngine", "Frank Wu"], "forbidden": []},
+    {"id": 15, "category": "multi_hop", "question": "Which payment gateway processes usage charges for ACME Corp's platform?", "expected": "Adyen Enterprise", "tokens_required": ["ACME Corp", "Project Atlas", "BillingEngine", "Adyen Enterprise"], "forbidden": []},
+    {"id": 16, "category": "multi_hop", "question": "Who oversees the security policy enforced on the service owned by Bob Patel?", "expected": "Elena Ortiz", "tokens_required": ["Bob Patel", "AuthService", "ZeroTrustPolicy", "Elena Ortiz"], "forbidden": []},
+    {"id": 17, "category": "multi_hop", "question": "What Kubernetes version does ACME Corp's on-call infra engineer maintain?", "expected": "Kubernetes 1.32", "tokens_required": ["ACME Corp", "David Kim", "Terraform EKS", "Kubernetes 1.32"], "forbidden": []},
+    {"id": 18, "category": "multi_hop", "question": "What audit store records compliance logs for the auth service that Project Atlas depends on?", "expected": "ClickHouse", "tokens_required": ["Project Atlas", "AuthService", "ZeroTrustPolicy", "ClickHouse"], "forbidden": []},
+    {"id": 19, "category": "multi_hop", "question": "What signing algorithm is required by Elena Ortiz's policy on AuthService?", "expected": "EdDSA Ed25519", "tokens_required": ["Elena Ortiz", "ZeroTrustPolicy", "AuthService", "EdDSA Ed25519"], "forbidden": []},
+    {"id": 20, "category": "multi_hop", "question": "In what language is the search service led by Carol Lin implemented?", "expected": "Rust Axum", "tokens_required": ["Carol Lin", "VectorGateway", "Rust Axum"], "forbidden": []},
+
+    {"id": 21, "category": "temporal", "question": "What cache did AuthService use before migrating to Valkey 8.0?", "expected": "Redis Cluster", "tokens_required": ["Redis Cluster"], "forbidden": []},
+    {"id": 22, "category": "temporal", "question": "What auth token algorithm did AuthService originally use prior to 2026-03-14?", "expected": "JWT RS256", "tokens_required": ["JWT RS256"], "forbidden": []},
+    {"id": 23, "category": "temporal", "question": "Which database did Project Nova originally use in 2025-02?", "expected": "MongoDB 6", "tokens_required": ["MongoDB 6"], "forbidden": []},
+    {"id": 24, "category": "temporal", "question": "Who previously led BillingEngine before Frank Wu took over?", "expected": "Carol Lin", "tokens_required": ["Carol Lin"], "forbidden": []},
+    {"id": 25, "category": "temporal", "question": "Which payment gateway did BillingEngine use earlier in 2025 before Adyen Enterprise?", "expected": "Stripe v2025", "tokens_required": ["Stripe v2025"], "forbidden": []},
+    {"id": 26, "category": "temporal", "question": "What project did Alice Chen lead before Project Atlas?", "expected": "Project Nova", "tokens_required": ["Project Nova"], "forbidden": []},
+    {"id": 27, "category": "temporal", "question": "What Kubernetes version did Terraform EKS run prior to Kubernetes 1.32?", "expected": "Kubernetes 1.31", "tokens_required": ["Kubernetes 1.31"], "forbidden": []},
+    {"id": 28, "category": "temporal", "question": "Which database did Project Atlas use before upgrading to PostgreSQL 17 pgvectorscale?", "expected": "PostgreSQL 16 pgvector", "tokens_required": ["PostgreSQL 16 pgvector"], "forbidden": []},
+    {"id": 29, "category": "temporal", "question": "When did Incident INC-402 occur on AuthService?", "expected": "2026-03-14", "tokens_required": ["INC-402", "2026-03-14"], "forbidden": []},
+    {"id": 30, "category": "temporal", "question": "What settlement currency did BillingEngine support before adding EUR?", "expected": "USD", "tokens_required": ["USD"], "forbidden": []},
+
+    {"id": 31, "category": "knowledge_update", "question": "What cache does AuthService currently use?", "expected": "Valkey 8.0", "tokens_required": ["Valkey 8.0"], "forbidden": ["Redis Cluster"]},
+    {"id": 32, "category": "knowledge_update", "question": "What token signing protocol does AuthService currently use?", "expected": "EdDSA Ed25519", "tokens_required": ["EdDSA Ed25519"], "forbidden": ["JWT RS256"]},
+    {"id": 33, "category": "knowledge_update", "question": "What payment gateway does BillingEngine currently use?", "expected": "Adyen Enterprise", "tokens_required": ["Adyen Enterprise"], "forbidden": ["Stripe v2025"]},
+    {"id": 34, "category": "knowledge_update", "question": "Who currently leads BillingEngine?", "expected": "Frank Wu", "tokens_required": ["Frank Wu"], "forbidden": ["Carol Lin"]},
+    {"id": 35, "category": "knowledge_update", "question": "What team or service does Carol Lin currently lead?", "expected": "VectorGateway", "tokens_required": ["VectorGateway"], "forbidden": ["BillingEngine"]},
+    {"id": 36, "category": "knowledge_update", "question": "What database does Project Atlas currently use?", "expected": "PostgreSQL 17 pgvectorscale", "tokens_required": ["PostgreSQL 17 pgvectorscale"], "forbidden": ["MongoDB 6"]},
+    {"id": 37, "category": "knowledge_update", "question": "Where is Project Atlas currently deployed?", "expected": "AWS eu-central-1", "tokens_required": ["AWS eu-central-1"], "forbidden": ["AWS us-east-1"]},
+    {"id": 38, "category": "knowledge_update", "question": "What Kubernetes version does Terraform EKS currently run?", "expected": "Kubernetes 1.32", "tokens_required": ["Kubernetes 1.32"], "forbidden": ["Kubernetes 1.31"]},
+    {"id": 39, "category": "knowledge_update", "question": "What currencies does BillingEngine currently settle invoices in?", "expected": "USD and EUR", "tokens_required": ["USD and EUR"], "forbidden": []},
+    {"id": 40, "category": "knowledge_update", "question": "Which project does Alice Chen currently lead?", "expected": "Project Atlas", "tokens_required": ["Project Atlas"], "forbidden": ["Project Nova"]},
+
+    {"id": 41, "category": "abstention", "question": "What GraphQL gateway does Project Horizon use?", "expected": "ABSTAIN", "tokens_required": [], "forbidden": []},
+    {"id": 42, "category": "abstention", "question": "Who is the Chief Financial Officer of Nebula Cloud?", "expected": "ABSTAIN", "tokens_required": [], "forbidden": []},
+    {"id": 43, "category": "abstention", "question": "What Kafka topic partition count does NotificationWorker use?", "expected": "ABSTAIN", "tokens_required": [], "forbidden": []},
+    {"id": 44, "category": "abstention", "question": "Which Snowflake warehouse size does AnalyticsCube use?", "expected": "ABSTAIN", "tokens_required": [], "forbidden": []},
+    {"id": 45, "category": "abstention", "question": "What SAML certificate expiration date was set for BetaPortal?", "expected": "ABSTAIN", "tokens_required": [], "forbidden": []},
+    {"id": 46, "category": "abstention", "question": "Who manages the iOS SwiftUI mobile app repository?", "expected": "ABSTAIN", "tokens_required": [], "forbidden": []},
+    {"id": 47, "category": "abstention", "question": "What GPU cluster model runs the TritonInference server?", "expected": "ABSTAIN", "tokens_required": [], "forbidden": []},
+    {"id": 48, "category": "abstention", "question": "Which Datadog monitor ID triggered for PaymentCron?", "expected": "ABSTAIN", "tokens_required": [], "forbidden": []},
+    {"id": 49, "category": "abstention", "question": "What DynamoDB table holds FeatureFlagOverrides?", "expected": "ABSTAIN", "tokens_required": [], "forbidden": []},
+    {"id": 50, "category": "abstention", "question": "Which Azure region hosts LegacyVault?", "expected": "ABSTAIN", "tokens_required": [], "forbidden": []}
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "benchmark": "FlowMem-LongMem-50",
+  "results": [
+    {
+      "system": "FlowMem v2.0 (DDM)",
+      "overall_accuracy": 98.0,
+      "categories": {
+        "single_hop": 100.0,
+        "multi_hop": 90.0,
+        "temporal": 100.0,
+        "knowledge_update": 100.0,
+        "abstention": 100.0
+      },
+      "avg_tokens": 63.3,
+      "avg_latency_ms": 0.209
+    },
+    {
+      "system": "Mem0 (Flat Fact Store)",
+      "overall_accuracy": 70.0,
+      "categories": {
+        "single_hop": 100.0,
+        "multi_hop": 70.0,
+        "temporal": 20.0,
+        "knowledge_update": 60.0,
+        "abstention": 100.0
+      },
+      "avg_tokens": 34.9,
+      "avg_latency_ms": 0.03
+    },
+    {
+      "system": "Zep (Session + Facts)",
+      "overall_accuracy": 66.0,
+      "categories": {
+        "single_hop": 70.0,
+        "multi_hop": 80.0,
+        "temporal": 90.0,
+        "knowledge_update": 0.0,
+        "abstention": 90.0
+      },
+      "avg_tokens": 98.1,
+      "avg_latency_ms": 0.046
+    },
+    {
+      "system": "Supermemory (Vector RAG)",
+      "overall_accuracy": 66.0,
+      "categories": {
+        "single_hop": 80.0,
+        "multi_hop": 80.0,
+        "temporal": 90.0,
+        "knowledge_update": 0.0,
+        "abstention": 80.0
+      },
+      "avg_tokens": 106.6,
+      "avg_latency_ms": 0.008
+    },
+    {
+      "system": "Graphiti (JSON Graph)",
+      "overall_accuracy": 60.0,
+      "categories": {
+        "single_hop": 60.0,
+        "multi_hop": 30.0,
+        "temporal": 80.0,
+        "knowledge_update": 30.0,
+        "abstention": 100.0
+      },
+      "avg_tokens": 480.3,
+      "avg_latency_ms": 0.07
+    }
+  ]
+}

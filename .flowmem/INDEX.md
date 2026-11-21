@@ -25,6 +25,7 @@ Generated: 2026-05-03 | Charts: 10 | Skill version: 1.0
 | Chart | Type | Method | Description |
 |-------|------|--------|-------------|
 | [data_flow.mmd](charts/data/data_flow.mmd) | sankey-beta | ai | Data flow from codebase → extraction scripts → chart types |
+| [knowledge_graph.mmd](charts/data/knowledge_graph.mmd) | flowchart LR | engine | Bi-temporal Dense Diagram-Markdown memory graph |
 
 ## Project Layer — Planning & History
 

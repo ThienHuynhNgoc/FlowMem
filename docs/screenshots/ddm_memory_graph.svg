@@ -1,0 +1,25 @@
+<svg width="960" height="310" viewBox="0 0 960 310" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="310" rx="14" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <!-- Left: JSON / Vector RAG -->
+  <rect x="24" y="24" width="440" height="262" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="42" y="52" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#475569">TRADITIONAL JSON / VECTOR CHUNKS (~400-800 tokens)</text>
+  <text x="42" y="80" font-family="monospace" font-size="11" fill="#64748b">[{"subject": "AuthService", "predicate": "uses_cache",</text>
+  <text x="42" y="98" font-family="monospace" font-size="11" fill="#64748b">  "object": "Redis Cluster", "valid": false},</text>
+  <text x="42" y="116" font-family="monospace" font-size="11" fill="#64748b"> {"subject": "AuthService", "predicate": "uses_cache",</text>
+  <text x="42" y="134" font-family="monospace" font-size="11" fill="#64748b">  "object": "Valkey 8.0", "valid": true, ...}]</text>
+  <text x="42" y="176" font-family="Inter, sans-serif" font-size="12" fill="#334155">- High JSON key/punctuation token overhead</text>
+  <text x="42" y="198" font-family="Inter, sans-serif" font-size="12" fill="#334155">- Not natively renderable in VS Code or HTML</text>
+  <text x="42" y="220" font-family="Inter, sans-serif" font-size="12" fill="#334155">- Requires Neo4j / vector DB daemon</text>
+
+  <!-- Right: FlowMem DDM -->
+  <rect x="496" y="24" width="440" height="262" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="514" y="52" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#1e40af">FLOWMEM DENSE DIAGRAM-MARKDOWN (~14 tokens/edge)</text>
+  <rect x="514" y="68" width="404" height="102" rx="8" fill="#ffffff" stroke="#bfdbfe"/>
+  <text x="526" y="90" font-family="monospace" font-size="11" font-weight="700" fill="#2563eb">flowchart LR</text>
+  <text x="526" y="110" font-family="monospace" font-size="10.5" fill="#111827">  AuthService -->|uses_cache @t=2026-03 #valid| Valkey_8_0</text>
+  <text x="526" y="130" font-family="monospace" font-size="10.5" fill="#64748b">  AuthService -.->|uses_cache @t=2025..2026 #superseded| Redis</text>
+  <text x="526" y="150" font-family="monospace" font-size="10.5" fill="#111827">  ProjectAtlas -->|depends_on @t=2025-12 #valid| AuthService</text>
+  <text x="514" y="198" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e3a8a">+ 3-4x denser than JSON triplets &amp; prose chunks</text>
+  <text x="514" y="220" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e3a8a">+ Bi-temporal (#valid vs #superseded) in 1 line</text>
+  <text x="514" y="242" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e3a8a">+ Renders directly in HTML, GitHub, and VS Code</text>
+</svg>

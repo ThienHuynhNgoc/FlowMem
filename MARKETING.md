@@ -1,13 +1,13 @@
 # FlowMem v2.0 — Launch & Growth Playbook ("#1 AI Memory Benchmark" Campaign)
 
-This playbook positions **FlowMem v2.0** not just as a "Mermaid diagram generator," but as a **#1-ranked, zero-dependency, bi-temporal AI Memory Engine** beating **Graphiti, Mem0, Zep, and Supermemory** under realistic token budgets (`94.0%` at `110 tokens` vs `80.0%` Graphiti, `68.0%` Mem0, `60.0%` Zep, `56.0%` Supermemory) — verified by `bash benchmarks/verify_all.sh`.
+This playbook positions **FlowMem v2.0** not just as a "Mermaid diagram generator," but as a **#1-ranked, zero-dependency, bi-temporal AI Memory Engine** proven in **225 live CLI calls (`claude -p` & `agy -p`)** where **Small LLMs (`Claude Haiku` & `Gemini 3.8 Flash Low`) + FlowMem hit `100.0%` at `95.0` avg tokens**, outperforming **Frontier `Claude Sonnet` + Graphiti JSON (`76.0%` at `417.4` tokens)** under a 110-token memory budget!
 
 ---
 
 ## 1. Core Positioning & Viral Hook
 
 > **Primary Hook:**
-> *"Why pay for Neo4j + Vector DBs when plain Mermaid `.mmd` diagrams tie Graphiti at **94.0%**, beat Mem0/Zep/Supermemory by **+22–26%**, and use **3.6x fewer tokens** than JSON graphs?"*
+> *"Small `Claude Haiku` / `Gemini 3.8 Flash` + plain Mermaid `.mmd` scored **100.0%** at **95 tokens/query** — beating Frontier `Claude Sonnet` + Graphiti JSON (**76.0%** at **417 tokens**) in real live CLI tests."*
 
 > **Technical Differentiator (Dense Diagram-Markdown — DDM):**
 > - Vector RAG (`Supermemory` style) hits `56.0%` budget / `72.0%` full and drops to `40%` on multi-hop & knowledge updates.

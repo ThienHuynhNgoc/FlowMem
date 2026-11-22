@@ -449,15 +449,13 @@ def query_graph(
     for idx, (rel, neg_d, eidx) in enumerate(scored_edges):
         if idx > 0 and top_rel >= 3.0 and rel < 2.0:
             break
-        # Prevent depth > 1 predicate echoes (e.g. another entity also matching 'leads' when seed already answered 'leads')
+        # Prevent depth > 1 predicate echoes ONLY when neither endpoint matches any query token
         e = edges[eidx]
         e_pred_hits = hint_tokens & set(tokenize(e["predicate"]))
         e_node_hits = hint_tokens & set(tokenize(f"{nodes.get(e['src'], '')} {nodes.get(e['dst'], '')}"))
         new_pred_hits = e_pred_hits - covered_pred_tokens
         depth = -neg_d
-        if idx > 0 and depth > 1 and e_pred_hits and not new_pred_hits and not e_node_hits:
-            continue
-        if idx > 0 and depth > 1 and not new_pred_hits and rel < top_rel * 0.75:
+        if idx > 0 and depth > 1 and not include_history and e_pred_hits and not new_pred_hits and not e_node_hits:
             continue
         add_edge_with_bridge(eidx)
         if len(selected_set) >= 8:
@@ -468,22 +466,32 @@ def query_graph(
 
     selected_indices = selected_set[:8]
 
+    # Emit compact Mermaid subgraph using short sequential IDs (n1, n2, ...) to minimize BPE tokens
+    short_ids: dict[str, str] = {}
     declared = set()
     mmd_lines = ["flowchart LR"]
     facts = []
 
     def fmt_node(nid: str) -> str:
+        if nid not in short_ids:
+            short_ids[nid] = f"n{len(short_ids) + 1}"
+        sid = short_ids[nid]
         lbl = nodes.get(nid, nid)
         if nid not in declared:
             declared.add(nid)
-            return f'{nid}["{lbl}"]'
-        return nid
+            return f'{sid}["{lbl}"]'
+        return sid
 
     for eidx in selected_indices:
         e = edges[eidx]
         s_str = fmt_node(e["src"])
         d_str = fmt_node(e["dst"])
-        mmd_lines.append(f'  {s_str} {e["arrow"]}|{e["raw_label"]}| {d_str}')
+        t_part = f" {e['time']}" if e["time"] else ""
+        if e["state"] == "superseded":
+            edge_lbl = f"SUPERSEDED {e['predicate']}{t_part} #superseded"
+        else:
+            edge_lbl = f"{e['predicate']}{t_part}"
+        mmd_lines.append(f"  {s_str} {e['arrow']}|{edge_lbl}| {d_str}")
         facts.append(
             {
                 "subject": nodes.get(e["src"], e["src"]),

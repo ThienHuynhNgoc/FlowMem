@@ -6,8 +6,8 @@ Audited 50-query evaluation comparing **FlowMem v2.0 (Dense Diagram-Markdown)** 
 
 | Rank | Architecture | Budget Acc | 1-Hop | Multi-Hop | Temporal | Update | Abstain | Avg Raw Tokens |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|
-| 1 | **FlowMem v2.0 (DDM .mmd)** | **94.0%** | 100.0% | 80.0% | 90.0% | 100.0% | 100.0% | ~114.9 tok |
-| 2 | Graphiti (Bi-Temporal JSON Graph) | 80.0% | 100.0% | 20.0% | 80.0% | 100.0% | 100.0% | ~418.6 tok |
+| 1 | **FlowMem v2.0 (DDM .mmd)** | **98.0%** | 100.0% | 100.0% | 90.0% | 100.0% | 100.0% | ~96.5 tok |
+| 2 | Graphiti (Bi-Temporal JSON Graph) | 80.0% | 100.0% | 20.0% | 80.0% | 100.0% | 100.0% | ~425.2 tok |
 | 3 | Mem0 (Atomic Fact Store) | 68.0% | 100.0% | 100.0% | 20.0% | 70.0% | 50.0% | ~29.1 tok |
 | 4 | Zep (Episodic + Fact Summaries) | 60.0% | 100.0% | 60.0% | 90.0% | 20.0% | 30.0% | ~147.3 tok |
 | 5 | Supermemory (Hybrid RAG) | 56.0% | 70.0% | 40.0% | 90.0% | 40.0% | 40.0% | ~111.5 tok |
@@ -16,8 +16,8 @@ Audited 50-query evaluation comparing **FlowMem v2.0 (Dense Diagram-Markdown)** 
 
 | Architecture | Full Acc | 1-Hop | Multi-Hop | Temporal | Update | Abstain | Avg Context |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| FlowMem v2.0 (DDM .mmd) | 94.0% | 100.0% | 80.0% | 90.0% | 100.0% | 100.0% | ~114.9 tok |
-| Graphiti (Bi-Temporal JSON Graph) | 94.0% | 100.0% | 80.0% | 90.0% | 100.0% | 100.0% | ~418.6 tok |
+| FlowMem v2.0 (DDM .mmd) | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | ~96.5 tok |
+| Graphiti (Bi-Temporal JSON Graph) | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | 100.0% | ~425.2 tok |
 | Supermemory (Hybrid RAG) | 72.0% | 90.0% | 80.0% | 90.0% | 60.0% | 40.0% | ~111.5 tok |
 | Mem0 (Atomic Fact Store) | 68.0% | 100.0% | 100.0% | 20.0% | 70.0% | 50.0% | ~29.1 tok |
 | Zep (Episodic + Fact Summaries) | 68.0% | 100.0% | 90.0% | 90.0% | 30.0% | 30.0% | ~147.3 tok |

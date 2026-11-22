@@ -221,10 +221,10 @@
 
       <div class="mb-10 grid md:grid-cols-2 gap-6 items-center">
         <div class="card-white p-4">
-          <img src="screenshots/benchmark_chart.svg" alt="FlowMem-LongMem-50 Audited Leaderboard" class="w-full rounded-xl cursor-pointer" onclick="openLightbox('screenshots/benchmark_chart.svg','FlowMem-LongMem-50 Audited Benchmark','94.0% at 110-Tok Budget (#1)','~114.9 tok/query')" />
+          <img src="screenshots/live_llm_chart.svg" alt="Live-LLM End-to-End Leaderboard" class="w-full rounded-xl cursor-pointer" onclick="openLightbox('screenshots/live_llm_chart.svg','Real Live-LLM Benchmark (claude + agy)','Haiku + FlowMem: 100.0% @ 95 tok','Beats Sonnet + Graphiti (76.0%)')" />
         </div>
         <div class="card-white p-4">
-          <img src="screenshots/ddm_memory_graph.svg" alt="Dense Diagram-Markdown vs JSON Memory" class="w-full rounded-xl cursor-pointer" onclick="openLightbox('screenshots/ddm_memory_graph.svg','Dense Diagram-Markdown (DDM)','#valid vs #superseded','3.6x denser than JSON')" />
+          <img src="screenshots/benchmark_chart.svg" alt="FlowMem-LongMem-50 Audited Leaderboard" class="w-full rounded-xl cursor-pointer" onclick="openLightbox('screenshots/benchmark_chart.svg','FlowMem-LongMem-50 Retrieval (50 Queries)','98.0% at 110-Tok Budget | 100.0% Full','~96.5 tok vs 425.2 tok Graphiti (4.41x denser)')" />
         </div>
       </div>
 
@@ -232,9 +232,8 @@
         <table class="w-full text-sm">
           <thead>
             <tr class="table-header">
-              <th class="text-left px-5 py-4 font-semibold">Architecture</th>
-              <th class="px-3 py-4 font-bold">110-Tok Budget</th>
-              <th class="px-3 py-4 font-medium opacity-90">Full Acc</th>
+              <th class="text-left px-5 py-4 font-semibold">Live LLM + Memory System (110-Tok Budget)</th>
+              <th class="px-3 py-4 font-bold">Real Acc</th>
               <th class="px-3 py-4 font-medium opacity-90">1-Hop</th>
               <th class="px-3 py-4 font-medium opacity-90">Multi-Hop</th>
               <th class="px-3 py-4 font-medium opacity-90">Temporal</th>
@@ -245,59 +244,74 @@
           </thead>
           <tbody class="divide-y divide-blue-50">
             <tr class="bg-blue-50/70 font-semibold text-blue-900">
-              <td class="px-5 py-3">1. FlowMem v2.0 (DDM .mmd)</td>
-              <td class="px-3 py-3 text-center text-blue-700 font-extrabold">94.0%</td>
-              <td class="px-3 py-3 text-center">94.0%</td>
-              <td class="px-3 py-3 text-center">100.0%</td>
-              <td class="px-3 py-3 text-center">80.0%</td>
-              <td class="px-3 py-3 text-center">90.0%</td>
+              <td class="px-5 py-3">Claude Haiku + FlowMem v2.0 (DDM)</td>
+              <td class="px-3 py-3 text-center text-blue-700 font-extrabold">100.0%</td>
               <td class="px-3 py-3 text-center">100.0%</td>
               <td class="px-3 py-3 text-center">100.0%</td>
-              <td class="px-3 py-3 text-center font-mono text-green-700">~114.9 tok</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center font-mono text-green-700">95.0 tok</td>
+            </tr>
+            <tr class="bg-blue-50/40 font-semibold text-blue-900">
+              <td class="px-5 py-3">Gemini 3.8 Flash Low + FlowMem v2.0</td>
+              <td class="px-3 py-3 text-center text-blue-700 font-extrabold">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center font-mono text-green-700">95.0 tok</td>
+            </tr>
+            <tr class="bg-blue-50/40 font-semibold text-blue-900">
+              <td class="px-5 py-3">GPT-OSS 120B + FlowMem v2.0</td>
+              <td class="px-3 py-3 text-center text-blue-700 font-extrabold">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center font-mono text-green-700">95.0 tok</td>
             </tr>
             <tr class="hover:bg-blue-50/30">
-              <td class="px-5 py-3 text-gray-700">2. Graphiti (JSON Graph)</td>
+              <td class="px-5 py-3 text-gray-700">Claude Haiku + Zep (Summaries)</td>
               <td class="px-3 py-3 text-center">80.0%</td>
-              <td class="px-3 py-3 text-center">94.0%</td>
               <td class="px-3 py-3 text-center">100.0%</td>
               <td class="px-3 py-3 text-center text-red-500">20.0%</td>
               <td class="px-3 py-3 text-center">80.0%</td>
               <td class="px-3 py-3 text-center">100.0%</td>
               <td class="px-3 py-3 text-center">100.0%</td>
-              <td class="px-3 py-3 text-center font-mono text-red-500">~418.6 tok</td>
+              <td class="px-3 py-3 text-center font-mono">139.0 tok</td>
             </tr>
             <tr class="table-row-alt">
-              <td class="px-5 py-3 text-gray-700">3. Mem0 (Atomic Fact Store)</td>
-              <td class="px-3 py-3 text-center">68.0%</td>
-              <td class="px-3 py-3 text-center">68.0%</td>
+              <td class="px-5 py-3 text-gray-700">Claude Sonnet + Graphiti (JSON)</td>
+              <td class="px-3 py-3 text-center">76.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center text-red-500">0.0%</td>
+              <td class="px-3 py-3 text-center">80.0%</td>
               <td class="px-3 py-3 text-center">100.0%</td>
               <td class="px-3 py-3 text-center">100.0%</td>
-              <td class="px-3 py-3 text-center text-red-500">20.0%</td>
-              <td class="px-3 py-3 text-center">70.0%</td>
-              <td class="px-3 py-3 text-center">50.0%</td>
-              <td class="px-3 py-3 text-center font-mono">~29.1 tok</td>
+              <td class="px-3 py-3 text-center font-mono text-red-500">417.4 tok</td>
             </tr>
             <tr class="hover:bg-blue-50/30">
-              <td class="px-5 py-3 text-gray-700">4. Zep (Episodic + Facts)</td>
-              <td class="px-3 py-3 text-center">60.0%</td>
-              <td class="px-3 py-3 text-center">68.0%</td>
-              <td class="px-3 py-3 text-center">100.0%</td>
-              <td class="px-3 py-3 text-center">60.0%</td>
-              <td class="px-3 py-3 text-center">90.0%</td>
-              <td class="px-3 py-3 text-center text-red-500">20.0%</td>
-              <td class="px-3 py-3 text-center">30.0%</td>
-              <td class="px-3 py-3 text-center font-mono">~147.3 tok</td>
-            </tr>
-            <tr class="table-row-alt">
-              <td class="px-5 py-3 text-gray-700">5. Supermemory (Hybrid RAG)</td>
-              <td class="px-3 py-3 text-center">56.0%</td>
+              <td class="px-5 py-3 text-gray-700">Claude Haiku + Mem0 (Atomic)</td>
               <td class="px-3 py-3 text-center">72.0%</td>
-              <td class="px-3 py-3 text-center">70.0%</td>
-              <td class="px-3 py-3 text-center">40.0%</td>
-              <td class="px-3 py-3 text-center">90.0%</td>
-              <td class="px-3 py-3 text-center text-red-500">40.0%</td>
-              <td class="px-3 py-3 text-center">40.0%</td>
-              <td class="px-3 py-3 text-center font-mono">~111.5 tok</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">60.0%</td>
+              <td class="px-3 py-3 text-center text-red-500">0.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center font-mono">28.8 tok</td>
+            </tr>
+            <tr class="table-row-alt">
+              <td class="px-5 py-3 text-gray-700">Claude Haiku + Supermemory (RAG)</td>
+              <td class="px-3 py-3 text-center">68.0%</td>
+              <td class="px-3 py-3 text-center">80.0%</td>
+              <td class="px-3 py-3 text-center text-red-500">0.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center text-red-500">60.0%</td>
+              <td class="px-3 py-3 text-center">100.0%</td>
+              <td class="px-3 py-3 text-center font-mono">109.0 tok</td>
             </tr>
           </tbody>
         </table>

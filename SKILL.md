@@ -20,7 +20,7 @@ description: >
   - AI-backed architectural charts: semantic reasoning generates sequences, C4, ER, and state machines
   - Bi-temporal Dense Diagram-Markdown (DDM) engine (`memory_engine.py`): stores evolving facts with
     `-->|rel @t=... #valid|` and `-.->|rel @t=... #superseded|` edges and answers multi-hop & temporal
-    queries at 94.0% (110-tok budget) on FlowMem-LongMem-50 (`bash benchmarks/verify_all.sh`).
+    queries at 98.0% (110-tok budget) / 100.0% unconstrained (`~96.5` avg tok, `100.0%` live LLM on Haiku/Flash/Sonnet).
 ---
 
 # FlowMem v2.0 — Dense Diagram-Markdown (DDM) AI Memory

@@ -32,3 +32,4 @@ def detect_live_backends() -> dict[str, dict]:
             "install_hint": hint,
         }
     return status
+

@@ -55,3 +55,4 @@ class Mem0Baseline:
 
         ctx = "\n".join(f"- {self.docs[i]}" for i in selected_indices)
         return "ANSWERED", ctx, bpe_approx_tokens(ctx)
+

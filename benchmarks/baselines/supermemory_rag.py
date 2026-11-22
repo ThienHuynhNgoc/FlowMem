@@ -28,3 +28,4 @@ class SupermemoryBaseline:
         selected = sorted([(self.dates[idx], txt) for _, idx, txt in hits], key=lambda x: x[0])
         ctx = "\n".join(txt for _, txt in selected)
         return "ANSWERED", ctx, bpe_approx_tokens(ctx)
+

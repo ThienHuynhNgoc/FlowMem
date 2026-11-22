@@ -23,6 +23,13 @@ python3 benchmarks/test_engine_verification.py -v
 
 echo ""
 echo "============================================================"
-echo "Step 3/3 — FlowMem-LongMem-50 Benchmark (5 Architectures)"
+echo "Step 3/4 — FlowMem-LongMem-50 Benchmark (5 Architectures)"
 echo "============================================================"
 python3 benchmarks/run_benchmark.py --token-budget 110 --sample-output
+
+echo ""
+echo "============================================================"
+echo "Step 4/4 — Build Interactive HTML Verification Report"
+echo "============================================================"
+python3 benchmarks/build_report.py
+

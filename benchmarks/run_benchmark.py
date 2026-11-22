@@ -44,6 +44,7 @@ from baselines.zep_memory import ZepBaseline  # noqa: E402
 
 DATASET_PATH = os.path.join(ROOT, "benchmarks", "dataset.json")
 RESULTS_JSON = os.path.join(ROOT, "benchmarks", "results.json")
+DETAILED_JSON = os.path.join(ROOT, "benchmarks", "detailed_results.json")
 RESULTS_MD = os.path.join(ROOT, "benchmarks", "RESULTS.md")
 CHART_SVG = os.path.join(ROOT, "docs", "screenshots", "benchmark_chart.svg")
 DDM_SVG = os.path.join(ROOT, "docs", "screenshots", "ddm_memory_graph.svg")
@@ -116,6 +117,9 @@ def run_flowmem_engine(sessions: list[dict], queries: list[dict], budget: int) -
                     supersede_existing=f["supersedes"],
                 )
 
+        with open(gpath, "r", encoding="utf-8") as fh:
+            full_mmd = fh.read()
+
         def qfn(q: dict):
             res = fm.query_graph([gpath], q["question"], hops=4)
             if res["status"] == "ABSTAIN":
@@ -127,7 +131,9 @@ def run_flowmem_engine(sessions: list[dict], queries: list[dict], budget: int) -
                 ctx = res["subgraph_mmd"]
             return "ANSWERED", ctx, bpe_approx_tokens(ctx)
 
-        return execute_eval("FlowMem v2.0 (DDM .mmd)", queries, qfn, budget)
+        summary, per_q, meta = execute_eval("FlowMem v2.0 (DDM .mmd)", queries, qfn, budget)
+        meta["full_flowmem_mmd"] = full_mmd
+        return summary, per_q, meta
 
 
 def execute_eval(name: str, queries: list[dict], qfn, budget: int) -> tuple[dict, dict, dict]:
@@ -158,6 +164,7 @@ def execute_eval(name: str, queries: list[dict], qfn, budget: int) -> tuple[dict
         per_query[q["id"]] = {
             "status": status,
             "tokens": tok,
+            "latency_ms": round(dt_ms, 3),
             "score_full": sc_full,
             "score_budget": sc_bud,
             "context": ctx,
@@ -349,6 +356,7 @@ def main() -> int:
 
     results = [r[0] for r in runs]
     details = {r[0]["system"]: r[1] for r in runs}
+    full_flowmem_mmd = runs[0][2].get("full_flowmem_mmd", "")
 
     results.sort(key=lambda r: (-r["budget_accuracy"], -r["full_accuracy"], r["avg_tokens"]))
 
@@ -358,6 +366,35 @@ def main() -> int:
                 "benchmark": data["benchmark_name"],
                 "token_budget": args.token_budget,
                 "results": results,
+            },
+            fh,
+            indent=2,
+        )
+
+    detailed_queries = []
+    for q in queries:
+        qid = q["id"]
+        detailed_queries.append(
+            {
+                "id": qid,
+                "category": q["category"],
+                "question": q["question"],
+                "expected": q["expected"],
+                "tokens_required": q["tokens_required"],
+                "forbidden": q["forbidden"],
+                "systems": {sys_name: per_q[qid] for sys_name, per_q in details.items()},
+            }
+        )
+
+    with open(DETAILED_JSON, "w", encoding="utf-8") as fh:
+        json.dump(
+            {
+                "benchmark": data["benchmark_name"],
+                "token_budget": args.token_budget,
+                "results": results,
+                "sessions": sessions,
+                "full_flowmem_mmd": full_flowmem_mmd,
+                "queries": detailed_queries,
             },
             fh,
             indent=2,

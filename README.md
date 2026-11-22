@@ -15,7 +15,7 @@ Turn any codebase **and** long-horizon agent memory into ultra-dense, bi-tempora
 [![GitHub Stars](https://img.shields.io/github/stars/ThienHuynhNgoc/FlowMem?style=flat-square&logo=github)](https://github.com/ThienHuynhNgoc/FlowMem/stargazers)
 [![GitHub Pages](https://img.shields.io/badge/Live%20Site-blue)](https://thienhuynhngoc.github.io/FlowMem/)
 
-[🌐 Live Site](https://thienhuynhngoc.github.io/FlowMem/) · [Audited Benchmark (#1)](benchmarks/RESULTS.md) · [Verify Yourself](benchmarks/verify_all.sh) · [Dense Diagram-Markdown](#why-dense-diagram-markdown-ddm-beats-json--vector-memory) · [Install](#installation)
+[🌐 Live Site](https://thienhuynhngoc.github.io/FlowMem/) · [📊 Interactive Audit Report](https://thienhuynhngoc.github.io/FlowMem/benchmark-report.html) · [Audited Benchmark (#1)](benchmarks/RESULTS.md) · [Verify Yourself](benchmarks/verify_all.sh) · [Dense Diagram-Markdown](#why-dense-diagram-markdown-ddm-beats-json--vector-memory) · [Install](#installation)
 
 </div>
 

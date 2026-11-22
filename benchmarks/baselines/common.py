@@ -112,3 +112,4 @@ class HybridRetriever:
 
         combined.sort(key=lambda x: -x[0])
         return combined[:top_k]
+
